@@ -1,0 +1,581 @@
+{
+ "meta": {
+  "schema": 1,
+  "updated": "2026-10-23",
+  "description": "Role model 原型庫：人物 → 特質維度加權 → traitMap 對應到各框架能力",
+  "contributors": [
+   "Eddy",
+   "Claude"
+  ],
+  "sources": [
+   "公開報導與訪談整理"
+  ],
+  "license": "待定（擁有者決定後填入）"
+ },
+ "note": "依公開報導與訪談整理的公眾形象，非本人背書，也不代表其真實能力或全部面貌。",
+ "dimensions": {
+  "comm": "溝通說服",
+  "solve": "判斷決策",
+  "exec": "執行交付",
+  "learn": "學習適應",
+  "people": "帶人文化",
+  "vision": "策略遠見",
+  "customer": "顧客體驗",
+  "craft": "專業深度",
+  "innovate": "創新科技",
+  "discipline": "紀律治理",
+  "brand": "影響力品牌"
+ },
+ "traitMap": {
+  "tech": {
+   "comm": "comm",
+   "solve": "solve",
+   "exec": "exec",
+   "learn": "learn",
+   "people": "comm",
+   "vision": "design",
+   "customer": "quality",
+   "craft": "code",
+   "innovate": "ai",
+   "discipline": "security",
+   "brand": "comm"
+  },
+  "biz": {
+   "comm": "comm",
+   "solve": "solve",
+   "exec": "exec",
+   "learn": "learn",
+   "people": "relation",
+   "vision": "market",
+   "customer": "relation",
+   "craft": "product",
+   "innovate": "growth",
+   "discipline": "pitch",
+   "brand": "pitch"
+  },
+  "ops": {
+   "comm": "comm",
+   "solve": "solve",
+   "exec": "exec",
+   "learn": "learn",
+   "people": "people",
+   "vision": "strategy",
+   "customer": "process",
+   "craft": "process",
+   "innovate": "digital",
+   "discipline": "risk",
+   "brand": "strategy"
+  },
+  "pro": {
+   "comm": "comm",
+   "solve": "solve",
+   "exec": "exec",
+   "learn": "learn",
+   "people": "stakeholder",
+   "vision": "advisory",
+   "customer": "stakeholder",
+   "craft": "domain",
+   "innovate": "digital",
+   "discipline": "deliverable",
+   "brand": "advisory"
+  },
+  "creative": {
+   "comm": "comm",
+   "solve": "solve",
+   "exec": "exec",
+   "learn": "learn",
+   "people": "comm",
+   "vision": "concept",
+   "customer": "ux",
+   "craft": "craft",
+   "innovate": "tooling",
+   "discipline": "visual",
+   "brand": "portfolio"
+  },
+  "automation": {
+   "comm": "comm",
+   "solve": "biz",
+   "exec": "pm",
+   "learn": "change",
+   "people": "lead",
+   "vision": "biz",
+   "customer": "process",
+   "craft": "genai",
+   "innovate": "genai",
+   "discipline": "gov",
+   "brand": "change"
+  }
+ },
+ "people": [
+  {
+   "id": "nadella",
+   "n": "薩蒂亞·納德拉 Satya Nadella",
+   "org": "微軟",
+   "img": "用成長心態與同理心重塑微軟文化，帶領雲端與 AI 轉型",
+   "traits": [
+    "成長心態",
+    "同理心領導",
+    "平台思維",
+    "夥伴合作"
+   ],
+   "w": {
+    "learn": 2,
+    "people": 2,
+    "vision": 1
+   },
+   "tracks": [
+    "tech",
+    "biz",
+    "ops",
+    "pro",
+    "creative"
+   ],
+   "act": "這週問一位同事「你最近卡在哪？」只聽不給建議",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "jensen",
+   "n": "黃仁勳 Jensen Huang",
+   "org": "NVIDIA",
+   "img": "數十年押注加速運算，以技術深度與直接溝通著稱",
+   "traits": [
+    "長期技術押注",
+    "技術深度",
+    "扁平直接溝通",
+    "韌性"
+   ],
+   "w": {
+    "vision": 2,
+    "craft": 2,
+    "comm": 1
+   },
+   "tracks": [
+    "tech"
+   ],
+   "act": "選一個你看好的技術方向，寫下「三年後它會怎樣改變我的工作」",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "morris",
+   "n": "張忠謀",
+   "org": "台積電",
+   "img": "開創晶圓代工模式，以誠信、紀律與長期策略建立客戶信任",
+   "traits": [
+    "商業模式創新",
+    "誠信紀律",
+    "長期策略",
+    "客戶信任"
+   ],
+   "w": {
+    "vision": 2,
+    "discipline": 2,
+    "customer": 1
+   },
+   "tracks": [
+    "ops",
+    "pro",
+    "biz"
+   ],
+   "act": "把一個承諾寫下期限並準時交付，讓「說到做到」成為你的標籤",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "lisasu",
+   "n": "蘇姿丰 Lisa Su",
+   "org": "AMD",
+   "img": "工程師出身，以聚焦的產品路線圖與可靠執行帶領公司翻轉",
+   "traits": [
+    "工程深度",
+    "聚焦路線圖",
+    "可靠交付",
+    "穩健領導"
+   ],
+   "w": {
+    "exec": 2,
+    "craft": 2,
+    "vision": 1
+   },
+   "tracks": [
+    "tech",
+    "ops"
+   ],
+   "act": "把手上的工作砍到只剩最重要的 3 件，寫成你的季度路線圖",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "jobs",
+   "n": "史蒂夫·賈伯斯 Steve Jobs",
+   "org": "Apple",
+   "img": "以產品品味、極致聚焦與發表會說故事聞名",
+   "traits": [
+    "產品品味",
+    "極致聚焦",
+    "說故事",
+    "高標準"
+   ],
+   "w": {
+    "customer": 2,
+    "comm": 2,
+    "craft": 1
+   },
+   "tracks": [
+    "creative",
+    "biz",
+    "tech"
+   ],
+   "act": "下次簡報只留一個重點，用一個故事開場",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "musk",
+   "n": "伊隆·馬斯克 Elon Musk",
+   "org": "Tesla、SpaceX",
+   "img": "以第一原理思考、極大膽目標與高速迭代聞名，風格具爭議",
+   "traits": [
+    "第一原理",
+    "極大膽目標",
+    "高速迭代",
+    "工程投入"
+   ],
+   "w": {
+    "solve": 2,
+    "innovate": 2,
+    "exec": 1
+   },
+   "tracks": [
+    "tech"
+   ],
+   "act": "挑一個「大家都這樣做」的流程，從零問：如果重新設計會長怎樣？",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "bezos",
+   "n": "傑夫·貝佐斯 Jeff Bezos",
+   "org": "Amazon",
+   "img": "顧客至上、長期主義，以六頁敘事備忘錄取代投影片",
+   "traits": [
+    "顧客至上",
+    "長期主義",
+    "寫作文化",
+    "決策機制"
+   ],
+   "w": {
+    "customer": 2,
+    "comm": 1,
+    "solve": 1,
+    "vision": 1
+   },
+   "tracks": [
+    "biz",
+    "ops",
+    "pro"
+   ],
+   "act": "下次提案先寫一頁敘事文件，從顧客的問題寫起",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "nooyi",
+   "n": "英德拉·努伊 Indra Nooyi",
+   "org": "前 PepsiCo",
+   "img": "推動長期策略轉型，重視跨文化領導與人才",
+   "traits": [
+    "策略轉型",
+    "長期規劃",
+    "跨文化領導",
+    "重視人才"
+   ],
+   "w": {
+    "vision": 2,
+    "people": 1,
+    "comm": 1
+   },
+   "tracks": [
+    "ops",
+    "biz",
+    "pro"
+   ],
+   "act": "寫下你部門五年後的樣子，並找主管聊 15 分鐘",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "barra",
+   "n": "瑪麗·巴拉 Mary Barra",
+   "org": "GM",
+   "img": "在傳統產業推動文化與電動化轉型，強調當責與安全",
+   "traits": [
+    "文化變革",
+    "當責",
+    "安全與誠信",
+    "產業轉型"
+   ],
+   "w": {
+    "discipline": 2,
+    "people": 1,
+    "vision": 1
+   },
+   "tracks": [
+    "ops",
+    "pro"
+   ],
+   "act": "主動認領一個大家都在推的問題，公開承擔結果",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "buffett",
+   "n": "華倫·巴菲特 Warren Buffett",
+   "org": "波克夏",
+   "img": "以長期思維、理性決策與淺白的股東信聞名",
+   "traits": [
+    "長期思維",
+    "理性決策",
+    "淺白溝通",
+    "紀律"
+   ],
+   "w": {
+    "solve": 2,
+    "discipline": 1,
+    "comm": 1
+   },
+   "tracks": [
+    "pro",
+    "ops"
+   ],
+   "act": "把一份複雜的報告改寫成國中生也看得懂的一頁",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "hastings",
+   "n": "里德·哈斯廷斯 Reed Hastings",
+   "org": "Netflix",
+   "img": "建立「自由與責任」文化，敢於自我顛覆商業模式",
+   "traits": [
+    "自由與責任",
+    "坦誠回饋",
+    "自我顛覆",
+    "高人才密度"
+   ],
+   "w": {
+    "people": 2,
+    "innovate": 1,
+    "learn": 1
+   },
+   "tracks": [
+    "tech",
+    "ops",
+    "creative"
+   ],
+   "act": "給一位同事具體、真誠的回饋，也請他回饋你一件事",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "cook",
+   "n": "提姆·庫克 Tim Cook",
+   "org": "Apple",
+   "img": "以營運與供應鏈卓越著稱，穩健且重視價值觀",
+   "traits": [
+    "營運卓越",
+    "供應鏈思維",
+    "穩健紀律",
+    "價值觀領導"
+   ],
+   "w": {
+    "exec": 2,
+    "discipline": 1,
+    "customer": 1
+   },
+   "tracks": [
+    "ops",
+    "biz"
+   ],
+   "act": "找出你流程中最常延誤的一步，量出它平均花多久",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "chesky",
+   "n": "布萊恩·切斯基 Brian Chesky",
+   "org": "Airbnb",
+   "img": "設計背景的創辦人，親自投入體驗細節",
+   "traits": [
+    "設計思維",
+    "體驗至上",
+    "投入細節",
+    "社群"
+   ],
+   "w": {
+    "customer": 2,
+    "craft": 1,
+    "brand": 1
+   },
+   "tracks": [
+    "creative",
+    "biz"
+   ],
+   "act": "用使用者身分完整走一次你的產品或服務，記下 5 個卡點",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "oprah",
+   "n": "歐普拉 Oprah Winfrey",
+   "org": "媒體人",
+   "img": "以同理、說故事與真誠建立跨媒體的個人品牌",
+   "traits": [
+    "說故事",
+    "同理傾聽",
+    "個人品牌",
+    "真誠"
+   ],
+   "w": {
+    "comm": 2,
+    "brand": 2,
+    "people": 1
+   },
+   "tracks": [
+    "creative",
+    "pro",
+    "biz"
+   ],
+   "act": "寫一篇 300 字的「我為什麼做這份工作」，發在你習慣的平台",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "yen",
+   "n": "嚴長壽",
+   "org": "前亞都麗緻",
+   "img": "以服務精神、說故事與人才培育聞名台灣服務業",
+   "traits": [
+    "服務精神",
+    "說故事",
+    "人才培育",
+    "在地關懷"
+   ],
+   "w": {
+    "customer": 2,
+    "people": 1,
+    "comm": 1
+   },
+   "tracks": [
+    "ops",
+    "biz",
+    "pro"
+   ],
+   "act": "記住一位客戶或同事的一個小細節，下次見面時用上",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "dalio",
+   "n": "瑞·達利歐 Ray Dalio",
+   "org": "橋水基金",
+   "img": "把決策原則化、系統化，倡導徹底透明",
+   "traits": [
+    "原則化",
+    "系統化決策",
+    "徹底透明",
+    "從錯誤學習"
+   ],
+   "w": {
+    "solve": 2,
+    "learn": 1,
+    "discipline": 1
+   },
+   "tracks": [
+    "pro",
+    "ops"
+   ],
+   "act": "寫下你最近一次決策失誤，以及下次的一條原則",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "garyvee",
+   "n": "蓋瑞·范納洽 Gary Vaynerchuk",
+   "org": "VaynerMedia",
+   "img": "以內容行銷、社群經營與高產量個人品牌著稱",
+   "traits": [
+    "內容為王",
+    "社群經營",
+    "執行速度",
+    "個人品牌"
+   ],
+   "w": {
+    "brand": 2,
+    "innovate": 1,
+    "exec": 1
+   },
+   "tracks": [
+    "biz",
+    "creative"
+   ],
+   "act": "這週發 3 篇和你專業相關的短內容，不求完美",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "ive",
+   "n": "強尼·艾夫 Jony Ive",
+   "org": "前 Apple 設計長",
+   "img": "以極致工藝與簡約設計語言聞名",
+   "traits": [
+    "極致工藝",
+    "簡約",
+    "跨團隊協作",
+    "材質與細節"
+   ],
+   "w": {
+    "craft": 2,
+    "customer": 1,
+    "discipline": 1
+   },
+   "tracks": [
+    "creative",
+    "tech"
+   ],
+   "act": "把一件作品再刪掉 30%，看看是不是更好",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "perkins",
+   "n": "梅蘭妮·珀金斯 Melanie Perkins",
+   "org": "Canva",
+   "img": "讓設計人人可用，創業初期被大量投資人拒絕仍持續提案",
+   "traits": [
+    "設計民主化",
+    "堅持被拒",
+    "產品導向",
+    "使命感"
+   ],
+   "w": {
+    "customer": 2,
+    "comm": 1,
+    "learn": 1
+   },
+   "tracks": [
+    "creative",
+    "biz",
+    "tech"
+   ],
+   "act": "把你最常被拒絕的提案改寫一次，再找一個人提",
+   "source": "公開報導與訪談整理"
+  },
+  {
+   "id": "blakely",
+   "n": "莎拉·布雷克莉 Sara Blakely",
+   "org": "Spanx",
+   "img": "自學起家的創業者，以說故事行銷與擁抱失敗聞名",
+   "traits": [
+    "自學創業",
+    "說故事行銷",
+    "擁抱失敗",
+    "勇於開口"
+   ],
+   "w": {
+    "learn": 2,
+    "brand": 1,
+    "comm": 1
+   },
+   "tracks": [
+    "biz",
+    "creative"
+   ],
+   "act": "每天晚上寫下一件今天「失敗但學到」的事，持續一週",
+   "source": "公開報導與訪談整理"
+  }
+ ]
+}

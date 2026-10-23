@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>個人成長導航系統</title>
+<style>
+:root{--bg:#f5f7fb;--card:#ffffff;--ink:#1c2333;--muted:#5f6b80;--line:#e2e7f0;--accent:#2f6fde;--accent2:#14a37f;--warn:#e08a1e;--bad:#d64545;--soft:#eaf1fd;--chip:#f0f3f8}
+@media (prefers-color-scheme: dark){:root{--bg:#12161f;--card:#1b2130;--ink:#e8ecf4;--muted:#9aa6bb;--line:#2c3446;--accent:#6b9cff;--accent2:#3dd1a5;--warn:#f0a548;--bad:#ff7b7b;--soft:#22304a;--chip:#252d3f}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft JhengHei","Noto Sans TC","PingFang TC",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55}
+header{padding:18px 24px 0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{margin:0;font-size:22px}
+.sub{color:var(--muted);margin-block-start:2px;font-size:13px}
+nav{display:flex;gap:6px;padding:14px 24px 0;flex-wrap:wrap;border-block-end:1px solid var(--line)}
+nav button{border:0;background:none;color:var(--muted);padding:8px 12px 10px;font-size:14px;cursor:pointer;border-block-end:3px solid transparent;font-family:inherit;display:flex;align-items:center;gap:7px}
+nav button .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
+nav button.done .n{background:var(--accent2);border-color:var(--accent2);color:#fff}
+nav button.on{color:var(--accent);border-block-end-color:var(--accent);font-weight:700}
+nav button.on .n{border-color:var(--accent);color:var(--accent)}
+nav button.on.done .n{background:var(--accent2);border-color:var(--accent2);color:#fff}
+nav button.lock{opacity:.5;cursor:not-allowed}
+main{padding:20px 24px 48px;max-width:1200px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h2{font-size:16px;margin:0 0 10px}
+.card h3{font-size:14px;margin:0 0 6px}
+.kpi .n{font-size:26px;font-weight:700}
+.kpi .l{color:var(--muted);font-size:12px}
+label{display:block;font-size:12px;color:var(--muted);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-family:inherit;font-size:13px}
+textarea{min-height:64px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:7px;padding:7px 14px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:3px 9px;font-size:12px}
+.btn.lg{padding:10px 20px;font-size:15px;font-weight:700}
+.btn.danger{border-color:var(--bad);color:var(--bad);background:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:start;padding:7px 6px;border-block-end:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:600}
+.tbl{overflow-x:auto}
+.chip{display:inline-block;background:var(--chip);border-radius:20px;padding:1px 9px;font-size:12px;margin-block:2px;margin-inline-end:4px;color:var(--muted)}
+.chip.c{background:#e6f0ff;color:#2457b8}.chip.s{background:#e3f7ef;color:#0f7a5d}.chip.a{background:#fdf0e1;color:#9a5a0a}.chip.o{background:#f6e7fb;color:#7d2d99}.chip.r{background:var(--chip);color:var(--muted)}
+.chip.add{cursor:pointer;border:1px dashed var(--line)}.chip.add:hover{border-color:var(--accent);color:var(--accent)}
+@media (prefers-color-scheme: dark){.chip.c{background:#1f3357;color:#9cc0ff}.chip.s{background:#163d33;color:#7fe3c4}.chip.a{background:#45331a;color:#f5c27f}.chip.o{background:#3b2445;color:#e0a8f5}}
+.bar{height:8px;background:var(--chip);border-radius:6px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent2)}
+.gap{font-weight:700}
+.gap.h{color:var(--bad)}.gap.m{color:var(--warn)}.gap.l{color:var(--accent2)}
+.rec{border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;background:var(--card)}
+.rec .t{font-weight:700}
+.rec .why{font-size:12px;color:var(--muted)}
+.score{font-size:12px;font-weight:700;color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:900px){.kanban{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.kanban{grid-template-columns:1fr}header,nav,main{padding-inline:16px}}
+.col{background:var(--soft);border-radius:10px;padding:10px;min-height:120px}
+.col h3{font-size:13px;margin:2px 4px 8px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-block-end:8px}
+.item .t{font-weight:600;font-size:13px}
+.item input[type=range]{padding:0}
+.hide{display:none}
+.lv{width:62px}
+.note{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:13px}
+.pitch{white-space:pre-wrap;font-family:inherit;background:var(--chip);border-radius:8px;padding:12px;font-size:13px;margin:0}
+svg text{fill:var(--muted);font-size:11px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-block-end:12px}
+.filters button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:20px;padding:4px 12px;cursor:pointer;font-family:inherit}
+.filters button.on{border-color:var(--accent);color:var(--accent);font-weight:700}
+.toast{position:fixed;inset-block-end:20px;inset-inline-end:20px;background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:30}
+.toast.on{opacity:.95}
+/* 檢核清單 / 精靈 */
+.check{display:flex;flex-direction:column;gap:8px}
+.check .it{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.check .it.done{border-color:var(--accent2);background:color-mix(in srgb,var(--accent2) 8%,var(--card))}
+.check .it.cur{border-color:var(--accent);background:var(--soft)}
+.check .mk{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:2px solid var(--line);color:var(--muted);flex:none}
+.check .it.done .mk{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.check .it.cur .mk{border-color:var(--accent);color:var(--accent)}
+.steps{display:flex;gap:4px;flex-wrap:wrap;margin-block-end:14px}
+.steps button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:20px;padding:4px 12px;cursor:pointer;font-family:inherit;font-size:12px}
+.steps button.on{border-color:var(--accent);color:var(--accent);font-weight:700}
+.steps button.done{color:var(--accent2);border-color:var(--accent2)}
+.wiz{max-width:720px}
+.lvopt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line);border-radius:10px;cursor:pointer;margin-block-end:8px;background:var(--card)}
+.lvopt:hover{border-color:var(--accent)}
+.lvopt.on{border-color:var(--accent);background:var(--soft)}
+.lvopt .n{width:28px;height:28px;border-radius:50%;background:var(--chip);display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.lvopt.on .n{background:var(--accent);color:#fff}
+.lvopt .d{font-size:13px}
+.lvopt .d b{display:block;font-size:13px}
+.prog{height:6px;background:var(--chip);border-radius:4px;overflow:hidden;margin:6px 0 14px}
+.prog>i{display:block;height:100%;background:var(--accent)}
+.rolecard{cursor:pointer;border-width:2px}
+.rolecard.on{border-color:var(--accent);background:var(--soft)}
+.sec{margin-block-end:22px}
+.sec>h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.lvchips{display:flex;flex-wrap:wrap;gap:6px}
+.lvchips .chip{cursor:pointer}
+.lvchips .chip b{color:var(--accent)}
+/* 模擬 */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat .l{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+.stat .bar{margin-block-start:4px}
+.stat.depth .bar>i{background:var(--accent)}.stat.impact .bar>i{background:var(--accent2)}.stat.vis .bar>i{background:#9b59b6}.stat.energy .bar>i{background:var(--warn)}
+.stat .d{font-size:11px;font-weight:700}.stat .d.up{color:var(--accent2)}.stat .d.dn{color:var(--bad)}
+.pick{cursor:pointer;border-width:2px}
+.pick.on{border-color:var(--accent);background:var(--soft)}
+.pick.off{opacity:.45;cursor:not-allowed}
+.route{display:grid;grid-template-columns:repeat(20,1fr);gap:3px}
+.route>i{display:block;height:18px;border-radius:3px;background:var(--chip)}
+.route>i.c{background:#2457b8}.route>i.s{background:#0f7a5d}.route>i.a{background:#c77d1a}.route>i.o{background:#7d2d99}.route>i.r{background:var(--line)}
+.route>i.ev{outline:2px solid var(--bad);outline-offset:-2px}
+.panel{position:fixed;inset-block-start:60px;inset-inline-end:20px;width:380px;max-width:calc(100vw - 32px);z-index:20;box-shadow:0 8px 30px rgba(0,0,0,.25);max-height:calc(100vh - 80px);overflow:auto}
+.qlog .item{font-size:13px}
+.qlog .ok{color:var(--accent2)}.qlog .ng{color:var(--bad)}
+.big{font-size:32px;font-weight:700;color:var(--accent)}
+.aibar{border:1px dashed var(--accent);border-radius:10px;padding:10px 12px;margin-block-end:12px;background:color-mix(in srgb,var(--accent) 6%,var(--card))}
+.chat .q{background:var(--soft);border-radius:10px;padding:10px 12px;margin:8px 0;max-width:92%}
+.chat .a{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:8px 0 8px auto;max-width:85%;color:var(--muted)}
+.chat .q b{display:block;font-size:11px;color:var(--accent);margin-block-end:2px}
+.gtable td{vertical-align:top}
+.gtable .lvchg{font-weight:700}
+.gtable .up{color:var(--accent2)}.gtable .dn{color:var(--bad)}
+label.stepline{display:flex;gap:6px;align-items:flex-start;font-size:12px;margin:4px 0;color:var(--ink);cursor:pointer;flex:1}
+label.stepline input{width:auto;margin-block-start:2px}
+label.stepline.done .sp{text-decoration:line-through;color:var(--muted)}
+.week label.stepline{font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;margin:0 0 6px}
+.steprow{display:flex;gap:4px;align-items:flex-start}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>🧭 個人成長導航系統</h1>
+    <div class="sub" id="hdrSub">現況 → 目標 → 計畫 → 模擬</div>
+  </div>
+  <div class="row">
+    <span class="small" id="saveStat"></span>
+    <button class="btn ghost sm" id="btnAI">⚙ AI 設定</button>
+    <button class="btn ghost sm" id="btnExport">⬇ 匯出</button>
+    <label class="btn ghost sm" style="margin:0">⬆ 匯入<input type="file" id="fileImport" accept=".json" class="hide"></label>
+  </div>
+</header>
+<nav id="nav"></nav>
+<main>
+  <section id="tab-dash"></section>
+  <section id="tab-now" class="hide"></section>
+  <section id="tab-goal" class="hide"></section>
+  <section id="tab-plan" class="hide"></section>
+  <section id="tab-sim" class="hide"></section>
+</main>
+<div class="card panel hide" id="aiPanel"></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+"use strict";
+/*@@DATA-BEGIN 由 tools/build.py 依 data/*.json 產生，請勿手改；要改資料請改 data/ 後執行 python tools/build.py */
+const DATA={
+"frameworks":{"meta":{"schema":1,"updated":"2026-10-23","description":"能力框架：共通核心 4 項、5 個職類各 6 項專屬能力（每項 5 級描述）、角色與目標等級、職涯階段","contributors":["Eddy","Claude"],"sources":["SFIA 8（Skills Framework for the Information Age）","O*NET OnLine","擁有者實務經驗"],"license":"待定（擁有者決定後填入）"},"core":[{"id":"comm","n":"溝通與說服","cat":"核心","lvd":["能清楚說明自己的工作","能做內部簡報並回答提問","能說服主管或客戶採納方案","能對高階主管與外部聽眾演講","能代表組織對外發聲，具公眾影響力"]},{"id":"solve","n":"問題解決與決策","cat":"核心","lvd":["遇到問題會找人問","能拆解問題並提出 1–2 個選項","能獨立分析根因並做出合理決定","能在資訊不足下決策並承擔結果","能建立決策框架，讓組織少走彎路"]},{"id":"exec","n":"專案執行與交付","cat":"核心","lvd":["能在指示下完成任務","能管理自己的時程並如期交付","能獨立帶 3–6 個月的專案交付","能同時管理多專案與利害關係人","能建立交付方法論並指導他人"]},{"id":"learn","n":"學習與適應","cat":"核心","lvd":["需要完整教學才會新工具","能自學新工具到可用程度","能快速上手新領域並應用在工作","能把所學轉成團隊方法或文件","能預判趨勢並引領組織學習"]}],"tracks":["tech","biz","ops","pro","creative"],"stages":[{"id":"junior","n":"新鮮人 / 轉職中","d":"工作 < 3 年，或剛轉進這個領域"},{"id":"senior","n":"資深個人貢獻者","d":"獨立交付、不帶人"},{"id":"lead","n":"小主管 / 團隊領導","d":"帶 2–10 人或帶專案"},{"id":"exec","n":"高階主管","d":"帶部門或多團隊，負責策略與預算"},{"id":"expert","n":"獨立專家 / 自由工作者","d":"顧問、講師、接案、創業者"}],"frameworks":{"tech":{"id":"tech","name":"技術與工程","eg":"軟體、資料、IT、自動化、研發","comps":[{"id":"design","n":"系統設計與架構","cat":"專業","lvd":["看得懂現有系統的架構圖","能設計單一模組或功能","能獨立設計一個完整子系統","能做跨系統架構與技術選型","能制定組織的架構標準"]},{"id":"code","n":"程式與工具","cat":"專業","lvd":["看得懂程式、能改小地方","能獨立寫功能並通過 review","能寫出可維護、有測試的程式","能設計共用模組並 review 他人","能制定技術規範與工程實踐"]},{"id":"data","n":"資料與分析","cat":"專業","lvd":["會用 Excel 做基本統計","能寫 SQL / 用工具做分析與圖表","能建儀表板並從資料得出結論","能設計資料模型與指標體系","能定義組織的資料策略"]},{"id":"ai","n":"自動化與 AI 應用","cat":"專業","lvd":["用過 AI 工具或看過自動化示範","能用低程式碼 / 腳本自動化例行工作","能設計並上線一個自動化或 AI 工作流程","能設計 Agent / RAG 並建立評估機制","能定義企業 AI 與自動化架構與治理"]},{"id":"quality","n":"品質與維運","cat":"專業","lvd":["知道測試與上線流程","能寫測試、處理一般事故","能建立 CI/CD 與監控，獨立維運服務","能設計可靠性策略與事故流程","能定義組織的 SRE / 品質標準"]},{"id":"security","n":"資安與合規","cat":"專業","lvd":["知道基本資安要求","能遵循規範、修一般弱點","能做威脅分析並落實控管","能設計安全架構並通過稽核","能主導資安治理與對外稽核"]}],"roles":{"資深工程師":{"d":"獨立交付高品質功能，是團隊的技術支柱","st":["junior","senior"],"tgt":{"comm":3,"solve":3,"exec":3,"learn":3,"design":3,"code":4,"data":3,"ai":3,"quality":4,"security":3}},"技術主管（Tech Lead / 經理）":{"d":"帶團隊交付，兼顧技術決策與人","st":["lead"],"tgt":{"comm":4,"solve":4,"exec":4,"learn":3,"design":4,"code":3,"data":3,"ai":3,"quality":4,"security":3}},"架構師":{"d":"跨系統設計與技術選型","st":["senior","lead"],"tgt":{"comm":4,"solve":4,"exec":3,"learn":4,"design":5,"code":4,"data":3,"ai":4,"quality":4,"security":4}},"AI / 自動化專家":{"d":"用 AI 與自動化改變業務流程","st":["senior","expert"],"tgt":{"comm":4,"solve":3,"exec":3,"learn":4,"design":3,"code":3,"data":4,"ai":5,"quality":3,"security":4}},"獨立技術顧問 / 講師":{"d":"以個人品牌提供技術顧問與教學","st":["expert"],"tgt":{"comm":5,"solve":4,"exec":4,"learn":5,"design":4,"code":3,"data":3,"ai":4,"quality":3,"security":3}}},"certs":["AWS Certified Solutions Architect","Azure AZ-900","Azure AI-102","Google Cloud Associate","Microsoft PL-500","CKA（Kubernetes）","ISO/IEC 27001 主導稽核員","PMP"],"source":"自訂；分級精神參考 SFIA 8 與 O*NET","contributor":"Eddy + Claude","updated":"2026-10-23"},"biz":{"id":"biz","name":"業務與行銷","eg":"業務、BD、行銷、客戶成功、電商","comps":[{"id":"market","n":"市場與客戶洞察","cat":"專業","lvd":["知道自家產品賣給誰","能整理競品與客群資訊","能從訪談與數據找出客戶痛點","能定義市場區隔與定位策略","能預判市場變化並調整方向"]},{"id":"relation","n":"客戶關係與經營","cat":"專業","lvd":["能回覆客戶基本需求","能維持既有客戶並處理抱怨","能經營關鍵客戶、提高續約與擴大","能建立客戶成功體系與高層關係","客戶主動推薦，具業界人脈網"]},{"id":"pitch","n":"提案與談判","cat":"專業","lvd":["能照腳本介紹產品","能依需求調整提案內容","能獨立完成提案到成交","能談複雜條件並處理多方利害","能設計談判策略並指導團隊"]},{"id":"growth","n":"數據驅動行銷與成長","cat":"專業","lvd":["知道基本行銷漏斗","能執行活動並看懂成效報表","能用數據優化轉換與成本","能設計成長實驗與歸因模型","能建立組織的成長引擎"]},{"id":"channel","n":"通路與夥伴","cat":"專業","lvd":["知道公司有哪些通路","能配合通路活動","能開發與經營新通路或夥伴","能設計通路策略與分潤機制","能建構生態系夥伴網絡"]},{"id":"product","n":"產品與解決方案知識","cat":"專業","lvd":["知道產品主要功能","能回答常見技術與規格問題","能把客戶需求對應到解決方案","能回饋需求影響產品路線","被視為該領域的解決方案權威"]}],"roles":{"資深業務 / 客戶經理":{"d":"獨立成交並經營關鍵客戶","st":["junior","senior"],"tgt":{"comm":4,"solve":3,"exec":3,"learn":3,"market":3,"relation":4,"pitch":4,"growth":2,"channel":3,"product":4}},"業務主管":{"d":"帶團隊達標，建立銷售方法","st":["lead","exec"],"tgt":{"comm":4,"solve":4,"exec":4,"learn":3,"market":4,"relation":4,"pitch":4,"growth":3,"channel":3,"product":3}},"行銷經理 / 成長負責人":{"d":"用數據驅動品牌與成長","st":["senior","lead"],"tgt":{"comm":4,"solve":4,"exec":4,"learn":4,"market":4,"relation":2,"pitch":3,"growth":5,"channel":3,"product":3}},"商務開發 / 通路負責人":{"d":"開拓新市場與夥伴","st":["senior","expert"],"tgt":{"comm":4,"solve":4,"exec":3,"learn":4,"market":4,"relation":4,"pitch":4,"growth":3,"channel":5,"product":3}}},"certs":["Google Ads 認證","Google Analytics 認證","HubSpot Inbound Marketing","Meta Blueprint","Salesforce Administrator","PMP"],"source":"自訂；分級精神參考 SFIA 8 與 O*NET","contributor":"Eddy + Claude","updated":"2026-10-23"},"ops":{"id":"ops","name":"營運與管理","eg":"營運、PM、採購、供應鏈、行政、部門主管","comps":[{"id":"process","n":"流程設計與改善","cat":"專業","lvd":["能描述自己負責的流程","能畫流程圖並找出明顯瓶頸","能獨立拆解並提出改善方案","能用 Lean / BPM 帶跨部門改善","能建立組織的流程改善體系"]},{"id":"people","n":"帶人與績效","cat":"專業","lvd":["主要是執行者","能帶新人或協調小任務","能帶小團隊、設目標、給回饋","能培養接班人、處理績效問題","能建立人才發展與文化"]},{"id":"resource","n":"資源與預算管理","cat":"專業","lvd":["知道部門有預算","能管理單一專案的費用","能編列並控管部門預算","能做投資決策與成本結構優化","能主導組織層級的資源配置"]},{"id":"risk","n":"風險與法遵","cat":"專業","lvd":["知道基本規範","能遵循 SOP 並通報異常","能辨識風險並設計控管","能建立風險管理框架","能主導治理並對外稽核"]},{"id":"digital","n":"數位工具與自動化","cat":"專業","lvd":["會用基本辦公軟體","能用現成工具自動化例行工作","能導入系統或低程式碼方案到部門","能規劃部門數位轉型路線","能主導組織層級數位轉型"]},{"id":"strategy","n":"策略落地與跨部門協作","cat":"專業","lvd":["知道公司年度目標","能把目標拆成部門任務","能協調跨部門完成專案","能參與策略制定並推動落地","能定義組織策略與執行節奏"]}],"roles":{"資深專案 / 營運專員":{"d":"獨立把流程與專案跑順","st":["junior","senior"],"tgt":{"comm":3,"solve":3,"exec":4,"learn":3,"process":4,"people":2,"resource":2,"risk":3,"digital":3,"strategy":3}},"部門主管":{"d":"帶團隊達標、管預算與流程","st":["lead"],"tgt":{"comm":4,"solve":4,"exec":4,"learn":3,"process":4,"people":4,"resource":4,"risk":3,"digital":3,"strategy":4}},"數位轉型 / PMO 負責人":{"d":"推動跨部門流程與系統改變","st":["senior","lead","expert"],"tgt":{"comm":5,"solve":4,"exec":5,"learn":4,"process":5,"people":3,"resource":3,"risk":3,"digital":5,"strategy":5}},"營運長 / 高階主管":{"d":"策略、資源、組織","st":["exec"],"tgt":{"comm":5,"solve":5,"exec":4,"learn":4,"process":4,"people":5,"resource":5,"risk":4,"digital":4,"strategy":5}}},"certs":["PMP","Lean Six Sigma 綠帶","ITIL 4 Foundation","Prosci 變革管理","Microsoft PL-900"],"source":"自訂；分級精神參考 SFIA 8 與 O*NET","contributor":"Eddy + Claude","updated":"2026-10-23"},"pro":{"id":"pro","name":"專業服務","eg":"顧問、法務、財務會計、HR、講師、分析師","comps":[{"id":"domain","n":"專業領域知識","cat":"專業","lvd":["具備基本學理","能處理常規案件","能獨立處理複雜案件","被同業視為該領域專家","能影響業界標準或法規"]},{"id":"analysis","n":"分析與診斷","cat":"專業","lvd":["能蒐集整理資料","能依框架做初步分析","能獨立診斷並找出根因","能設計分析框架與方法","能建立業界引用的方法論"]},{"id":"advisory","n":"顧問與建議","cat":"專業","lvd":["能回答事實性問題","能給出有依據的建議","能讓客戶採納建議並落地","能影響客戶高層決策","客戶主動尋求、長期信賴"]},{"id":"deliverable","n":"文件與交付品質","cat":"專業","lvd":["能照範本完成文件","能獨立完成結構清楚的報告","交付品可直接給客戶高層","能定義交付標準並審核他人","作品被視為業界範本"]},{"id":"stakeholder","n":"利害關係人管理","cat":"專業","lvd":["知道誰是客戶窗口","能維持窗口關係","能同時管理多方期待","能處理衝突並建立高層關係","具業界人脈與影響力"]},{"id":"digital","n":"數位工具與 AI 應用","cat":"專業","lvd":["會用基本辦公軟體","能用 AI 工具加速日常工作","能把自動化 / AI 導入自己的服務流程","能設計數位化服務產品","能引領該專業領域的數位轉型"]}],"roles":{"資深專員 / 分析師":{"d":"獨立處理複雜案件與分析","st":["junior","senior"],"tgt":{"comm":3,"solve":3,"exec":3,"learn":3,"domain":4,"analysis":4,"advisory":3,"deliverable":4,"stakeholder":3,"digital":3}},"顧問 / 專案負責人":{"d":"帶客戶專案從診斷到落地","st":["senior","lead"],"tgt":{"comm":4,"solve":4,"exec":4,"learn":3,"domain":4,"analysis":4,"advisory":4,"deliverable":4,"stakeholder":4,"digital":3}},"合夥人 / 部門主管":{"d":"帶團隊、經營客戶與業務","st":["lead","exec"],"tgt":{"comm":5,"solve":4,"exec":4,"learn":3,"domain":4,"analysis":3,"advisory":5,"deliverable":4,"stakeholder":5,"digital":3}},"獨立顧問 / 講師":{"d":"以個人品牌提供專業與教學","st":["expert"],"tgt":{"comm":5,"solve":4,"exec":4,"learn":4,"domain":4,"analysis":4,"advisory":4,"deliverable":4,"stakeholder":4,"digital":4}}},"certs":["PMP","CPA","CFA","SHRM-CP","ISO 主導稽核員","Microsoft Certified Trainer（MCT）","iPAS AI 應用規劃師"],"source":"自訂；分級精神參考 SFIA 8 與 O*NET","contributor":"Eddy + Claude","updated":"2026-10-23"},"creative":{"id":"creative","name":"創意與設計","eg":"設計、UX、內容、品牌、影音","comps":[{"id":"concept","n":"概念與創意發想","cat":"專業","lvd":["能依指示產出初稿","能提出多個方向供選擇","能從需求推導出有洞察的概念","能定義品牌或產品的創意策略","作品引領業界趨勢"]},{"id":"craft","n":"設計執行與工藝","cat":"專業","lvd":["會用基本工具","能獨立完成符合規範的作品","作品細節與品質穩定可直接上線","能定義設計系統與規範","工藝水準被同業視為標竿"]},{"id":"ux","n":"使用者研究與體驗","cat":"專業","lvd":["知道什麼是使用者需求","能做簡單訪談與可用性測試","能用研究結果驅動設計決策","能設計研究計畫並影響產品方向","能建立組織的體驗策略"]},{"id":"visual","n":"視覺與品牌","cat":"專業","lvd":["知道品牌規範","能在規範內做一致的視覺","能獨立建立一致的視覺語言","能定義品牌識別系統","建立被市場辨識的品牌風格"]},{"id":"tooling","n":"工具與 AI 協作","cat":"專業","lvd":["會用主流設計工具","能用 AI 工具加速產出","能把 AI 整合進工作流程並維持品質","能設計團隊的 AI 協作流程","能引領創意產業的工具變革"]},{"id":"portfolio","n":"作品管理與個人品牌","cat":"專業","lvd":["有基本作品集","作品集能說明脈絡與成果","作品集能帶來機會或客戶","具業界能見度，受邀分享","被視為該領域的代表人物"]}],"roles":{"資深設計師":{"d":"獨立產出高品質作品","st":["junior","senior"],"tgt":{"comm":3,"solve":3,"exec":3,"learn":3,"concept":4,"craft":4,"ux":3,"visual":4,"tooling":3,"portfolio":3}},"設計主管 / 創意總監":{"d":"帶團隊、定方向、對外提案","st":["lead","exec"],"tgt":{"comm":5,"solve":4,"exec":4,"learn":3,"concept":5,"craft":4,"ux":4,"visual":5,"tooling":3,"portfolio":4}},"產品 / UX 設計師":{"d":"以研究驅動產品體驗","st":["senior","lead"],"tgt":{"comm":4,"solve":4,"exec":3,"learn":4,"concept":4,"craft":3,"ux":5,"visual":3,"tooling":3,"portfolio":3}},"獨立創作者 / 接案設計師":{"d":"以個人品牌接案與創作","st":["expert"],"tgt":{"comm":4,"solve":3,"exec":4,"learn":4,"concept":4,"craft":4,"ux":3,"visual":4,"tooling":4,"portfolio":5}}},"certs":["Google UX Design","Adobe Certified Professional","NN/g UX Certification","HubSpot Content Marketing"],"source":"自訂；分級精神參考 SFIA 8 與 O*NET","contributor":"Eddy + Claude","updated":"2026-10-23"},"automation":{"id":"automation","name":"自動化 / AI 顧問（14 項專用框架）","eg":"擁有者專用，技術 × 獨立專家時可選","full":true,"comps":[{"id":"rpa","n":"RPA 流程自動化開發","cat":"技術","lvd":["知道 RPA 是什麼，看過示範","能依規格修改或完成簡單流程","能獨立分析需求並交付穩定的機器人","能設計例外處理與架構，指導他人","能制定開發規範、跨平台評選與治理"]},{"id":"lowcode","n":"Power Platform / 低程式碼","cat":"技術","lvd":["知道 Power Apps / Automate 的用途","能用範本做簡單的 App 或流程","能獨立做含資料表與審核流程的應用","能設計連接器、擴充與權限架構","能規劃企業級平台治理與 ALM"]},{"id":"genai","n":"生成式 AI / LLM 應用（Prompt、RAG、Agent）","cat":"技術","lvd":["用過 ChatGPT 之類的工具","能寫結構化提示處理日常任務","能設計 RAG 或 AI 工作流程並上線","能設計 Agent、建立評估機制並指導團隊","能定義企業 AI 應用架構與標準"]},{"id":"ml","n":"機器學習與資料科學","cat":"技術","lvd":["知道分類、預測等基本概念","能用現成工具跑簡單模型","能獨立完成特徵工程與模型評估","能設計模型上線與監控流程","能帶領資料科學專案並定義方法"]},{"id":"data","n":"資料分析與視覺化","cat":"技術","lvd":["會用 Excel 做基本統計","能做樞紐分析與基本圖表","能獨立建儀表板並解讀洞察","能設計資料模型與指標體系","能定義組織的資料策略與治理"]},{"id":"prog","n":"程式開發（Python / JS / API 整合）","cat":"技術","lvd":["看得懂簡單的程式碼","能修改腳本或寫小工具","能獨立開發 API 串接與自動化程式","能設計模組架構並做 code review","能制定技術標準與架構決策"]},{"id":"cloud","n":"雲端架構與 DevOps","cat":"技術","lvd":["知道雲端服務的基本概念","能在指導下部署簡單服務","能獨立設計與部署雲端方案","能規劃成本、安全與 DevOps 流程","能主導企業上雲策略與架構治理"]},{"id":"process","n":"流程分析與改善（BPM / Lean）","cat":"業務","lvd":["能描述自己負責的流程","能畫流程圖並找出明顯瓶頸","能獨立訪談、拆解並提出改善方案","能用 Lean / BPM 方法帶領跨部門改善","能建立組織層級的流程改善體系"]},{"id":"biz","n":"商業思維與 ROI 評估","cat":"業務","lvd":["知道專案需要算投資報酬","能估算工時節省並寫簡單效益","能獨立寫出主管買單的商業案例","能評估投資組合並排定優先順序","能參與策略規劃與預算決策"]},{"id":"pm","n":"專案管理","cat":"管理","lvd":["參與過專案，知道基本流程","能管理小型任務與時程","能獨立帶 3–6 個月的專案交付","能同時管理多專案與利害關係人","能建立 PMO 方法論並指導 PM"]},{"id":"comm","n":"溝通、簡報與說服","cat":"軟實力","lvd":["能清楚說明自己的工作","能做內部簡報並回答提問","能說服主管或客戶採納方案","能對高階主管與外部聽眾演講","能代表組織對外發聲，具公眾影響力"]},{"id":"lead","n":"領導與影響力","cat":"軟實力","lvd":["主要是執行者","能帶新人或協調小任務","能帶小團隊交付成果","能影響跨部門決策並培養人才","能定義組織方向，被外界視為領導者"]},{"id":"change","n":"變革管理與推廣","cat":"軟實力","lvd":["知道推動改變會遇到阻力","能協助宣導與教育訓練","能獨立規劃推廣並處理反對聲音","能設計變革計畫並建立 Champion 網路","能主導組織層級的轉型"]},{"id":"gov","n":"AI 治理、資安與法遵","cat":"管理","lvd":["知道個資與資安的基本要求","能遵循既有規範執行專案","能獨立做風險評估並提出控管","能設計 AI 使用政策與稽核機制","能主導法遵框架、對外接受稽核"]}],"roles":{"AI 轉型顧問 / 首席講師（個人品牌）":{"d":"以個人品牌接案、授課、顧問，能見度與說服力優先。","st":["expert"],"tgt":{"rpa":5,"lowcode":4,"genai":5,"ml":3,"data":3,"prog":3,"cloud":4,"process":5,"biz":5,"pm":4,"comm":5,"lead":5,"change":5,"gov":4}},"企業 AI 轉型長 / CoE 負責人":{"d":"在企業內主導 AI 策略、治理與卓越中心。","st":["exec"],"tgt":{"rpa":4,"lowcode":4,"genai":5,"ml":3,"data":4,"prog":3,"cloud":4,"process":5,"biz":5,"pm":5,"comm":5,"lead":5,"change":5,"gov":5}},"自動化解決方案架構師":{"d":"設計跨系統的自動化方案，技術深度優先。","st":["senior","lead"],"tgt":{"rpa":5,"lowcode":5,"genai":4,"ml":2,"data":3,"prog":4,"cloud":4,"process":4,"biz":4,"pm":3,"comm":4,"lead":3,"change":3,"gov":4}},"AI 應用工程師":{"d":"動手打造 LLM / RAG / Agent 應用，程式能力優先。","st":["junior","senior"],"tgt":{"rpa":3,"lowcode":3,"genai":5,"ml":4,"data":4,"prog":5,"cloud":4,"process":3,"biz":3,"pm":2,"comm":3,"lead":2,"change":2,"gov":4}},"數位轉型專案經理":{"d":"統籌轉型專案與利害關係人，流程與管理優先。","st":["lead"],"tgt":{"rpa":3,"lowcode":3,"genai":3,"ml":2,"data":3,"prog":2,"cloud":2,"process":5,"biz":5,"pm":5,"comm":5,"lead":4,"change":5,"gov":3}},"自動化 / AI 技術主管 (CoE Lead)":{"d":"帶領自動化團隊，兼顧技術、管理與治理。","st":["lead","exec"],"tgt":{"rpa":4,"lowcode":4,"genai":4,"ml":3,"data":3,"prog":3,"cloud":3,"process":4,"biz":5,"pm":4,"comm":5,"lead":5,"change":5,"gov":5}}},"certs":[],"source":"擁有者 Eddy 的自動化 / AI 顧問實務框架","contributor":"Eddy","updated":"2026-10-23"}}},
+"recommendations":{"meta":{"schema":1,"updated":"2026-10-23","description":"推薦目錄：catalog 為舊 14 項能力 id 的通用目錄（tech 與 automation 使用，含擁有者精選機會），byTrack 為各職類自己的清單，catalogMap 把舊 id 對應到新框架","contributors":["Eddy","Claude"],"sources":["各認證官方網站","擁有者實務經驗"],"license":"待定（擁有者決定後填入）"},"catalog":[{"id":"c1","type":"c","t":"Microsoft PL-500：Power Automate RPA Developer Associate","comps":["rpa","lowcode"],"h":60,"lv":2,"d":"證明桌面流程 + 雲端流程的 RPA 開發能力，與 Microsoft 生態系高度相容。"},{"id":"c2","type":"c","t":"UiPath Certified Professional Automation Developer Associate","comps":["rpa"],"h":60,"lv":2,"d":"業界主流 RPA 平台認證，適合多平台或跨企業專案。"},{"id":"c3","type":"c","t":"Microsoft AI-900：Azure AI Fundamentals","comps":["genai","ml","cloud"],"h":15,"lv":1,"d":"AI 與 Azure AI 服務入門，快速建立共同語言。"},{"id":"c4","type":"c","t":"Microsoft AI-102：Azure AI Engineer Associate","comps":["genai","prog","cloud"],"h":80,"lv":3,"d":"設計與實作 Azure AI / OpenAI 解決方案，對應 AI 應用工程職能。"},{"id":"c5","type":"c","t":"經濟部 iPAS AI 應用規劃師（初級 / 中級）","comps":["genai","biz","gov"],"h":40,"lv":1,"d":"台灣在地 AI 應用規劃能力鑑定，強化企業內 AI 導入規劃的說服力。"},{"id":"c6","type":"c","t":"Microsoft PL-400：Power Platform Developer Associate","comps":["lowcode","prog"],"h":70,"lv":3,"d":"進階 Power Platform 擴充開發（自訂連接器、外掛、API）。"},{"id":"c7","type":"c","t":"Microsoft PL-600：Power Platform Solution Architect Expert","comps":["lowcode","process","cloud","biz"],"h":90,"lv":4,"d":"解決方案架構師專家級認證，對應架構與需求整合職責。"},{"id":"c8","type":"c","t":"Microsoft PL-300：Power BI Data Analyst Associate","comps":["data"],"h":50,"lv":2,"d":"以資料呈現自動化成效與營運洞察。"},{"id":"c9","type":"c","t":"Lean Six Sigma 綠帶","comps":["process","biz","data"],"h":60,"lv":2,"d":"系統化流程改善方法，先「改善」再「自動化」。"},{"id":"c10","type":"c","t":"PMP 專案管理師","comps":["pm","lead","comm"],"h":120,"lv":3,"d":"國際專案管理認證，爭取 PM / 主導角色的敲門磚。"},{"id":"c11","type":"c","t":"AZ-900：Azure Fundamentals","comps":["cloud"],"h":15,"lv":1,"d":"雲端基礎概念與服務，奠定架構知識。"},{"id":"c12","type":"c","t":"ITIL 4 Foundation","comps":["process","gov"],"h":25,"lv":1,"d":"IT 服務管理框架，適合維運、治理與 CoE 角色。"},{"id":"c13","type":"c","t":"Prosci 變革管理認證","comps":["change","lead"],"h":30,"lv":3,"d":"結構化推動組織採用新工具與新流程。"},{"id":"c14","type":"c","t":"AZ-305：Azure Solutions Architect Expert","comps":["cloud","gov"],"h":90,"lv":3,"d":"把上雲論證、雲端架構與節費經驗正式化，對大型企業提案很有說服力。"},{"id":"c15","type":"c","t":"ISO/IEC 42001 AI 管理系統主導稽核員 / 主導實施者","comps":["gov","change","process"],"h":40,"lv":2,"d":"AI 治理國際標準，金融、醫藥等高監管產業導入 AI 時的關鍵門票。"},{"id":"c16","type":"c","t":"ISO/IEC 27001 資訊安全主導稽核員","comps":["gov"],"h":40,"lv":2,"d":"把資安評估實務經驗轉為正式資格，強化 AI 專案的資安論述。"},{"id":"c17","type":"c","t":"Microsoft Certified Trainer（MCT）","comps":["comm","lead","change"],"h":20,"lv":3,"d":"取得微軟官方講師身分，可教授官方課程，與授課經歷高度加乘。"},{"id":"s12","type":"s","t":"多代理系統（Multi-Agent）與 MCP 工具整合","comps":["genai","prog","rpa"],"h":40,"lv":3,"d":"Agentic Automation 的下一階段：多個 AI 代理協作、串接企業系統。"},{"id":"s13","type":"s","t":"AI 成效量測與 LLM 評估（Evals）","comps":["genai","data","biz"],"h":25,"lv":2,"d":"建立準確率、成本、節省工時的衡量框架，讓 AI 專案可被驗收。"},{"id":"s14","type":"s","t":"產業法規知識（醫藥 GxP、金融監理、長照個資）","comps":["gov","biz"],"h":30,"lv":2,"d":"把既有產業案例深化為「懂產業法規的 AI 顧問」定位。"},{"id":"a9","type":"a","t":"顧問產品化（標準方法論、報價與課程包）","comps":["biz","pm","comm"],"h":30,"lv":3,"d":"把一次性的顧問與授課經驗，整理成可複製、可報價的服務包。"},{"id":"a10","type":"a","t":"個人品牌與內容經營（文章、Podcast、社群）","comps":["comm","change"],"h":30,"lv":2,"d":"把講座內容轉成持續曝光的內容資產，累積帶來機會的影響力。"},{"id":"a11","type":"a","t":"高階主管溝通與 AI 策略規劃","comps":["biz","lead","comm"],"h":25,"lv":3,"d":"從講工具升級到談策略：AI 投資組合、組織能力、治理框架。"},{"id":"s1","type":"s","t":"Python 自動化與 API 串接","comps":["prog","rpa"],"h":40,"lv":1,"d":"requests、pandas、REST / Graph API，補齊 RPA 做不到的部分。"},{"id":"s2","type":"s","t":"Prompt Engineering 與 LLM 工作流程設計","comps":["genai"],"h":20,"lv":1,"d":"結構化提示、少樣本、輸出格式控制、評估方法。"},{"id":"s3","type":"s","t":"RAG 檢索增強生成實作","comps":["genai","prog","data"],"h":40,"lv":2,"d":"文件切分、向量檢索、引用來源，打造企業知識問答。"},{"id":"s4","type":"s","t":"AI Agent / Copilot Studio 代理設計","comps":["genai","lowcode","rpa"],"h":35,"lv":2,"d":"把 RPA 從「規則執行」升級為「智慧代理」，是下一波自動化趨勢。"},{"id":"s5","type":"s","t":"流程挖掘（Process Mining）","comps":["process","data"],"h":30,"lv":2,"d":"用系統日誌找出瓶頸與自動化熱點，用數據挑選專案。"},{"id":"s6","type":"s","t":"Power BI 與 DAX","comps":["data"],"h":35,"lv":1,"d":"自動化成效儀表板、節省工時追蹤。"},{"id":"s7","type":"s","t":"Git、CI/CD 與自動化部署","comps":["cloud","prog"],"h":25,"lv":2,"d":"讓自動化方案可版控、可測試、可維運。"},{"id":"s8","type":"s","t":"SQL 與資料建模","comps":["data","prog"],"h":30,"lv":1,"d":"資料清理、整合與報表的基本功。"},{"id":"s9","type":"s","t":"機器學習基礎（scikit-learn / Azure ML）","comps":["ml","data"],"h":50,"lv":2,"d":"分類、預測、異常偵測，延伸智慧自動化。"},{"id":"s10","type":"s","t":"文件智慧（OCR / Document Intelligence）","comps":["genai","rpa"],"h":25,"lv":2,"d":"發票、表單、合約自動擷取，RPA 最常見的高價值情境。"},{"id":"s11","type":"s","t":"AI 風險評估與負責任 AI 實務","comps":["gov"],"h":20,"lv":1,"d":"個資、資安、幻覺風險控管與使用規範設計。"},{"id":"a1","type":"a","t":"自動化 ROI 與商業案例撰寫","comps":["biz","comm"],"h":15,"lv":1,"d":"把「節省工時」轉成「金額、風險、品質」的語言，讓主管願意買單。"},{"id":"a2","type":"a","t":"需求訪談與流程拆解","comps":["process","comm"],"h":20,"lv":1,"d":"從使用者痛點找出可自動化的步驟與例外情境。"},{"id":"a3","type":"a","t":"技術簡報與 Demo 說故事","comps":["comm","change"],"h":15,"lv":1,"d":"3 分鐘 Demo 結構：痛點 → 前後對比 → 成效 → 下一步。"},{"id":"a4","type":"a","t":"跨部門協作與利害關係人管理","comps":["lead","pm","comm"],"h":20,"lv":2,"d":"建立業務端 Champion 網路，降低推動阻力。"},{"id":"a5","type":"a","t":"教學與知識傳承（內訓講師）","comps":["lead","change","comm"],"h":20,"lv":2,"d":"把個人能力擴散成團隊能力，是晉升的關鍵證據。"},{"id":"a6","type":"a","t":"系統化思考與架構設計","comps":["cloud","process","biz"],"h":30,"lv":3,"d":"從單一機器人思維升級為平台與治理思維。"},{"id":"a7","type":"a","t":"優先順序與時間管理","comps":["pm"],"h":10,"lv":1,"d":"在多專案並行中，用價值與影響度排序。"},{"id":"a8","type":"a","t":"教練式領導與團隊培育","comps":["lead"],"h":25,"lv":3,"d":"透過提問與回饋帶人，為管理職做準備。"},{"id":"o1","type":"o","t":"主導一個部門的「高頻手工作業」自動化專案","comps":["rpa","process","biz"],"req":{"rpa":3,"process":2,"biz":2},"h":80,"d":"挑選每月耗時最多的重複流程，交付可量化的節省工時。"},{"id":"o2","type":"o","t":"建立企業內部 GenAI 知識問答助理（PoC）","comps":["genai","prog","data"],"req":{"genai":3,"prog":2,"data":2},"h":100,"d":"用 RAG 解決制度、SOP、產品文件查詢問題。"},{"id":"o3","type":"o","t":"發起自動化卓越中心（CoE）與治理規範","comps":["lead","gov","change","pm"],"req":{"lead":3,"gov":3,"change":3,"pm":3},"h":120,"d":"建立開發規範、上線流程、機器人盤點與成效追蹤。"},{"id":"o4","type":"o","t":"擔任公司內 AI / 自動化內訓講師","comps":["comm","change","genai"],"req":{"comm":3,"genai":2},"h":30,"d":"每季開一門課，建立個人品牌與影響力。"},{"id":"o5","type":"o","t":"打造自動化成效儀表板，向高層定期報告","comps":["data","biz","comm"],"req":{"data":3,"biz":2,"comm":2},"h":40,"d":"讓你的貢獻被高層「看見」。"},{"id":"o6","type":"o","t":"將既有 RPA 升級為 AI Agent 智慧流程","comps":["genai","rpa","lowcode"],"req":{"genai":3,"rpa":3,"lowcode":3},"h":80,"d":"處理非結構化文件與判斷型任務，展現下一代自動化能力。"},{"id":"o7","type":"o","t":"參與客戶 / 跨部門售前與解決方案提案","comps":["biz","comm","process"],"req":{"biz":3,"comm":3,"process":3},"h":40,"d":"從執行者走向方案設計者，累積商業曝光。"},{"id":"o8","type":"o","t":"外部演講、技術社群或部落格分享","comps":["comm","lead"],"req":{"comm":3},"h":20,"d":"技術社群、研討會投稿，建立業界能見度。"},{"id":"o9","type":"o","t":"擔任新人導師（Mentor）","comps":["lead","comm"],"req":{"lead":2,"comm":3},"h":20,"d":"累積帶人經驗，為主管職鋪路。"},{"id":"o11","type":"o","t":"申請 Microsoft MVP（AI Platform / Business Applications）","comps":["comm","genai","lowcode"],"req":{"comm":4,"genai":3,"lowcode":3},"h":60,"d":"把講座與社群貢獻整理成紀錄即可申請，取得國際級技術影響力認可。"},{"id":"o12","type":"o","t":"出版書籍或推出系統化線上課程","comps":["comm","genai","rpa"],"req":{"comm":4,"rpa":4,"genai":3},"h":150,"d":"把多年授課內容產品化，建立長期收入與權威地位。"},{"id":"o13","type":"o","t":"打造產業別 AI 自動化解決方案包（醫藥 / 金融 / 長照）","comps":["process","biz","gov"],"req":{"process":4,"biz":4,"gov":3},"h":100,"d":"以既有成功案例為基礎，做成可複製的產業方案，提高單案價值。"},{"id":"o14","type":"o","t":"擔任企業 AI 轉型顧問 / 外部顧問委員","comps":["biz","lead","change","gov"],"req":{"biz":4,"lead":3,"change":4,"gov":3},"h":80,"d":"從專案執行者進入策略層，參與企業 AI 藍圖與治理決策。"},{"id":"o15","type":"o","t":"在大型研討會發表主題演講","comps":["comm","lead","genai"],"req":{"comm":5,"lead":3,"genai":4},"h":30,"d":"從講座講師升級為主題講者，擴大能見度。"},{"id":"o16","type":"o","t":"主導 AI 雲端成本治理（FinOps for AI）專案","comps":["cloud","biz","gov"],"req":{"cloud":3,"biz":4},"h":60,"d":"結合 FinOps 認證與節費經驗，切入企業正頭痛的 AI 成本問題。"},{"id":"o10","type":"o","t":"主導 AI 使用政策與風險評估機制","comps":["gov","genai","change"],"req":{"gov":3,"genai":3},"h":50,"d":"站上 AI 治理的關鍵位置，與資安、法務協作。"}],"byTrack":{"biz":[{"id":"biz_c1","type":"c","t":"Google Ads 認證","comps":["growth"],"h":20,"lv":1,"d":"證明你能規劃與優化付費廣告，行銷職缺的常見門檻。"},{"id":"biz_c2","type":"c","t":"Google Analytics 4 認證","comps":["growth","market"],"h":20,"lv":1,"d":"看懂流量與轉換數據，讓行銷決策有依據。"},{"id":"biz_c3","type":"c","t":"HubSpot Inbound Sales 認證","comps":["relation","pitch"],"h":15,"lv":1,"d":"系統化的集客式銷售方法，免費且可快速完成。"},{"id":"biz_c4","type":"c","t":"Salesforce Administrator","comps":["relation","product"],"h":60,"lv":2,"d":"CRM 管理能力，往業務營運（Sales Ops）發展的敲門磚。"},{"id":"biz_s1","type":"s","t":"顧問式銷售（SPIN / Challenger）","comps":["pitch","relation"],"h":20,"lv":2,"d":"從推銷產品轉為挖掘痛點、帶客戶重新思考問題。"},{"id":"biz_s2","type":"s","t":"數據分析：GA4 + Looker Studio 儀表板","comps":["growth","market"],"h":25,"lv":2,"d":"自己拉數據、做週報，不再等別人給報表。"},{"id":"biz_s3","type":"s","t":"AI 輔助銷售與行銷（提案、個人化信件、素材）","comps":["growth","learn"],"h":15,"lv":1,"d":"用生成式 AI 把提案與內容產出速度提高數倍。"},{"id":"biz_s4","type":"s","t":"談判技巧（BATNA、讓步策略）","comps":["pitch","solve"],"h":15,"lv":2,"d":"在價格與條件上守住利潤，同時維持關係。"},{"id":"biz_a1","type":"a","t":"客戶訪談與需求挖掘","comps":["market","relation"],"h":15,"lv":1,"d":"用 5 個問題找出客戶真正願意付錢的痛點。"},{"id":"biz_a2","type":"a","t":"提案簡報與說故事","comps":["comm","pitch"],"h":15,"lv":1,"d":"痛點 → 方案 → 證據 → 下一步，讓決策者 3 分鐘聽懂。"},{"id":"biz_a3","type":"a","t":"關鍵客戶經營計畫（Account Plan）","comps":["relation","exec"],"h":20,"lv":3,"d":"為前 3 大客戶寫年度經營計畫，提高續約與擴大。"},{"id":"biz_a4","type":"a","t":"設計一個通路夥伴合作方案","comps":["channel","pitch"],"h":30,"lv":3,"d":"從找夥伴、談分潤到共同行銷，打開新市場。"}],"ops":[{"id":"ops_c1","type":"c","t":"PMP 專案管理師","comps":["exec","strategy"],"h":120,"lv":3,"d":"國際專案管理認證，爭取主導角色的敲門磚。"},{"id":"ops_c2","type":"c","t":"Lean Six Sigma 綠帶","comps":["process","solve"],"h":60,"lv":2,"d":"系統化流程改善方法，先改善再自動化。"},{"id":"ops_c3","type":"c","t":"ITIL 4 Foundation","comps":["process","risk"],"h":25,"lv":1,"d":"服務管理框架，適合營運、維運與治理角色。"},{"id":"ops_c4","type":"c","t":"Microsoft PL-900 Power Platform Fundamentals","comps":["digital"],"h":15,"lv":1,"d":"低程式碼入門，自己動手自動化部門例行工作。"},{"id":"ops_s1","type":"s","t":"流程圖與 SOP 撰寫（BPMN）","comps":["process"],"h":15,"lv":1,"d":"把隱性作業變成可交接、可改善的標準流程。"},{"id":"ops_s2","type":"s","t":"低程式碼自動化（Power Automate / Make）","comps":["digital","process"],"h":30,"lv":2,"d":"簽核、通知、報表彙整，每週省下數小時。"},{"id":"ops_s3","type":"s","t":"預算編列與成本分析","comps":["resource"],"h":20,"lv":2,"d":"看懂成本結構，提出有數字支撐的資源需求。"},{"id":"ops_s4","type":"s","t":"OKR 目標設定與追蹤","comps":["strategy","exec"],"h":15,"lv":2,"d":"把公司目標拆成團隊可衡量的關鍵結果。"},{"id":"ops_a1","type":"a","t":"一對一面談與回饋","comps":["people","comm"],"h":15,"lv":2,"d":"固定節奏的一對一，及早發現問題、培養成員。"},{"id":"ops_a2","type":"a","t":"跨部門會議主持與共識建立","comps":["strategy","comm"],"h":15,"lv":2,"d":"會前對齊、會中收斂、會後追蹤，讓決策真的落地。"},{"id":"ops_a3","type":"a","t":"風險盤點與控管表","comps":["risk","solve"],"h":15,"lv":1,"d":"為負責的流程列出前 10 大風險與對策。"},{"id":"ops_a4","type":"a","t":"授權與帶人：把一件事完整交出去","comps":["people"],"h":25,"lv":3,"d":"從自己做到讓團隊做，是升主管的關鍵轉變。"}],"pro":[{"id":"pro_c1","type":"c","t":"PMP 專案管理師","comps":["exec","stakeholder"],"h":120,"lv":3,"d":"帶客戶專案的共通語言，提升提案可信度。"},{"id":"pro_c2","type":"c","t":"你領域的進階專業證照（CPA、CFA、SHRM、律師等）","comps":["domain"],"h":150,"lv":3,"d":"專業服務最直接的信任背書，依你的領域選擇。"},{"id":"pro_c3","type":"c","t":"ISO 主導稽核員（27001 / 9001 / 42001）","comps":["domain","analysis"],"h":40,"lv":2,"d":"切入稽核與合規顧問服務的正式資格。"},{"id":"pro_c4","type":"c","t":"iPAS AI 應用規劃師","comps":["digital"],"h":40,"lv":1,"d":"台灣在地 AI 應用規劃鑑定，展現數位轉型能力。"},{"id":"pro_s1","type":"s","t":"結構化分析（MECE、議題樹、假設驅動）","comps":["analysis","solve"],"h":15,"lv":1,"d":"顧問的基本功：把模糊問題拆成可回答的子問題。"},{"id":"pro_s2","type":"s","t":"商業文件寫作（金字塔原理）","comps":["deliverable","comm"],"h":15,"lv":1,"d":"結論先行、論點分層，讓高層一頁看懂。"},{"id":"pro_s3","type":"s","t":"AI 輔助研究與報告產出","comps":["digital","deliverable"],"h":15,"lv":1,"d":"用 AI 做文獻整理、初稿與資料分析，交付更快。"},{"id":"pro_s4","type":"s","t":"Excel / Power BI 資料分析","comps":["analysis","digital"],"h":30,"lv":2,"d":"自己處理數據，讓診斷與建議有量化依據。"},{"id":"pro_a1","type":"a","t":"客戶需求訪談與期待管理","comps":["stakeholder","advisory"],"h":15,"lv":2,"d":"開案前對齊範圍與成功標準，避免期待落差。"},{"id":"pro_a2","type":"a","t":"高階簡報與建議說服","comps":["advisory","comm"],"h":20,"lv":3,"d":"讓決策者採納你的建議，而不只是收下報告。"},{"id":"pro_a3","type":"a","t":"把經驗整理成方法論或課程","comps":["domain","learn"],"h":30,"lv":3,"d":"把個人經驗產品化，建立可複製的專業品牌。"},{"id":"pro_a4","type":"a","t":"建立同業人脈並公開分享","comps":["stakeholder","comm"],"h":20,"lv":2,"d":"社群、演講、文章，讓案子主動找上門。"}],"creative":[{"id":"cre_c1","type":"c","t":"Google UX Design 證書","comps":["ux"],"h":80,"lv":1,"d":"完整的 UX 流程訓練，附作品集專案。"},{"id":"cre_c2","type":"c","t":"Adobe Certified Professional","comps":["craft","visual"],"h":40,"lv":2,"d":"證明主流設計工具的熟練度。"},{"id":"cre_c3","type":"c","t":"NN/g UX Certification","comps":["ux","concept"],"h":40,"lv":3,"d":"國際 UX 權威機構認證，適合往 UX 研究與策略發展。"},{"id":"cre_c4","type":"c","t":"HubSpot Content Marketing 認證","comps":["portfolio","comm"],"h":15,"lv":1,"d":"內容策略與經營方法，免費且快速。"},{"id":"cre_s1","type":"s","t":"Figma 元件與設計系統","comps":["craft","visual"],"h":25,"lv":2,"d":"從單張畫面升級到可維護、可擴充的設計系統。"},{"id":"cre_s2","type":"s","t":"AI 生成工具工作流（Midjourney、Firefly 等）","comps":["tooling","concept"],"h":15,"lv":1,"d":"用 AI 加速發想與素材產出，同時守住品質。"},{"id":"cre_s3","type":"s","t":"可用性測試與使用者訪談","comps":["ux"],"h":20,"lv":2,"d":"用 5 位使用者的測試，找出最關鍵的體驗問題。"},{"id":"cre_s4","type":"s","t":"動態設計／短影音剪輯","comps":["craft","tooling"],"h":30,"lv":2,"d":"補上動態與影音能力，作品與接案範圍更廣。"},{"id":"cre_a1","type":"a","t":"設計提案與說故事","comps":["comm","concept"],"h":15,"lv":2,"d":"說清楚設計背後的理由，讓提案一次過。"},{"id":"cre_a2","type":"a","t":"作品集重整（每件寫脈絡與成果）","comps":["portfolio"],"h":20,"lv":1,"d":"從展示畫面改為展示思考與成果，提高錄取與成交率。"},{"id":"cre_a3","type":"a","t":"建立個人品牌內容節奏","comps":["portfolio","comm"],"h":30,"lv":2,"d":"固定頻率分享作品與觀點，累積能見度。"},{"id":"cre_a4","type":"a","t":"跨職能協作（與 PM、工程師）","comps":["exec","ux"],"h":15,"lv":2,"d":"早期參與需求、清楚交付規格，減少來回修改。"}]},"catalogMap":{"rpa":"ai","lowcode":"ai","genai":"ai","ml":"data","data":"data","prog":"code","cloud":"design","process":"process","biz":"solve","pm":"exec","comm":"comm","lead":"people","change":"comm","gov":"security"}},
+"rolemodels":{"meta":{"schema":1,"updated":"2026-10-23","description":"Role model 原型庫：人物 → 特質維度加權 → traitMap 對應到各框架能力","contributors":["Eddy","Claude"],"sources":["公開報導與訪談整理"],"license":"待定（擁有者決定後填入）"},"note":"依公開報導與訪談整理的公眾形象，非本人背書，也不代表其真實能力或全部面貌。","dimensions":{"comm":"溝通說服","solve":"判斷決策","exec":"執行交付","learn":"學習適應","people":"帶人文化","vision":"策略遠見","customer":"顧客體驗","craft":"專業深度","innovate":"創新科技","discipline":"紀律治理","brand":"影響力品牌"},"traitMap":{"tech":{"comm":"comm","solve":"solve","exec":"exec","learn":"learn","people":"comm","vision":"design","customer":"quality","craft":"code","innovate":"ai","discipline":"security","brand":"comm"},"biz":{"comm":"comm","solve":"solve","exec":"exec","learn":"learn","people":"relation","vision":"market","customer":"relation","craft":"product","innovate":"growth","discipline":"pitch","brand":"pitch"},"ops":{"comm":"comm","solve":"solve","exec":"exec","learn":"learn","people":"people","vision":"strategy","customer":"process","craft":"process","innovate":"digital","discipline":"risk","brand":"strategy"},"pro":{"comm":"comm","solve":"solve","exec":"exec","learn":"learn","people":"stakeholder","vision":"advisory","customer":"stakeholder","craft":"domain","innovate":"digital","discipline":"deliverable","brand":"advisory"},"creative":{"comm":"comm","solve":"solve","exec":"exec","learn":"learn","people":"comm","vision":"concept","customer":"ux","craft":"craft","innovate":"tooling","discipline":"visual","brand":"portfolio"},"automation":{"comm":"comm","solve":"biz","exec":"pm","learn":"change","people":"lead","vision":"biz","customer":"process","craft":"genai","innovate":"genai","discipline":"gov","brand":"change"}},"people":[{"id":"nadella","n":"薩蒂亞·納德拉 Satya Nadella","org":"微軟","img":"用成長心態與同理心重塑微軟文化，帶領雲端與 AI 轉型","traits":["成長心態","同理心領導","平台思維","夥伴合作"],"w":{"learn":2,"people":2,"vision":1},"tracks":["tech","biz","ops","pro","creative"],"act":"這週問一位同事「你最近卡在哪？」只聽不給建議","source":"公開報導與訪談整理"},{"id":"jensen","n":"黃仁勳 Jensen Huang","org":"NVIDIA","img":"數十年押注加速運算，以技術深度與直接溝通著稱","traits":["長期技術押注","技術深度","扁平直接溝通","韌性"],"w":{"vision":2,"craft":2,"comm":1},"tracks":["tech"],"act":"選一個你看好的技術方向，寫下「三年後它會怎樣改變我的工作」","source":"公開報導與訪談整理"},{"id":"morris","n":"張忠謀","org":"台積電","img":"開創晶圓代工模式，以誠信、紀律與長期策略建立客戶信任","traits":["商業模式創新","誠信紀律","長期策略","客戶信任"],"w":{"vision":2,"discipline":2,"customer":1},"tracks":["ops","pro","biz"],"act":"把一個承諾寫下期限並準時交付，讓「說到做到」成為你的標籤","source":"公開報導與訪談整理"},{"id":"lisasu","n":"蘇姿丰 Lisa Su","org":"AMD","img":"工程師出身，以聚焦的產品路線圖與可靠執行帶領公司翻轉","traits":["工程深度","聚焦路線圖","可靠交付","穩健領導"],"w":{"exec":2,"craft":2,"vision":1},"tracks":["tech","ops"],"act":"把手上的工作砍到只剩最重要的 3 件，寫成你的季度路線圖","source":"公開報導與訪談整理"},{"id":"jobs","n":"史蒂夫·賈伯斯 Steve Jobs","org":"Apple","img":"以產品品味、極致聚焦與發表會說故事聞名","traits":["產品品味","極致聚焦","說故事","高標準"],"w":{"customer":2,"comm":2,"craft":1},"tracks":["creative","biz","tech"],"act":"下次簡報只留一個重點，用一個故事開場","source":"公開報導與訪談整理"},{"id":"musk","n":"伊隆·馬斯克 Elon Musk","org":"Tesla、SpaceX","img":"以第一原理思考、極大膽目標與高速迭代聞名，風格具爭議","traits":["第一原理","極大膽目標","高速迭代","工程投入"],"w":{"solve":2,"innovate":2,"exec":1},"tracks":["tech"],"act":"挑一個「大家都這樣做」的流程，從零問：如果重新設計會長怎樣？","source":"公開報導與訪談整理"},{"id":"bezos","n":"傑夫·貝佐斯 Jeff Bezos","org":"Amazon","img":"顧客至上、長期主義，以六頁敘事備忘錄取代投影片","traits":["顧客至上","長期主義","寫作文化","決策機制"],"w":{"customer":2,"comm":1,"solve":1,"vision":1},"tracks":["biz","ops","pro"],"act":"下次提案先寫一頁敘事文件，從顧客的問題寫起","source":"公開報導與訪談整理"},{"id":"nooyi","n":"英德拉·努伊 Indra Nooyi","org":"前 PepsiCo","img":"推動長期策略轉型，重視跨文化領導與人才","traits":["策略轉型","長期規劃","跨文化領導","重視人才"],"w":{"vision":2,"people":1,"comm":1},"tracks":["ops","biz","pro"],"act":"寫下你部門五年後的樣子，並找主管聊 15 分鐘","source":"公開報導與訪談整理"},{"id":"barra","n":"瑪麗·巴拉 Mary Barra","org":"GM","img":"在傳統產業推動文化與電動化轉型，強調當責與安全","traits":["文化變革","當責","安全與誠信","產業轉型"],"w":{"discipline":2,"people":1,"vision":1},"tracks":["ops","pro"],"act":"主動認領一個大家都在推的問題，公開承擔結果","source":"公開報導與訪談整理"},{"id":"buffett","n":"華倫·巴菲特 Warren Buffett","org":"波克夏","img":"以長期思維、理性決策與淺白的股東信聞名","traits":["長期思維","理性決策","淺白溝通","紀律"],"w":{"solve":2,"discipline":1,"comm":1},"tracks":["pro","ops"],"act":"把一份複雜的報告改寫成國中生也看得懂的一頁","source":"公開報導與訪談整理"},{"id":"hastings","n":"里德·哈斯廷斯 Reed Hastings","org":"Netflix","img":"建立「自由與責任」文化，敢於自我顛覆商業模式","traits":["自由與責任","坦誠回饋","自我顛覆","高人才密度"],"w":{"people":2,"innovate":1,"learn":1},"tracks":["tech","ops","creative"],"act":"給一位同事具體、真誠的回饋，也請他回饋你一件事","source":"公開報導與訪談整理"},{"id":"cook","n":"提姆·庫克 Tim Cook","org":"Apple","img":"以營運與供應鏈卓越著稱，穩健且重視價值觀","traits":["營運卓越","供應鏈思維","穩健紀律","價值觀領導"],"w":{"exec":2,"discipline":1,"customer":1},"tracks":["ops","biz"],"act":"找出你流程中最常延誤的一步，量出它平均花多久","source":"公開報導與訪談整理"},{"id":"chesky","n":"布萊恩·切斯基 Brian Chesky","org":"Airbnb","img":"設計背景的創辦人，親自投入體驗細節","traits":["設計思維","體驗至上","投入細節","社群"],"w":{"customer":2,"craft":1,"brand":1},"tracks":["creative","biz"],"act":"用使用者身分完整走一次你的產品或服務，記下 5 個卡點","source":"公開報導與訪談整理"},{"id":"oprah","n":"歐普拉 Oprah Winfrey","org":"媒體人","img":"以同理、說故事與真誠建立跨媒體的個人品牌","traits":["說故事","同理傾聽","個人品牌","真誠"],"w":{"comm":2,"brand":2,"people":1},"tracks":["creative","pro","biz"],"act":"寫一篇 300 字的「我為什麼做這份工作」，發在你習慣的平台","source":"公開報導與訪談整理"},{"id":"yen","n":"嚴長壽","org":"前亞都麗緻","img":"以服務精神、說故事與人才培育聞名台灣服務業","traits":["服務精神","說故事","人才培育","在地關懷"],"w":{"customer":2,"people":1,"comm":1},"tracks":["ops","biz","pro"],"act":"記住一位客戶或同事的一個小細節，下次見面時用上","source":"公開報導與訪談整理"},{"id":"dalio","n":"瑞·達利歐 Ray Dalio","org":"橋水基金","img":"把決策原則化、系統化，倡導徹底透明","traits":["原則化","系統化決策","徹底透明","從錯誤學習"],"w":{"solve":2,"learn":1,"discipline":1},"tracks":["pro","ops"],"act":"寫下你最近一次決策失誤，以及下次的一條原則","source":"公開報導與訪談整理"},{"id":"garyvee","n":"蓋瑞·范納洽 Gary Vaynerchuk","org":"VaynerMedia","img":"以內容行銷、社群經營與高產量個人品牌著稱","traits":["內容為王","社群經營","執行速度","個人品牌"],"w":{"brand":2,"innovate":1,"exec":1},"tracks":["biz","creative"],"act":"這週發 3 篇和你專業相關的短內容，不求完美","source":"公開報導與訪談整理"},{"id":"ive","n":"強尼·艾夫 Jony Ive","org":"前 Apple 設計長","img":"以極致工藝與簡約設計語言聞名","traits":["極致工藝","簡約","跨團隊協作","材質與細節"],"w":{"craft":2,"customer":1,"discipline":1},"tracks":["creative","tech"],"act":"把一件作品再刪掉 30%，看看是不是更好","source":"公開報導與訪談整理"},{"id":"perkins","n":"梅蘭妮·珀金斯 Melanie Perkins","org":"Canva","img":"讓設計人人可用，創業初期被大量投資人拒絕仍持續提案","traits":["設計民主化","堅持被拒","產品導向","使命感"],"w":{"customer":2,"comm":1,"learn":1},"tracks":["creative","biz","tech"],"act":"把你最常被拒絕的提案改寫一次，再找一個人提","source":"公開報導與訪談整理"},{"id":"blakely","n":"莎拉·布雷克莉 Sara Blakely","org":"Spanx","img":"自學起家的創業者，以說故事行銷與擁抱失敗聞名","traits":["自學創業","說故事行銷","擁抱失敗","勇於開口"],"w":{"learn":2,"brand":1,"comm":1},"tracks":["biz","creative"],"act":"每天晚上寫下一件今天「失敗但學到」的事，持續一週","source":"公開報導與訪談整理"}]},
+"templates":{"meta":{"schema":1,"updated":"2026-10-23","description":"模板：計畫項目的起步清單（steps，[步驟, 時數權重]）與機會型態的職類場景用語（oppScenes）","contributors":["Eddy","Claude"],"sources":["擁有者實務經驗"],"license":"待定（擁有者決定後填入）"},"steps":{"c":[["確認考試範圍、費用與報名方式",1],["取得教材或報名課程",1],["讀完考試大綱並整理筆記",6],["做模擬考，分數達 80% 以上",2],["報名並參加正式考試",1]],"s":[["挑一個學習資源（課程、書或官方文件）",1],["跟著做完基礎教學",4],["做一個小專案練手",4],["產出可展示的作品（文章、Demo、作品集）",2],["在工作上實際用一次",1]],"a":[["挑一個可以練習的真實情境",1],["寫下要練的具體行為與成功標準",1],["在情境中實際執行",5],["向一位同事或主管要回饋",1],["把結果與心得記到成長紀錄",1]],"o":[["產生提案說帖並改成自己的版本",2],["找一位支持者（Champion）聊過",2],["向主管或客戶提案",1],["啟動並完成第一個里程碑",10],["量化成效並對外分享",2]]},"oppScenes":{"lead":{"tech":"一個系統或流程的自動化改善","biz":"一個提升轉換率或續約率的改善","ops":"一個跨部門流程改善","pro":"一個客戶交付流程的優化","creative":"一個設計流程或設計系統的改善"},"share":{"tech":"技術社群、讀書會或部落格","biz":"業界活動、LinkedIn 或內部分享會","ops":"內部讀書會或管理社群","pro":"專業公會、研討會或專欄","creative":"設計社群、作品發表或社群媒體"},"showcase":{"tech":"專業認證、黑客松或開源作品","biz":"業務競賽、案例獎項或認證","ops":"專案管理認證或改善成果發表","pro":"專業證照或公開案例","creative":"作品集、設計獎或比賽"}}}
+};
+/*@@DATA-END*/
+const IMP={1:"低",2:"中",3:"高"};
+const CAT=DATA.recommendations.catalog;
+const TYPE={c:"證照",s:"技能",a:"能力",o:"專案機會"};
+const STAT=[["todo","待開始"],["doing","進行中"],["review","驗收 / 待考"],["done","已完成"]];
+// ===== 能力框架（Persona → 10 項能力）=====
+// 共通核心 4 項：所有框架相同
+const CORE=DATA.frameworks.core;
+const CORE_IDS=CORE.map(function(c){return c.id;});
+// 擁有者專用：自動化 / AI 顧問 14 項（原框架）
+const AUTO_COMPS=DATA.frameworks.frameworks.automation.comps;
+// 角色：d 一句定位、st 適合的階段（排序用）、tgt 目標等級
+const FRAMEWORKS=DATA.frameworks.frameworks;
+const TRACKS=DATA.frameworks.tracks;
+const STAGE_LIST=DATA.frameworks.stages.map(function(s){return [s.id,s.n,s.d];});
+const stageName=function(id){return (STAGE_LIST.find(function(s){return s[0]===id;})||[])[1]||"";};
+// 推薦目錄（CAT）用的是舊 14 項能力 id；對應到新框架時用這張表
+const CMAP=DATA.recommendations.catalogMap;
+// 依目前框架派生的全域（applyFramework 設定）
+let COMPS=[],ROLES={},ROLE_D={},CATX=[],TECH=[],BIZ=[],SOFT=[];
+function fwComps(fw){return fw.full?fw.comps.slice():CORE.concat(fw.comps);}
+function buildRoles(fw,stage){
+  const R={},D={};
+  Object.keys(fw.roles).forEach(function(r){const t=Object.assign({},fw.roles[r].tgt);
+    if(!fw.full){Object.keys(t).forEach(function(k){if(stage==="junior")t[k]=Math.max(2,t[k]-1);if((stage==="exec"||stage==="expert")&&CORE_IDS.indexOf(k)>=0)t[k]=Math.min(5,t[k]+1);});}
+    R[r]=t;D[r]=fw.roles[r].d;});
+  return {R:R,D:D};
+}
+// 把推薦目錄翻譯成目前框架的能力 id；全部對不上的項目丟掉
+function translateCat(fw){
+  if(fw.ext)return (FW_RECS[fw.id]||[]).slice();
+  if(fw.full)return CAT.slice();
+  const ids=fwComps(fw).map(function(c){return c.id;});
+  const mp=function(k){const m=CMAP[k]||k;return ids.indexOf(m)>=0?m:null;};
+  const out=[];const own=FW_RECS[fw.id];
+  CAT.forEach(function(it){
+    if(it.type==="o"&&!fw.full)return; // 機會改由 genOpps() 依差距生成；擁有者框架保留手寫精選
+    if(own&&it.type!=="o")return;
+    const comps=[];it.comps.forEach(function(k){const m=mp(k);if(m&&comps.indexOf(m)<0)comps.push(m);});
+    if(!comps.length)return;
+    const x=Object.assign({},it,{comps:comps});
+    if(it.req){const req={};Object.keys(it.req).forEach(function(k){const m=mp(k);if(m)req[m]=Math.max(req[m]||0,it.req[k]);});if(!Object.keys(req).length)return;x.req=req;}
+    out.push(x);
+  });
+  return (own||[]).concat(out);
+}
+function applyFramework(d){
+  const fw=FRAMEWORKS[d.fw];
+  if(!fw){COMPS=[];ROLES={};ROLE_D={};CATX=[];TECH=[];BIZ=[];SOFT=[];return;}
+  COMPS=fwComps(fw);
+  // AI 客製：改名與等級描述，並附加自訂能力（第 11、12 項）
+  if(d.custom){COMPS=COMPS.map(function(c){const x=d.custom.comps&&d.custom.comps[c.id];return x?Object.assign({},c,{n:x.n||c.n,lvd:(x.lvd&&x.lvd.length===5)?x.lvd:c.lvd}):c;}).concat((d.custom.extra||[]).map(function(e){return Object.assign({cat:"自訂"},e);}));}
+  const br=buildRoles(fw,(d.profile.persona||{}).stage);ROLES=br.R;ROLE_D=br.D;
+  const ids=COMPS.map(function(c){return c.id;});
+  CATX=translateCat(fw).concat(d.aiRecs&&d.aiRecs.fw===d.fw?d.aiRecs.items.filter(function(it){return it.comps.every(function(k){return ids.indexOf(k)>=0;});}):[]);
+  if(fw.full){TECH=COMPS.filter(function(c){return c.cat==="技術";}).map(function(c){return c.id;});BIZ=COMPS.filter(function(c){return c.cat==="業務"||c.cat==="管理";}).map(function(c){return c.id;});SOFT=["comm","lead","change"];}
+  else{TECH=COMPS.filter(function(c){return c.cat!=="核心";}).map(function(c){return c.id;});BIZ=["solve","exec"];SOFT=["comm","learn"];}
+  const first=Object.keys(ROLES)[0];
+  if(!ROLES[d.profile.target])d.profile.target=first;
+  COMPS.forEach(function(c){d.lv[c.id]=Object.assign({cur:1,tgt:ROLES[d.profile.target][c.id]||3,imp:2,ev:"",rated:false},d.lv[c.id]||{});});
+}
+// 使用者在精靈選定 persona 後呼叫：切換框架、保留同 id 的既有評分
+function setFramework(id){
+  const prev=S.fw;S.fw=id;applyFramework(S);
+  if(prev!==id){S.custom=null;applyFramework(S);S.setup.lv=COMPS.every(function(c){return S.lv[c.id].rated;});S.setup.target=false;}
+  save();
+}
+// 各職類自己的推薦清單（證照 c / 技能 s / 能力 a）；tech 與 automation 沿用 CAT
+const FW_RECS=DATA.recommendations.byTrack;
+// 加入計畫時自動產生的起步清單：[步驟, 時數權重]
+const STEP_TPL=DATA.templates.steps;
+function mkSteps(type,h){const tpl=STEP_TPL[type]||STEP_TPL.s;const tot=tpl.reduce(function(a,x){return a+x[1];},0);return tpl.map(function(x){return {id:uid(),t:x[0],h:Math.max(1,Math.round((h||10)*x[1]/tot)),done:false};});}
+// ===== 框架包匯入 / 匯出（BACKLOG #5）=====
+// 格式：{format:"growth-nav-framework",version:1,meta:{source,contributor,updated},framework:{name,eg,comps:[{id,n,cat,lvd[5]}],roles:{名稱:{d,st,tgt}},certs},recs:[{type,t,d,comps,h,lv}]}
+function validatePack(j){
+  if(!j||j.format!=="growth-nav-framework")return "不是框架包（format 應為 growth-nav-framework）";
+  const f=j.framework;if(!f||!f.name||!Array.isArray(f.comps))return "缺少 framework.name 或 comps";
+  if(f.comps.length<4||f.comps.length>14)return "能力需要 4–14 項";
+  const ids=f.comps.map(function(c){return c&&c.id;});
+  if(ids.some(function(x,i){return !x||ids.indexOf(x)!==i;}))return "能力 id 不可空白或重複";
+  const badC=f.comps.find(function(c){return !c.n||!Array.isArray(c.lvd)||c.lvd.length!==5;});if(badC)return "能力「"+(badC.n||badC.id)+"」需要名稱與 5 級描述";
+  const rs=Object.keys(f.roles||{});if(!rs.length)return "至少要有一個角色";
+  for(let i=0;i<rs.length;i++){const tg=f.roles[rs[i]].tgt||{};const miss=ids.find(function(x){return !(tg[x]>=1&&tg[x]<=5);});if(miss)return "角色「"+rs[i]+"」缺少「"+miss+"」的目標等級（1–5）";}
+  return "";
+}
+function registerExt(pack){
+  const f=pack.framework,id=pack.id,m=pack.meta||{};
+  FRAMEWORKS[id]=Object.assign({},f,{id:id,full:true,ext:true,eg:f.eg||"匯入的框架",certs:f.certs||[],source:m.source||"",contributor:m.contributor||"",comps:f.comps.map(function(c){return Object.assign({cat:"專業"},c);})});
+  FW_RECS[id]=(pack.recs||[]).filter(function(it){return it&&it.t&&TYPE[it.type]&&it.type!=="o";}).map(function(it,i){return Object.assign({h:20,lv:2,d:""},it,{id:id+"_r"+i,comps:(it.comps||[]).filter(function(k){return f.comps.some(function(c){return c.id===k;});})});}).filter(function(it){return it.comps.length;});
+}
+const KEY="growth-nav-v7";
+const OLDKEYS=["growth-nav-v6","growth-nav-v5","growth-nav-v4","growth-nav-v3","growth-nav-v2"];
+function defaultAI(){return {provider:"rules",claudeKey:"",jevKey:"",model:"claude-haiku-5-5",narrative:true};}
+// 全新使用者：一切空白，由精靈逐步帶著填
+function defaults(){
+  return {fw:"",profile:{name:"",role:"",target:"",horizon:"12",hours:"5",interests:"",strengths:"",certs:"",values:"",persona:{track:"",stage:"",auto:false}},
+    lv:{},certs:[],exps:[],plan:[],log:[],sims:[],ai:defaultAI(),custom:null,grill:null,aiRecs:null,oppText:null,roleModel:"",customRM:[],extFws:[],since:today(),lastReview:"",
+    setup:{profile:false,lv:false,evidence:false,target:false}};
+}
+// 範例資料：一位自動化 / AI 顧問講師的完整設定，給新用戶看「填好的樣子」
+function sample(){
+  const d=defaults();const role="AI 轉型顧問 / 首席講師（個人品牌）";
+  d.fw="automation";d.profile.persona={track:"tech",stage:"expert",auto:true};d.profile.target=role;applyFramework(d);
+  const cur={rpa:4,lowcode:4,genai:4,ml:2,data:3,prog:3,cloud:3,process:4,biz:4,pm:3,comm:5,lead:3,change:4,gov:3};
+  const evd={rpa:"協助醫藥、金融、長照等產業導入流程自動化並實踐成功案例",lowcode:"Power Platform 200",genai:"自動化 + AI 講座；Microsoft AI Transformation Leader",data:"Data Streaming Engineer",cloud:"上雲論證、雲端成本節費專案",process:"多產業流程自動化導入顧問",biz:"清大科管所；企業顧問經驗",comm:"104人資市集、MasterTalks、AiWorks 課程導師；企業、大專院校、中高階經理人講座",change:"與 AI人工智慧協會、微軟、數位時代合作中高階經理人自動化趨勢講座",gov:"資安評估專案經驗",lead:"多個單位課程導師"};
+  COMPS.forEach(function(c){d.lv[c.id]={cur:cur[c.id]||1,tgt:ROLES[role][c.id],imp:2,ev:evd[c.id]||"",rated:true};});
+  ["genai","biz","lead","gov","change"].forEach(function(k){d.lv[k].imp=3;});
+  d.profile={persona:{track:"tech",stage:"expert",auto:true},name:"Eddy",role:"流程自動化 / AI 應用 / 數位轉型顧問與講師",target:role,horizon:"12",hours:"6",interests:"Agent、Agentic、治理、FinOps、顧問、講師、產業",
+    strengths:"專注於流程自動化、AI 應用與數位轉型，擁有豐富的企業顧問與授課經驗，並具備上雲論證、資安評估、雲端成本節費等技術專案實務經驗。\n學歷：清大科管所、台大社會系。",certs:"",values:"自由、影響力、持續學習"};
+  d.certs=["Microsoft AI Transformation Leader","Power Platform 200","UiPath Professional Agentic Automation","Make Advanced","Gemini Educator","FinOps for AI Certified","Data Streaming Engineer"].map(function(t){return {id:uid(),t:t,y:""};});
+  d.exps=[{id:uid(),t:"醫藥 / 金融 / 長照產業流程自動化導入",d:"多個產業成功案例，交付可量化的工時節省",c:"rpa"},
+          {id:uid(),t:"104人資市集、MasterTalks、AiWorks 課程導師",d:"自動化與 AI 課程，累積數百位學員",c:"comm"},
+          {id:uid(),t:"中高階經理人自動化趨勢講座",d:"與 AI人工智慧協會、微軟、數位時代合作",c:"change"},
+          {id:uid(),t:"上雲論證與雲端成本節費專案",d:"為企業完成上雲評估並節省雲端成本",c:"cloud"}];
+  syncCerts(d);
+  d.setup={profile:true,lv:true,evidence:true,target:true};
+  return d;
+}
+function syncCerts(d){d.profile.certs=d.certs.map(function(c){return c.t;}).join("\n");}
+// 補齊舊版資料缺少的欄位，讓舊的 localStorage / 匯入檔都能正常載入
+function migrate(d){
+  const base=defaults();
+  d.profile=Object.assign({},base.profile,d.profile||{});
+  d.profile.persona=Object.assign({track:"",stage:"",auto:false},d.profile.persona||{});
+  d.lv=d.lv||{};
+  const hadLv=Object.keys(d.lv).length>0;
+  // v4 以前沒有框架概念：一律視為擁有者的 14 項自動化框架
+  if(!d.fw&&hadLv){d.fw="automation";d.profile.persona={track:"tech",stage:"expert",auto:true};Object.keys(d.lv).forEach(function(k){if(d.lv[k].rated===undefined)d.lv[k].rated=true;});}
+  if(!d.fw)d.fw="";
+  d.custom=d.custom||null;d.grill=d.grill||null;
+  d.extFws=d.extFws||[];d.extFws.forEach(registerExt);
+  if(d.fw&&!FRAMEWORKS[d.fw]){d.fw="";d.setup=Object.assign({},d.setup||{},{lv:false,target:false});} // 匯入的框架被移除時退回選擇
+  applyFramework(d);
+  d.plan=d.plan||[];d.log=d.log||[];d.sims=d.sims||[];d.exps=d.exps||[];
+  // v6：計畫項目加上起步清單；舊項目依進度把前幾步標為完成
+  d.plan.forEach(function(p){if(!p.steps){p.steps=mkSteps(p.type,p.h);const k=Math.floor((p.pg||0)/100*p.steps.length);for(let i=0;i<k;i++)p.steps[i].done=true;}});
+  d.aiRecs=d.aiRecs||null;d.oppText=d.oppText||null;d.roleModel=d.roleModel||"";d.customRM=d.customRM||[];d.since=d.since||today();d.lastReview=d.lastReview||"";
+  if(!d.certs){d.certs=(d.profile.certs||"").split(/\n+/).map(function(s){return s.trim();}).filter(Boolean).map(function(t){return {id:uid(),t:t,y:""};});}
+  syncCerts(d);
+  d.ai=Object.assign(defaultAI(),d.ai||{});
+  // 舊版資料（v2/v3）視為已完成設定
+  d.setup=Object.assign({profile:!!d.profile.role,lv:hadLv,evidence:hadLv,target:hadLv},d.setup||{});
+  return d;
+}
+function uid(){return "x"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+let S;
+try{let raw=window.localStorage.getItem(KEY);if(!raw){OLDKEYS.some(function(k){raw=window.localStorage.getItem(k);return !!raw;});}S=raw?migrate(JSON.parse(raw)):defaults();}catch(e){S=defaults();}
+let canStore=false;try{window.localStorage.setItem(KEY+"-t","1");window.localStorage.removeItem(KEY+"-t");canStore=true;}catch(e){canStore=false;}
+let dirty=false;
+function stat(){const el=document.getElementById("saveStat");if(!el)return;el.innerHTML=canStore?'<span class="gap l small">✓ 自動儲存</span>':(dirty?'<span class="gap h">⚠ 無法自動儲存，請匯出</span>':'<span class="gap m">⚠ 此環境無法自動儲存</span>');}
+function save(){dirty=true;try{window.localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}stat();}
+window.addEventListener("beforeunload",function(e){if(!canStore&&dirty){e.preventDefault();e.returnValue="";}});
+const $=function(s){return document.querySelector(s);};
+const esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];});};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on");},2200);}
+const compName=function(id){return (COMPS.find(function(c){return c.id===id;})||{}).n||id;};
+const short=function(id){return compName(id).replace(/（.*）/,"");};
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function gaps(){return COMPS.map(function(c){const v=S.lv[c.id];const g=Math.max(0,v.tgt-v.cur);return {c:c,v:v,g:g,p:g*v.imp};}).sort(function(a,b){return b.p-a.p||b.g-a.g;});}
+function readinessIn(lv,o){const ks=Object.keys(o.req);let ok=0;const miss=[];ks.forEach(function(k){if(lv[k].cur>=o.req[k])ok++;else miss.push(k);});return {pct:Math.round(ok/ks.length*100),miss:miss};}
+function readiness(o){return readinessIn(S.lv,o);}
+function scoreItem(it){
+  let sc=0;const why=[];
+  it.comps.forEach(function(k){const v=S.lv[k];const g=Math.max(0,v.tgt-v.cur);if(g>0){sc+=g*v.imp*10;why.push(short(k)+" 差 "+g+" 級");}});
+  const avg=it.comps.reduce(function(a,k){return a+S.lv[k].cur;},0)/it.comps.length;
+  if(avg+1<it.lv){sc*=0.6;why.push("難度偏高，建議先打底");}
+  const kw=(S.profile.interests||"").split(/[、,，\s]+/).filter(Boolean);
+  if(kw.some(function(w){return (it.t+it.d).toLowerCase().indexOf(w.toLowerCase())>=0;})){sc+=12;why.push("符合你的興趣");}
+  sc=sc/Math.max(1,Math.sqrt(it.h/20));
+  return {sc:Math.round(sc),why:why};
+}
+const HELD={c2:"uipath",c1:"pl-500",c3:"ai-900",c4:"ai-102",c6:"pl-400",c7:"pl-600",c8:"pl-300",c10:"pmp",c11:"az-900",c12:"itil",c14:"az-305",c17:"mct"};
+function held(it){const h=(S.profile.certs||"").toLowerCase();const k=HELD[it.id];return !!(k&&h.indexOf(k)>=0)||S.certs.some(function(c){return c.t.toLowerCase()===it.t.toLowerCase();});}
+function inPlan(id){return S.plan.some(function(p){return p.ref===id;});}
+function overall(){let c=0,t=0;COMPS.forEach(function(x){c+=Math.min(S.lv[x.id].cur,S.lv[x.id].tgt);t+=S.lv[x.id].tgt;});return t?Math.round(c/t*100):0;}
+function radar(size,lvA,lvB,labA,labB){
+  // lvA：虛線（預設目標）、lvB：實心（預設目前）
+  lvA=lvA||null;lvB=lvB||S.lv;labA=labA||"目標水準";labB=labB||"目前水準";
+  const tgtOf=function(c){return lvA?lvA[c.id].cur:S.lv[c.id].tgt;};
+  const n=COMPS.length,cx=size/2,cy=size/2,R=size/2-75;
+  const pt=function(i,v){const a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*R*v/5,cy+Math.sin(a)*R*v/5];};
+  let s='<svg viewBox="0 0 '+size+' '+size+'" width="100%" style="max-width:'+size+'px" role="img" aria-label="能力雷達圖">';
+  for(let l=1;l<=5;l++){s+='<polygon fill="none" stroke="currentColor" stroke-opacity=".15" points="'+COMPS.map(function(c,i){return pt(i,l).join(",");}).join(" ")+'"/>';}
+  COMPS.forEach(function(c,i){const p=pt(i,5),q=pt(i,6.2);s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="currentColor" stroke-opacity=".15"/>';
+    const anc=Math.abs(q[0]-cx)<10?"middle":(q[0]>cx?"start":"end");s+='<text x="'+q[0]+'" y="'+(q[1]+4)+'" text-anchor="'+anc+'">'+esc(short(c.id).slice(0,10))+'</text>';});
+  s+='<polygon fill="#e08a1e" fill-opacity=".12" stroke="#e08a1e" stroke-dasharray="4 3" points="'+COMPS.map(function(c,i){return pt(i,tgtOf(c)).join(",");}).join(" ")+'"/>';
+  s+='<polygon fill="#2f6fde" fill-opacity=".25" stroke="#2f6fde" stroke-width="2" points="'+COMPS.map(function(c,i){return pt(i,lvB[c.id].cur).join(",");}).join(" ")+'"/>';
+  s+='</svg><div class="row small muted" style="justify-content:center"><span style="color:#2f6fde">■ '+esc(labB)+'</span><span style="color:#e08a1e">▢ '+esc(labA)+'</span></div>';
+  return s;
+}
+// ===== 階段與完成度 =====
+const STAGES=[["dash","🏠","總覽"],["now","1","現況"],["goal","2","目標與差距"],["plan","3","成長計畫"],["sim","4","職涯模擬"]];
+function nowDone(){return S.setup.profile&&S.setup.lv&&S.setup.evidence;}
+function ready(){return S.setup.profile&&S.setup.lv&&S.setup.target;}
+function stageDone(id){
+  if(id==="now")return nowDone();
+  if(id==="goal")return S.setup.target;
+  if(id==="plan")return S.plan.length>0;
+  if(id==="sim")return S.sims.some(function(r){return r.status==="done";});
+  return false;
+}
+function stageLocked(id){return (id==="plan"||id==="sim")&&!ready();}
+function nextStage(){if(!nowDone()&&!ready())return "now";if(!S.setup.target)return "goal";if(!S.plan.length)return "plan";if(!S.sims.length)return "sim";return "dash";}
+function rNav(){
+  $("#nav").innerHTML=STAGES.map(function(s){const d=stageDone(s[0]),l=stageLocked(s[0]);return '<button data-tab="'+s[0]+'" class="'+(tab===s[0]?"on ":"")+(d?"done ":"")+(l?"lock":"")+'" title="'+(l?"先完成「現況」與「目標」再解鎖":"")+'">'+(s[0]==="dash"?'<span>'+s[1]+'</span>':'<span class="n">'+(d?"✓":s[1])+'</span>')+s[2]+(l?' 🔒':'')+'</button>';}).join("");
+}
+// ===== 總覽 =====
+function checklist(){
+  const items=[
+    ["now","設定現況","基本資料、能力自評、證照與經歷",nowDone()],
+    ["goal","選擇目標角色","系統會算出能力差距與可爭取的機會",S.setup.target],
+    ["plan","建立成長計畫","從推薦清單挑選要考的證照、要練的技能",S.plan.length>0],
+    ["sim","跑一局職涯模擬","看看接下來 5 年不同走法會變成誰",stageDone("sim")]
+  ];
+  const cur=nextStage();
+  return '<div class="check">'+items.map(function(it,i){const lock=stageLocked(it[0]);return '<div class="it '+(it[3]?"done":(it[0]===cur?"cur":""))+'"><span class="mk">'+(it[3]?"✓":(i+1))+'</span><div class="sp"><b>'+it[1]+'</b><div class="small muted">'+it[2]+'</div></div>'+(lock?'<span class="small muted">🔒</span>':'<button class="btn '+(it[3]?"ghost ":"")+'sm" data-go="'+it[0]+'">'+(it[3]?"查看 / 修改":(it[0]===cur?"開始 →":"前往"))+'</button>')+'</div>';}).join("")+'</div>';
+}
+function rDash(){
+  if(!ready()){
+    $("#tab-dash").innerHTML='<div class="grid g2"><div class="card"><h2>👋 歡迎！用 4 步把你的職涯導航建起來</h2><div class="note" style="margin-block-end:12px">這個工具會依你的<b>現況</b>和<b>目標角色</b>算出能力差距、推薦證照與技能、幫你排計畫，最後用模擬器試走接下來 5 年。所有資料只存在這台電腦的瀏覽器裡。</div>'+checklist()+
+    '<div class="row" style="margin-block-start:14px"><button class="btn lg" data-go="'+nextStage()+'">'+(S.setup.profile?"繼續設定 →":"開始設定 →")+'</button><span class="sp"></span><button class="btn ghost sm" id="btnSample">先看範例（載入示範資料）</button></div></div>'+
+    '<div class="card"><h2>這套工具怎麼運作</h2><div class="note"><b>① 現況</b>：你目前是誰——職務、工作類型與階段、10 項能力的等級、已有的證照與代表經歷。<br><br><b>② 目標與差距</b>：挑一個想成為的角色，系統對照每項能力的目標等級，標出差距最大、最重要的項目，並列出你已經「準備好爭取」的專案機會。<br><br><b>③ 成長計畫</b>：依「差距 × 重要度 ÷ 投入成本」推薦證照、技能與能力培養方式，拖進看板追蹤；完成後記錄成果當作佐證。<br><br><b>④ 職涯模擬</b>：每季選 1–2 個行動，看狀態值與隨機事件如何改變路線，5 年後結算你最接近哪個角色。</div></div></div>';
+    return;
+  }
+  const g=gaps().filter(function(x){return x.g>0;});
+  const doing=S.plan.filter(function(p){return p.st==="doing";}).length,done=S.plan.filter(function(p){return p.st==="done";}).length;
+  const upcoming=S.plan.filter(function(p){return p.st!=="done"&&p.due;}).sort(function(a,b){return a.due.localeCompare(b.due);}).slice(0,4);
+  const nx=nextStage();
+  const hint={plan:"目標已設好，下一步到「③ 成長計畫」挑 2–3 個項目加入看板。",sim:"計畫有了，去「④ 職涯模擬」試走 5 年，看這條路會帶你到哪。",dash:"四個階段都走過一輪了。每季回來更新能力等級、記錄成果、再跑一局模擬比較。"}[nx]||"";
+  const rd=daysSince(S.lastReview||S.since);
+  $("#tab-dash").innerHTML=
+  (S.plan.length&&rd>=90?'<div class="card" style="margin-block-end:16px;border-color:var(--warn)"><div class="row"><b class="sp">🔁 距離上次季度回顧已 '+rd+' 天</b><button class="btn sm" id="btnGoReview">開始回顧 →</button></div><div class="small muted">花 15 分鐘：整理這季成果、更新能力等級、刪掉卡住的計畫、再跑一局模擬。</div></div>':'')+
+  '<div class="grid g4">'+
+   '<div class="card kpi"><div class="n">'+overall()+'%</div><div class="l">目標達成度（'+esc(S.profile.target)+'）</div></div>'+
+   '<div class="card kpi"><div class="n">'+g.length+'</div><div class="l">待補強能力</div></div>'+
+   '<div class="card kpi"><div class="n">'+doing+' / '+S.plan.length+'</div><div class="l">進行中 / 計畫項目</div></div>'+
+   '<div class="card kpi"><div class="n">'+done+'</div><div class="l">已完成里程碑</div></div>'+
+  '</div><div class="grid g2" style="margin-block-start:16px">'+
+   '<div class="grid" style="align-content:start">'+
+    '<div class="card"><h2>📍 你在哪一步</h2>'+checklist()+(hint?'<div class="note" style="margin-block-start:10px">'+hint+(nx!=="dash"?' <button class="btn sm" data-go="'+nx+'">前往 →</button>':'')+'</div>':'')+'</div>'+
+    '<div class="card"><h2>🔥 最該優先補強</h2>'+(g.slice(0,4).map(function(x){return '<div class="row" style="margin:6px 0"><span class="sp">'+esc(x.c.n)+'</span><span class="gap '+(x.g>=2?"h":"m")+'">差 '+x.g+' 級</span></div>';}).join("")||'<div class="muted">所有能力已達目標，可以到「②」調高目標。</div>')+'</div>'+
+    '<div class="card"><h2>📅 本週要做 <span class="small muted" style="font-weight:400">'+weekLabel()+'</span></h2>'+weekCard(false)+'<h3 style="margin-block-start:12px">近期截止</h3>'+(upcoming.map(function(p){return '<div class="row" style="margin:5px 0"><span class="chip '+p.type+'">'+TYPE[p.type]+'</span><span class="sp">'+esc(p.t)+'</span><span class="muted small">'+esc(p.due)+'</span></div>';}).join("")||'<div class="muted small">尚未設定截止日。</div>')+'</div>'+
+   '</div>'+
+   '<div class="card"><h2>能力雷達</h2>'+radar(460)+'<div class="row" style="margin-block-start:10px"><span class="sp"></span><button class="btn ghost sm" id="btnSample">載入範例資料</button><button class="btn danger sm" id="btnReset">清除全部重來</button></div></div>'+
+  '</div>';
+}
+// ===== ① 現況：四步精靈 =====
+let nowStep=null,rateIdx=0;
+const NOW_STEPS=[["基本資料",function(){return S.setup.profile;}],["能力自評",function(){return S.setup.lv;}],["證照",function(){return S.setup.evidence;}],["經歷與專案",function(){return S.setup.evidence;}]];
+function nowStepsBar(){return '<div class="steps">'+NOW_STEPS.map(function(s,i){return '<button data-ns="'+i+'" class="'+(nowStep===i?"on":(s[1]()?"done":""))+'">'+(s[1]()?"✓ ":"")+(i+1)+' '+s[0]+'</button>';}).join("")+'<button data-ns="4" class="'+(nowStep===4?"on":"")+'">總覽</button>'+(nowStep===5?'<button class="on">✨ AI 追問</button>':'')+'</div>';}
+function rNow(){
+  if(nowStep===null)nowStep=nowDone()?4:(S.setup.profile?(S.setup.lv?2:1):0);
+  if(nowStep>0&&!S.fw)nowStep=0; // 還沒選 persona 就不能進自評以後的步驟
+  const p=S.profile;const ps=p.persona||{};let h=nowStepsBar();
+  if(nowStep===0){
+    h+='<div class="card wiz"><h2>第 1 步：你現在是誰？</h2><div class="small muted" style="margin-block-end:8px">先填必要的三項，其他可以之後再補。</div>'+
+    '<label>目前職務／頭銜 <span class="gap h">*</span></label><input data-p="role" value="'+esc(p.role)+'" placeholder="例：RPA 工程師、數位轉型顧問、行銷專員">'+
+    '<label>你的工作比較接近哪一類？ <span class="gap h">*</span></label><div class="grid g3">'+TRACKS.map(function(k){const f=FRAMEWORKS[k];return '<div class="rec rolecard'+(ps.track===k?" on":"")+'" data-track="'+k+'"><b>'+esc(f.name)+'</b><div class="small muted">'+esc(f.eg)+'</div></div>';}).join("")+'</div>'+
+    '<label>你現在處於哪個階段？ <span class="gap h">*</span></label><div class="grid g3">'+STAGE_LIST.map(function(st){return '<div class="rec rolecard'+(ps.stage===st[0]?" on":"")+'" data-stage="'+st[0]+'"><b>'+esc(st[1])+'</b><div class="small muted">'+esc(st[2])+'</div></div>';}).join("")+'</div>'+
+    (ps.track==="tech"&&ps.stage==="expert"?'<label class="row" style="margin-block-start:10px"><input type="checkbox" id="useAuto" style="width:auto"'+(ps.auto?" checked":"")+'> 使用「自動化 / AI 顧問」14 項專用框架（擁有者原版）</label>':'')+
+    '<label>或使用別人分享的框架包（選填；選了會取代上面工作類型的預設框架）</label><div class="grid g3">'+(S.extFws||[]).map(function(pk){const m=pk.meta||{};return '<div class="rec rolecard'+(ps.ext===pk.id?" on":"")+'" data-extfw="'+esc(pk.id)+'"><div class="row"><b class="sp">'+esc(pk.framework.name)+'</b><button class="btn ghost sm" data-delext="'+esc(pk.id)+'" aria-label="移除">✕</button></div><div class="small muted">'+pk.framework.comps.length+' 項能力'+(m.contributor?'｜'+esc(m.contributor):'')+(m.source?'｜'+esc(m.source):'')+'</div></div>';}).join("")+
+    '<label class="rec" style="cursor:pointer;align-items:center;justify-content:center;border-style:dashed;margin:0"><b>⬆ 匯入框架包（JSON）</b><span class="small muted">格式見 data/README.md</span><input type="file" id="fwImport" accept=".json,application/json" class="hide"></label></div>'+
+    '<div class="row"><div class="sp"><label>每週可投入成長的時數 <span class="gap h">*</span></label><input data-p="hours" type="number" min="1" value="'+esc(p.hours)+'"></div><div class="sp"><label>規劃期間（月） <span class="gap h">*</span></label><input data-p="horizon" type="number" min="1" value="'+esc(p.horizon)+'"></div></div>'+
+    '<label>姓名／稱呼（選填）</label><input data-p="name" value="'+esc(p.name)+'">'+
+    '<label>想發展的方向或關鍵字（選填，以頓號分隔，會影響推薦）</label><input data-p="interests" value="'+esc(p.interests)+'" placeholder="例：AI Agent、資料分析、講師">'+
+    '<label>一段自我介紹（選填，之後產生提案說帖會用到）</label><textarea data-p="strengths">'+esc(p.strengths)+'</textarea>'+
+    '<div class="row" style="margin-block-start:14px"><span class="sp"></span><button class="btn" id="btnNow0">下一步：能力自評 →</button></div></div>';
+  }else if(nowStep===1){
+    rateIdx=Math.max(0,Math.min(COMPS.length-1,rateIdx));
+    const c=COMPS[rateIdx],v=S.lv[c.id],rated=COMPS.filter(function(x){return S.lv[x.id].rated;}).length;
+    h+='<div class="card wiz"><div class="row"><h2 style="margin:0" class="sp">第 2 步：能力自評</h2><span class="small muted">'+(rateIdx+1)+' / '+COMPS.length+'</span></div><div class="prog"><i style="width:'+Math.round(rated/COMPS.length*100)+'%"></i></div>'+aiBanner()+
+    '<div class="small muted">誠實就好，之後隨時能改。選擇最接近「你現在做得到」的描述。</div>'+
+    '<div style="margin:12px 0 10px"><span class="chip">'+c.cat+'</span><b style="font-size:17px">'+esc(c.n)+'</b></div>'+
+    [1,2,3,4,5].map(function(n){return '<div class="lvopt'+(v.rated&&v.cur===n?" on":"")+'" data-rate="'+n+'"><span class="n">'+n+'</span><div class="d"><b>'+["入門","基礎","熟練","進階","專家"][n-1]+'</b>'+esc(c.lvd[n-1])+'</div></div>';}).join("")+
+    '<div class="row" style="margin-block-start:12px"><button class="btn ghost sm" id="btnRatePrev"'+(rateIdx===0?" disabled":"")+'>← 上一項</button><span class="sp"></span>'+(rated===COMPS.length?(hasClaude()?'<button class="btn ghost" id="btnGrill">✨ 讓 AI 問幾題，校正自評</button>':'')+'<button class="btn" id="btnNow1">完成自評，下一步 →</button>':'<button class="btn ghost sm" id="btnRateSkip">先跳過（視為 1 級）</button>')+'</div></div>';
+  }else if(nowStep===5){
+    h+=rGrill();
+  }else if(nowStep===2){
+    const fwc=(FRAMEWORKS[S.fw]||{}).certs||[];const suggest=(fwc.length?fwc.map(function(t){return {t:t};}):CATX.filter(function(i){return i.type==="c";})).filter(function(i){return !S.certs.some(function(c){return c.t===i.t;});}).slice(0,10);
+    h+='<div class="card wiz"><h2>第 3 步：已取得的證照</h2><div class="small muted" style="margin-block-end:8px">一次加一張。沒有也沒關係，直接跳過。已有的證照不會再被推薦。</div>'+
+    '<div class="row"><div class="sp" style="min-width:200px"><label>證照名稱</label><input id="certT" placeholder="例：PL-500、PMP、iPAS AI 應用規劃師"></div><div style="width:100px"><label>年份</label><input id="certY" placeholder="2025"></div><button class="btn" id="btnAddCert" style="margin-block-start:22px">新增</button></div>'+
+    '<div style="margin-block-start:10px">'+(S.certs.map(function(c){return '<div class="item"><div class="row"><span class="chip c">證照</span><b class="sp">'+esc(c.t)+'</b><span class="muted small">'+esc(c.y)+'</span><button class="btn ghost sm" data-dcert="'+c.id+'">✕</button></div></div>';}).join("")||'<div class="muted small">尚未新增。</div>')+'</div>'+
+    '<label style="margin-block-start:12px">點一下快速加入常見證照</label><div class="lvchips">'+suggest.map(function(i){return '<span class="chip add" data-qcert="'+esc(i.t)+'">+ '+esc(i.t.split("：")[0])+'</span>';}).join("")+'</div>'+
+    '<div class="row" style="margin-block-start:14px"><button class="btn ghost sm" data-ns="1">← 上一步</button><span class="sp"></span><button class="btn" id="btnNow2">'+(S.certs.length?"下一步：經歷與專案 →":"沒有證照，跳過 →")+'</button></div></div>';
+  }else if(nowStep===3){
+    h+='<div class="card wiz"><h2>第 4 步：代表性經歷與專案</h2><div class="small muted" style="margin-block-end:8px">之後向主管提案、或模擬器判斷成功率時，這些會是你的佐證。盡量寫得可量化。</div>'+
+    '<label>經歷／專案名稱</label><input id="expT" placeholder="例：請款流程自動化、內部 AI 讀書會講師">'+
+    '<label>一句話成果（最好有數字）</label><input id="expD" placeholder="例：每月節省 40 小時人工、3 個部門採用">'+
+    '<label>最相關的能力</label><select id="expC">'+COMPS.map(function(c){return '<option value="'+c.id+'">'+esc(c.n)+'</option>';}).join("")+'</select>'+
+    '<div class="row" style="margin-block-start:8px"><span class="sp"></span><button class="btn" id="btnAddExp">新增</button></div>'+
+    '<div style="margin-block-start:10px">'+(S.exps.map(function(x){return '<div class="item"><div class="row"><b class="sp">'+esc(x.t)+'</b><span class="chip">'+esc(short(x.c))+'</span><button class="btn ghost sm" data-dexp="'+x.id+'">✕</button></div><div class="small muted">'+esc(x.d)+'</div></div>';}).join("")||'<div class="muted small">尚未新增。</div>')+'</div>'+
+    '<div class="row" style="margin-block-start:14px"><button class="btn ghost sm" data-ns="2">← 上一步</button><span class="sp"></span><button class="btn" id="btnNow3">'+(S.exps.length?"完成現況設定 ✓":"先跳過，完成現況設定 ✓")+'</button></div></div>';
+  }else{
+    h+='<div class="grid g2"><div class="card"><div class="row"><h2 style="margin:0" class="sp">基本資料</h2><button class="btn ghost sm" id="btnFwExport" title="把目前使用的能力框架（含 AI／自訂調整）匯出成框架包，分享給別人">⬇ 匯出我的框架</button><button class="btn ghost sm" data-ns="0">修改</button></div><div><b>'+esc(p.name||"（未填姓名）")+'</b>　'+esc(p.role)+'</div><div class="small">'+esc((FRAMEWORKS[S.fw]||{}).name||"")+'｜'+esc(stageName((p.persona||{}).stage))+(S.custom&&S.custom.by==="ai"?'｜✨ AI 客製':'')+(S.grill?'｜✨ AI 追問於 '+esc(S.grill.at):'')+'</div><div class="small muted">每週 '+esc(p.hours)+' 小時 × '+esc(p.horizon)+' 個月 ≈ 可投入 '+Math.round(Number(p.hours||0)*Number(p.horizon||0)*4.3)+' 小時'+(p.interests?'｜方向：'+esc(p.interests):'')+'</div></div>'+
+    '<div class="card"><div class="row"><h2 style="margin:0" class="sp">證照（'+S.certs.length+'）與經歷（'+S.exps.length+'）</h2><button class="btn ghost sm" data-ns="2">修改</button></div><div>'+(S.certs.map(function(c){return '<span class="chip c">'+esc(c.t)+'</span>';}).join("")||'<span class="muted small">無證照</span>')+'</div><div style="margin-block-start:6px">'+(S.exps.map(function(x){return '<div class="small">• '+esc(x.t)+'<span class="muted">｜'+esc(x.d)+'</span></div>';}).join("")||'<span class="muted small">無經歷</span>')+'</div></div>'+
+    '<div class="card" style="grid-column:1/-1"><div class="row"><h2 style="margin:0" class="sp">'+COMPS.length+' 項能力（點任一項重新評估）</h2></div><div class="lvchips">'+COMPS.map(function(c,i){return '<span class="chip" data-rego="'+i+'">'+esc(short(c.id))+' <b>'+S.lv[c.id].cur+'</b></span>';}).join("")+'</div></div></div>'+
+    '<div class="row" style="margin-block-start:16px"><span class="sp"></span><button class="btn lg" data-go="goal">'+(S.setup.target?"查看目標與差距 →":"下一步：選擇目標角色 →")+'</button></div>';
+  }
+  $("#tab-now").innerHTML=h;
+}
+// ===== ① AI 客製（BACKLOG #2）=====
+function hasClaude(){return !!(S.ai.claudeKey);}
+let aiBusy=false;
+function profileCtx(){const p=S.profile,ps=p.persona||{};return {職務:p.role,工作類型:(FRAMEWORKS[S.fw]||{}).name||"",階段:stageName(ps.stage),方向:p.interests,自我介紹:p.strengths,證照:S.certs.map(function(c){return c.t;}),經歷:S.exps.map(function(x){return x.t+"："+x.d;})};}
+function aiBanner(){
+  if(!hasClaude())return '';
+  if(aiBusy==="custom")return '<div class="aibar small">✨ AI 正在依你的背景調整能力描述…（最多 15 秒）</div>';
+  if(S.custom&&S.custom.by==="ai")return '<div class="aibar small row"><span class="sp">✨ 已依你的背景調整命名與等級描述'+(S.custom.extra&&S.custom.extra.length?'，並加入 '+S.custom.extra.length+' 項自訂能力':'')+'</span><button class="btn ghost sm" id="btnAICustomReset">退回預建</button></div>';
+  return '<div class="aibar small row"><span class="sp">✨ 讓 AI 依你的職務與自介，把這 '+COMPS.length+' 項能力的名稱與等級描述改成你的語言（可退回）</span><button class="btn sm" id="btnAICustom">調整</button></div>';
+}
+function customizeAI(){
+  const base=fwComps(FRAMEWORKS[S.fw]);
+  const q="你是職涯能力框架的設計師。以下是一位使用者的背景，以及他所屬職類的 "+base.length+" 項能力（每項 5 級描述）。請：(1) 保留每項的 id，依使用者的職務與產業，把名稱與 5 級描述改寫成他會用的語言與情境（更具體、不改難度順序，每句 ≤ 30 字）；(2) 若他的背景顯示有這份清單沒涵蓋、但對他職涯重要的能力，最多新增 2 項（也要 5 級描述）。繁體中文。\n背景："+JSON.stringify(profileCtx())+"\n能力："+JSON.stringify(base.map(function(c){return {id:c.id,n:c.n,lvd:c.lvd};}));
+  const lvdS={type:"array",items:{type:"string"},minItems:5,maxItems:5};
+  return claudeCall({max_tokens:4096,messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:{type:"object",properties:{comps:{type:"array",items:{type:"object",properties:{id:{type:"string"},n:{type:"string"},lvd:lvdS},required:["id","n","lvd"],additionalProperties:false}},extra:{type:"array",items:{type:"object",properties:{n:{type:"string"},lvd:lvdS},required:["n","lvd"],additionalProperties:false}}},required:["comps","extra"],additionalProperties:false}}}})
+  .then(function(t){const j=JSON.parse(t);const ids=base.map(function(c){return c.id;});const comps={};(j.comps||[]).forEach(function(c){if(ids.indexOf(c.id)>=0&&c.lvd&&c.lvd.length===5)comps[c.id]={n:c.n,lvd:c.lvd};});
+    const extra=(j.extra||[]).slice(0,2).filter(function(e){return e.n&&e.lvd&&e.lvd.length===5;}).map(function(e){return {id:"x_"+uid(),n:e.n,lvd:e.lvd,cat:"自訂"};});
+    if(!Object.keys(comps).length)throw new Error("AI 沒有回傳可用的內容");
+    S.custom={by:"ai",comps:comps,extra:extra};applyFramework(S);save();return extra.length;});
+}
+// ===== ① AI 追問 grill（BACKLOG #3）=====
+const GRILL_MAX=12;
+let grill=null; // 對話只存在記憶體，不落地
+function grillSystem(){return "你是職涯能力盤點的面談官。目標：透過使用者的具體經歷，校正他對每項能力的自評等級，並找出清單上沒有、但他其實具備的能力。規則：一次只問一題，每題不超過兩句；只問前提已確定的問題，上一題的答案決定下一題；從最近的具體經歷切入（做了什麼、負責哪部分、結果怎麼量化、卡在哪裡怎麼解、誰依賴你的產出），不要直接問「你幾級」；答案模糊就追問具體例子；「不知道／沒做過」是合法答案，直接換下一個分支；不說教、不給建議、不重複使用者的話。總共最多 "+GRILL_MAX+" 題。當每項能力都至少有一個證據或明確的「無」、或已達題數上限、或使用者要求結束時，輸出 type=final：對每項能力給建議等級（1–5，依等級描述判斷，沒有證據就維持自評）、一句理由、證據摘錄；newSkills 列出清單外的能力（0–3 項，各附 5 級描述）；exps 把對話中提到、值得記錄的具體經歷整理成「名稱／一句量化成果／最相關能力 id」。全部繁體中文。輸出 JSON。";}
+function grillSchema(){const lvdS={type:"array",items:{type:"string"},minItems:5,maxItems:5};return {type:"object",properties:{type:{type:"string",enum:["question","final"]},question:{type:"string"},result:{type:"object",properties:{levels:{type:"array",items:{type:"object",properties:{id:{type:"string"},level:{type:"integer",minimum:1,maximum:5},reason:{type:"string"},evidence:{type:"string"}},required:["id","level","reason","evidence"],additionalProperties:false}},newSkills:{type:"array",items:{type:"object",properties:{n:{type:"string"},why:{type:"string"},lvd:lvdS},required:["n","why","lvd"],additionalProperties:false}},exps:{type:"array",items:{type:"object",properties:{t:{type:"string"},d:{type:"string"},c:{type:"string"}},required:["t","d","c"],additionalProperties:false}}},required:["levels","newSkills","exps"],additionalProperties:false}},required:["type","question","result"],additionalProperties:false};}
+function grillCtx(){return "使用者背景："+JSON.stringify(profileCtx())+"\n能力清單與自評（含各級描述）："+JSON.stringify(COMPS.map(function(c){return {id:c.id,n:c.n,自評:S.lv[c.id].cur,lvd:c.lvd};}))+"\n請開始第 1 題。";}
+function grillStart(){grill={msgs:[{role:"user",content:grillCtx()}],qs:[],n:0,busy:false,final:null,err:""};nowStep=5;render();grillTurn();}
+function grillTurn(){
+  if(!grill||grill.busy)return;grill.busy=true;grill.err="";render();
+  const sys=grillSystem()+"（目前已問 "+grill.n+" 題"+(grill.n>=GRILL_MAX?"，已達上限，必須輸出 final":"")+"）";
+  claudeCall({max_tokens:2048,system:sys,messages:grill.msgs,output_config:{format:{type:"json_schema",schema:grillSchema()}}})
+  .then(function(t){const j=JSON.parse(t);grill.msgs.push({role:"assistant",content:t});
+    if(j.type==="final"||grill.n>=GRILL_MAX){grill.final=j.result||{levels:[],newSkills:[],exps:[]};}
+    else{grill.n++;grill.qs.push({q:j.question,a:null});}
+  }).catch(function(e){grill.err=(e.message||e).toString().slice(0,120);}).then(function(){grill.busy=false;render();const ta=$("#grillA");if(ta)ta.focus();});
+}
+function grillAnswer(text){if(!grill||grill.busy||grill.final)return;const last=grill.qs[grill.qs.length-1];if(last)last.a=text;grill.msgs.push({role:"user",content:text});grillTurn();}
+function grillEnd(){if(!grill||grill.busy||grill.final)return;grill.msgs.push({role:"user",content:"請直接輸出 final。"});grill.n=GRILL_MAX;grillTurn();}
+function rGrill(){
+  if(!grill)return '<div class="card wiz"><div class="note">尚未開始。</div><div class="row" style="margin-block-start:10px"><button class="btn ghost sm" data-ns="1">← 回自評</button></div></div>';
+  if(grill.final)return rGrillResult();
+  let h='<div class="card wiz chat"><div class="row"><h2 style="margin:0" class="sp">✨ AI 追問：用經歷校正自評</h2><span class="small muted">第 '+Math.min(grill.n,GRILL_MAX)+' / '+GRILL_MAX+' 題</span></div><div class="prog"><i style="width:'+Math.round(grill.n/GRILL_MAX*100)+'%"></i></div>'+
+  '<div class="small muted" style="margin-block-end:6px">想到什麼就答什麼，可以很短；「不知道」「沒做過」也是答案。</div>';
+  grill.qs.forEach(function(x,i){h+='<div class="q"><b>Q'+(i+1)+'</b>'+esc(x.q)+'</div>'+(x.a!==null?'<div class="a">'+esc(x.a)+'</div>':'');});
+  if(grill.busy)h+='<div class="q muted">…思考下一題</div>';
+  if(grill.err)h+='<div class="note" style="margin-block-start:8px"><span class="gap h">AI 呼叫失敗：'+esc(grill.err)+'</span> <button class="btn ghost sm" id="btnGrillRetry">重試</button></div>';
+  const cur=grill.qs[grill.qs.length-1];
+  if(cur&&cur.a===null&&!grill.busy)h+='<textarea id="grillA" placeholder="你的回答…（Ctrl+Enter 送出）" style="margin-block-start:8px"></textarea><div class="row" style="margin-block-start:8px"><button class="btn ghost sm" id="btnGrillDunno">不知道 / 沒做過</button><span class="sp"></span><button class="btn ghost sm" id="btnGrillEnd">夠了，直接產生結果</button><button class="btn" id="btnGrillSend">送出</button></div>';
+  h+='<div class="row" style="margin-block-start:12px"><button class="btn ghost sm" id="btnGrillQuit">放棄，回自評</button></div></div>';
+  return h;
+}
+function rGrillResult(){
+  const r=grill.final;const byId={};(r.levels||[]).forEach(function(x){byId[x.id]=x;});
+  let h='<div class="card wiz"><h2>✨ AI 追問結果</h2><div class="small muted" style="margin-block-end:8px">勾選要採用的項目，再按「套用」。未勾選的維持你的自評。</div><div class="tbl"><table class="gtable"><tr><th></th><th>能力</th><th>自評 → 建議</th><th>理由 / 證據</th></tr>'+
+  COMPS.map(function(c){const x=byId[c.id];if(!x)return '';const cur=S.lv[c.id].cur,d=x.level-cur;return '<tr><td><input type="checkbox" data-gacc="'+c.id+'" style="width:auto"'+(d!==0?" checked":"")+'></td><td>'+esc(c.n)+'</td><td class="lvchg '+(d>0?"up":d<0?"dn":"")+'">'+cur+' → '+x.level+(d?' ('+(d>0?"+":"")+d+')':'')+'</td><td class="small">'+esc(x.reason)+(x.evidence?'<div class="muted">「'+esc(x.evidence)+'」</div>':'')+'</td></tr>';}).join("")+'</table></div>';
+  if(r.newSkills&&r.newSkills.length)h+='<h3 style="margin-block-start:14px">新發現的能力（加為第 '+(COMPS.length+1)+' 項起）</h3>'+r.newSkills.map(function(n,i){return '<label class="row" style="margin:4px 0"><input type="checkbox" data-gnew="'+i+'" style="width:auto" checked> <b>'+esc(n.n)+'</b><span class="small muted">'+esc(n.why)+'</span></label>';}).join("");
+  if(r.exps&&r.exps.length)h+='<h3 style="margin-block-start:14px">可存成經歷</h3>'+r.exps.map(function(x,i){return '<label class="row" style="margin:4px 0"><input type="checkbox" data-gexp="'+i+'" style="width:auto" checked> <b>'+esc(x.t)+'</b><span class="small muted">'+esc(x.d)+'</span></label>';}).join("");
+  h+='<div class="row" style="margin-block-start:14px"><button class="btn ghost sm" id="btnGrillQuit">不採用</button><span class="sp"></span><button class="btn" id="btnGrillApply">套用並繼續 →</button></div></div>';
+  return h;
+}
+function grillApply(){
+  const r=grill.final;const byId={};(r.levels||[]).forEach(function(x){byId[x.id]=x;});let n=0;
+  document.querySelectorAll("[data-gacc]:checked").forEach(function(cb){const id=cb.dataset.gacc,x=byId[id];if(!x||!S.lv[id])return;S.lv[id].cur=x.level;S.lv[id].rated=true;if(x.evidence){S.lv[id].ev=S.lv[id].ev?S.lv[id].ev+"；"+x.evidence:x.evidence;}n++;});
+  const newIdx=[];document.querySelectorAll("[data-gnew]:checked").forEach(function(cb){const k=r.newSkills[Number(cb.dataset.gnew)];if(!k)return;S.custom=S.custom||{by:"user",comps:{},extra:[]};S.custom.extra=S.custom.extra||[];if(S.custom.extra.length>=3)return;S.custom.extra.push({id:"x_"+uid(),n:k.n,lvd:k.lvd,cat:"自訂"});newIdx.push(S.custom.extra.length-1);});
+  document.querySelectorAll("[data-gexp]:checked").forEach(function(cb){const x=r.exps[Number(cb.dataset.gexp)];if(!x)return;const c=S.lv[x.c]?x.c:(COMPS[0]||{}).id;S.exps.push({id:uid(),t:x.t,d:x.d,c:c});if(c){const ev=x.t+(x.d?"（"+x.d+"）":"");S.lv[c].ev=S.lv[c].ev?S.lv[c].ev+"；"+ev:ev;}});
+  applyFramework(S);S.grill={at:today(),n:grill.n,applied:n};
+  const firstNew=COMPS.findIndex(function(c){return !S.lv[c.id].rated;});
+  grill=null;save();
+  if(firstNew>=0){rateIdx=firstNew;nowStep=1;toast("已套用，請為新加入的能力自評");}else{S.setup.lv=true;nowStep=2;toast("已套用 "+n+" 項調整");}
+  render();
+}
+function downloadJSON(obj,name){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(obj,null,1)],{type:"application/json"}));a.download=name;document.body.appendChild(a);a.click();a.remove();}
+function exportPack(){
+  const fw=FRAMEWORKS[S.fw];if(!fw)return;
+  const roles={};Object.keys(ROLES).forEach(function(r){const tg=Object.assign({},ROLES[r]);COMPS.forEach(function(c){if(!tg[c.id])tg[c.id]=3;});roles[r]={d:ROLE_D[r]||"",st:((fw.roles||{})[r]||{}).st||[],tgt:tg};});
+  const nm=fw.name+(S.custom?"（"+(S.profile.name||"我")+"的調整版）":"");
+  const pack={format:"growth-nav-framework",version:1,
+    meta:{source:"由「個人成長導航系統」匯出"+(S.custom?"；含 AI／自訂調整":""),contributor:S.profile.name||"",updated:today()},
+    framework:{name:nm,eg:fw.eg||"",comps:COMPS.map(function(c){return {id:c.id,n:c.n,cat:c.cat,lvd:c.lvd};}),roles:roles,certs:fw.certs||[]},
+    recs:CATX.filter(function(i){return i.type!=="o";}).map(function(i){return {type:i.type,t:i.t,d:i.d,comps:i.comps,h:i.h,lv:i.lv};})};
+  downloadJSON(pack,"框架包_"+nm.replace(/[\\/:*?"<>|\s]/g,"_")+".json");toast("已匯出框架包，可分享給別人用「匯入框架包」載入");
+}
+function importPack(file){
+  const rd=new FileReader();
+  rd.addEventListener("load",function(){
+    let j;try{j=JSON.parse(rd.result);}catch(x){toast("檔案不是有效的 JSON");return;}
+    const er=validatePack(j);if(er){toast("無法匯入："+er);return;}
+    j.id="ext_"+uid();S.extFws.push(j);registerExt(j);S.profile.persona.ext=j.id;save();render();
+    toast("已匯入「"+j.framework.name+"」，按「下一步」就會使用它");
+  });
+  rd.readAsText(file);
+}
+// ===== ② 目標與差距 =====
+// ===== Role model 原型庫（BACKLOG #4）=====
+// 人物 → 特質維度（w）→ 依框架對應到具體能力（TRAIT_MAP）；同一能力取最大加權
+const DIM_N=DATA.rolemodels.dimensions;
+const TRAIT_MAP=DATA.rolemodels.traitMap;
+const RM_NOTE=DATA.rolemodels.note;
+const ROLE_MODELS=DATA.rolemodels.people;
+let rmAll=false;
+function allRM(){return ROLE_MODELS.concat(S.customRM||[]);}
+function getRM(id){id=id||S.roleModel;if(!id)return null;return allRM().find(function(r){return r.id===id;})||null;}
+function rmWeights(rm){const map=TRAIT_MAP[S.fw]||TRAIT_MAP.tech;const ids=COMPS.map(function(c){return c.id;});const w={};Object.keys(rm.w).forEach(function(d){const k=map[d];if(k&&ids.indexOf(k)>=0)w[k]=Math.max(w[k]||0,rm.w[d]);});return w;}
+// 目標等級 = 目標角色 + role model 加權（上限 5）
+function applyTargets(){const r=ROLES[S.profile.target]||{};const rm=getRM();const w=rm?rmWeights(rm):{};COMPS.forEach(function(c){S.lv[c.id].tgt=Math.min(5,(r[c.id]||3)+(w[c.id]||0));});}
+function rmCard(r,on){
+  const tr=(S.profile.persona||{}).track;const fit=r.tracks&&r.tracks.indexOf(tr)>=0;const w=rmWeights(r);
+  return '<div class="rec rolecard'+(on?" on":"")+'" data-rm="'+esc(r.id)+'"><div class="row"><b class="sp">'+esc(r.n)+'</b>'+(r.ai?'<span class="chip">✨ AI 生成</span>':'')+(fit?'<span class="chip">適合你的職類</span>':'')+'</div><div class="small muted">'+esc(r.org)+'｜'+esc(r.img)+'</div><div>'+r.traits.map(function(t){return '<span class="chip">'+esc(t)+'</span>';}).join("")+'</div><div class="small">加權：'+(Object.keys(w).map(function(k){return esc(short(k))+' +'+w[k];}).join("、")||"（對應不到你的能力）")+'</div></div>';
+}
+function rmSection(){
+  const rm=getRM();const tr=(S.profile.persona||{}).track;const map=TRAIT_MAP[S.fw]||TRAIT_MAP.tech;
+  let h='<div class="sec"><h2>🌟 向一位 Role model 看齊 <span class="small muted" style="font-weight:400">選填；把他的特質疊加在「'+esc(S.profile.target)+'」的目標上</span></h2>';
+  if(rm){
+    const w=rmWeights(rm);const base=ROLES[S.profile.target]||{};
+    h+='<div class="card" style="margin-block-end:12px"><div class="row"><b class="sp" style="font-size:16px">✨ 你選擇向「'+esc(rm.n)+'」看齊</b>'+(rm.ai?'<span class="chip">AI 生成，請自行查證</span>':'')+'<button class="btn ghost sm" id="btnRMAll">'+(rmAll?"收合名單":"換一位")+'</button><button class="btn ghost sm" id="btnRMClear">取消 role model</button></div>'+
+    '<div class="small muted">'+esc(rm.org)+'｜'+esc(rm.img)+'</div><div style="margin:6px 0">'+rm.traits.map(function(t){return '<span class="chip">'+esc(t)+'</span>';}).join("")+'</div>'+
+    '<div class="tbl"><table><tr><th>特質維度</th><th>對應你的能力</th><th>目前</th><th>目標（角色 → 加權後）</th></tr>'+Object.keys(rm.w).map(function(d){const k=map[d];const ok=k&&S.lv[k];return '<tr><td>'+esc(DIM_N[d]||d)+' <span class="muted">+'+rm.w[d]+'</span></td><td>'+(ok?esc(short(k)):'<span class="muted">（你的框架沒有對應）</span>')+'</td><td>'+(ok?S.lv[k].cur:"")+'</td><td>'+(ok?(base[k]||3)+' → <b>'+S.lv[k].tgt+'</b>':"")+'</td></tr>';}).join("")+'</table></div>'+
+    '<div class="note" style="margin-block-start:10px"><b>你現在就能做的事：</b>'+esc(rm.act)+(inPlan("rm_"+rm.id)?' <span class="muted small">✓ 已在計畫中</span>':' <button class="btn sm" id="btnRMAct">加入計畫</button>')+'</div>'+
+    '<div class="small muted" style="margin-block-start:8px">'+RM_NOTE+'</div></div>';
+  }
+  if(!rm||rmAll){
+    const list=allRM().slice().sort(function(a,b){const fa=a.tracks&&a.tracks.indexOf(tr)>=0?0:1,fb=b.tracks&&b.tracks.indexOf(tr)>=0?0:1;return (b.ai?1:0)-(a.ai?1:0)||fa-fb;});
+    const shown=rmAll?list:list.slice(0,6);
+    h+='<div class="grid g3">'+shown.map(function(r){return rmCard(r,rm&&rm.id===r.id);}).join("")+'</div>'+
+    '<div class="row" style="margin-block-start:10px">'+(!rm&&list.length>6?'<button class="btn ghost sm" id="btnRMAll">'+(rmAll?"只看前 6 位":"顯示全部 "+list.length+" 位")+'</button>':'')+'<span class="sp"></span>'+
+    (hasClaude()?'<input id="rmName" placeholder="想看齊的人不在名單？輸入名字，例如：稻盛和夫" style="max-width:320px"><button class="btn ghost sm" id="btnRMAI"'+(aiBusy?" disabled":"")+'>'+(aiBusy==="rm"?"✨ 產生中…":"✨ AI 產生")+'</button>':'')+'</div>'+
+    (rm?'':'<div class="small muted" style="margin-block-start:6px">'+RM_NOTE+'</div>');
+  }
+  return h+'</div>';
+}
+function aiRoleModel(name){
+  const dims=Object.keys(DIM_N);
+  const q="請依公開報導與訪談，整理「"+name+"」的職業公眾形象，給職涯學習工具使用。只寫廣為人知、可查證的特質，不要捏造細節；若此人資訊不足或不是公眾人物，n 填空字串。欄位：n 姓名（中文 + 原文）、org 代表組織、img 一句公眾形象（≤ 35 字）、traits 3–4 個特質（每個 ≤ 8 字）、w 2–4 個特質維度與加權 1 或 2（維度只能從清單選：）"+JSON.stringify(DIM_N)+"、tracks 適合的工作類型（tech / biz / ops / pro / creative 中選 1–3）、act 一句一般上班族本週就能做的小行動（≤ 35 字）。繁體中文。";
+  const sch={type:"object",properties:{n:{type:"string"},org:{type:"string"},img:{type:"string"},traits:{type:"array",items:{type:"string"}},w:{type:"array",items:{type:"object",properties:{dim:{type:"string",enum:dims},v:{type:"integer"}},required:["dim","v"],additionalProperties:false}},tracks:{type:"array",items:{type:"string",enum:TRACKS}},act:{type:"string"}},required:["n","org","img","traits","w","tracks","act"],additionalProperties:false};
+  return claudeCall({max_tokens:1024,messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:sch}}}).then(function(t){
+    const j=JSON.parse(t);if(!j.n)throw new Error("找不到足夠的公開資訊");
+    const w={};(j.w||[]).slice(0,4).forEach(function(x){if(DIM_N[x.dim])w[x.dim]=clamp(Math.round(x.v)||1,1,2);});
+    if(!Object.keys(w).length)throw new Error("AI 沒有回傳可用的特質");
+    const r={id:"c_"+uid(),n:j.n,org:j.org,img:j.img,traits:(j.traits||[]).slice(0,4),w:w,tracks:j.tracks||[],act:j.act,ai:true};
+    S.customRM=(S.customRM||[]).concat([r]).slice(-10);S.roleModel=r.id;applyTargets();save();return r;
+  });
+}
+// ===== 機會生成（BACKLOG #6）=====
+// 5 種通用型態 × 要練的能力 k；k 取差距 × 重要度最大的前 3 項
+function roleId(r){const fw=FRAMEWORKS[S.fw]||{};if(fw.ext)return COMPS.some(function(c){return c.id===r;})?r:null;if(fw.full)return {comm:"comm",solve:"biz",exec:"pm",learn:"change",people:"lead"}[r];if(r==="people")return COMPS.some(function(c){return c.id==="people";})?"people":null;return r;}
+const OPP_SCENE=DATA.templates.oppScenes;
+const OPP_TPL={
+ lead:{n:"主導改善專案",lv:2,h:60,t:function(k,sc){return k===roleId("exec")||k===roleId("solve")?"主導"+sc+"，從拆解問題到交付成果":"主導"+sc+"，重點練「"+short(k)+"」";},d:"挑一個每月重複耗時、大家都抱怨的問題，用 6–8 週的小規模 PoC 交付可量化成果。",trains:function(k){return [k,roleId("solve"),roleId("exec")];},req:function(){const r={};r[roleId("exec")]=2;return r;}},
+ share:{n:"對外分享",lv:2,h:20,t:function(k,sc){return k===roleId("comm")?"挑一個你擅長的主題，在"+sc+"做一次分享":"就「"+short(k)+"」在"+sc+"做一次分享";},d:"把正在學或剛做完的事整理成 20 分鐘分享或一篇文章，邊教邊學，同時累積能見度。",trains:function(k){return [roleId("comm"),k];},req:function(){const r={};r[roleId("comm")]=2;return r;}},
+ mentor:{n:"帶人／內訓",lv:3,h:25,t:function(k){return "帶一位新人，或開一堂「"+short(k)+"」內訓";},d:"教別人是最快的內化方式，也是晉升主管時最有力的證據。",trains:function(k){return [k,roleId("comm"),roleId("people")];},req:function(k){const r={};r[k]=3;r[roleId("comm")]=2;return r;}},
+ pitch:{n:"跨部門提案",lv:3,h:40,t:function(k){return k===roleId("comm")||k===roleId("solve")?"找一個其他部門的痛點，提出跨部門提案並爭取試做":"提出一個跨部門提案：用「"+short(k)+"」解決一個業務問題";},d:"找一個其他部門的痛點，寫一頁提案、找到支持者，爭取試做的機會。",trains:function(k){return [roleId("comm"),roleId("solve"),k];},req:function(){const r={};r[roleId("comm")]=3;r[roleId("solve")]=2;return r;}},
+ showcase:{n:"外部證明",lv:2,h:40,t:function(k,sc){return "用"+sc+"證明你的「"+short(k)+"」";},d:"把能力變成別人看得到的證據：一張證照、一個獎項或一份作品集。",trains:function(k){return [k,roleId("learn")];},req:function(k){const r={};r[k]=2;return r;}}
+};
+// 每項能力適合用哪些型態練
+function tplsFor(k){
+  const m={};m[roleId("comm")]=["share","pitch"];m[roleId("solve")]=["lead","pitch"];m[roleId("exec")]=["lead","pitch"];m[roleId("learn")]=["share","showcase"];
+  const pp=roleId("people");if(pp)m[pp]=["mentor","lead"];
+  return m[k]||["lead","showcase"];
+}
+function makeOpp(tpl,k){
+  const T=OPP_TPL[tpl];if(!T||!COMPS.some(function(x){return x.id===k;}))return null;
+  const tr=(S.profile.persona||{}).track||"tech";const sc=(OPP_SCENE[tpl]||{})[tr]||(OPP_SCENE[tpl]||{}).tech||"";
+  const ids=COMPS.map(function(x){return x.id;});
+  const comps=[];T.trains(k).forEach(function(x){if(x&&ids.indexOf(x)>=0&&comps.indexOf(x)<0)comps.push(x);});
+  const req={};const rq=T.req(k);Object.keys(rq).forEach(function(x){if(x&&x!=="null"&&ids.indexOf(x)>=0)req[x]=rq[x];});
+  if(!Object.keys(req).length)req[k]=1;
+  const id="g_"+tpl+"_"+k;const ov=S.oppText&&S.oppText.fw===S.fw&&S.oppText.map[id];
+  return {id:id,type:"o",gen:true,tpl:tpl,k:k,t:ov?ov.t:T.t(k,sc),d:ov?ov.d:T.d,ai:!!ov,comps:comps,req:req,h:T.h,lv:T.lv};
+}
+function genOpps(lv){
+  lv=lv||S.lv;
+  let gs=COMPS.map(function(c){const v=S.lv[c.id],g=Math.max(0,v.tgt-lv[c.id].cur);return {k:c.id,g:g,p:g*v.imp};}).filter(function(x){return x.g>0;}).sort(function(a,b){return b.p-a.p||b.g-a.g;});
+  if(!gs.length)gs=COMPS.map(function(c){return {k:c.id,g:0,p:S.lv[c.id].imp};}).sort(function(a,b){return b.p-a.p;});
+  const out=[];
+  gs.slice(0,3).forEach(function(x,rank){tplsFor(x.k).forEach(function(tp){const o=makeOpp(tp,x.k);if(o&&!out.some(function(y){return y.id===o.id;})){o.rank=rank;out.push(o);}});});
+  return out;
+}
+// 依 id 找任何項目（推薦目錄、生成的機會）
+function findItem(id){const it=CATX.find(function(i){return i.id===id;});if(it)return it;if(String(id).indexOf("g_")===0){const ps=id.split("_");return makeOpp(ps[1],ps.slice(2).join("_"));}return null;}
+// 每張機會卡的理由：主要練哪項、門檻狀態
+function oppWhy(o){
+  let k=o.k;if(!k){let best=-1;o.comps.forEach(function(c){const v=S.lv[c];if(!v)return;const sc=Math.max(0,v.tgt-v.cur)*v.imp;if(sc>best){best=sc;k=c;}});}
+  const v=S.lv[k]||{cur:0,tgt:0,imp:2};const g=Math.max(0,v.tgt-v.cur);
+  const main=g>0?"因為你在「"+short(k)+"」差 "+g+" 級（重要度"+IMP[v.imp]+"），這個機會主要練它":"主要練「"+short(k)+"」（已達目標，可再拉高）";
+  const miss=Object.keys(o.req).filter(function(x){return S.lv[x]&&S.lv[x].cur<o.req[x];});
+  const gate=miss.length?"還差："+miss.map(function(x){return short(x)+" 目前 "+S.lv[x].cur+"，需要 "+o.req[x];}).join("、"):"門檻 "+Object.keys(o.req).map(function(x){return short(x)+" ≥ "+o.req[x];}).join("、")+" 你都已達標";
+  return main+"；"+gate+"。";
+}
+function oppList(){
+  return genOpps().concat(CATX.filter(function(i){return i.type==="o";})).map(function(o){return Object.assign({},o,{r:readiness(o),why:oppWhy(o)});})
+  .sort(function(a,b){return (b.r.pct===100?1:0)-(a.r.pct===100?1:0)||(a.gen?0:1)-(b.gen?0:1)||(a.rank||0)-(b.rank||0)||b.r.pct-a.r.pct;});
+}
+function aiOppText(list){
+  const items=list.filter(function(o){return o.gen;}).slice(0,6).map(function(o){return {id:o.id,型態:OPP_TPL[o.tpl].n,標題:o.t,說明:o.d,要練的能力:short(o.k)};});
+  if(!items.length)return Promise.reject(new Error("沒有可改寫的機會"));
+  const q="你是職涯教練。下面是系統依能力差距產生的通用「可爭取的機會」。請依使用者的職務、產業與階段，把每一個改寫成他在自己工作中真的做得到的具體題目：標題 t（≤ 35 字，具體到情境，保留要練的能力）、說明 d（一句話，說怎麼開始與預期成果）。不要改變型態，不要新增或刪除項目，id 照抄。繁體中文。\n背景："+JSON.stringify(profileCtx())+"\n機會："+JSON.stringify(items);
+  const sch={type:"object",properties:{items:{type:"array",items:{type:"object",properties:{id:{type:"string"},t:{type:"string"},d:{type:"string"}},required:["id","t","d"],additionalProperties:false}}},required:["items"],additionalProperties:false};
+  return claudeCall({max_tokens:2048,messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:sch}}}).then(function(t){
+    const j=JSON.parse(t);const ok=items.map(function(x){return x.id;});const map=(S.oppText&&S.oppText.fw===S.fw)?S.oppText.map:{};let n=0;
+    (j.items||[]).forEach(function(x){if(ok.indexOf(x.id)>=0&&x.t){map[x.id]={t:x.t,d:x.d||""};n++;}});
+    if(!n)throw new Error("AI 沒有回傳可用的內容");
+    S.oppText={fw:S.fw,map:map};save();return n;
+  });
+}
+let oppAll=false,pitchId=null;
+function pitch(o){
+  const p=S.profile;
+  const ev=o.comps.map(function(k){return S.lv[k].ev;}).filter(Boolean);
+  const doneP=S.plan.filter(function(x){return x.st==="done";}).map(function(x){return x.t;});
+  return "主旨：提議由我"+(p.name?"（"+p.name+"）":"")+"負責「"+o.t.replace(/「/g,"『").replace(/」/g,"』")+"」\n\n"+
+  "1. 目的與價值\n   "+o.d+"\n   預期效益：[填入節省工時 / 成本 / 風險降低的量化目標]\n\n"+
+  "2. 為什麼由我來做\n"+(ev.length?ev.map(function(e){return "   • "+e;}).join("\n"):"   • [填入相關成果或佐證]")+"\n"+(doneP.length?"   • 已完成："+doneP.slice(0,4).join("、")+"\n":"")+
+  "   • 相關能力："+o.comps.map(function(k){return short(k)+" Lv"+S.lv[k].cur;}).join("、")+"\n\n"+
+  "3. 執行規劃\n   • 第 1–2 週：需求盤點與範圍確認\n   • 第 3–6 週：PoC / 第一階段交付\n   • 第 7–8 週：成效量測與推廣建議\n\n"+
+  "4. 需要的支持\n   • [時間配置 / 合作部門 / 預算或授權]\n\n"+
+  "5. 成功指標\n   • [例：每月節省 XX 小時、錯誤率下降 XX%、XX 位使用者採用]";
+}
+function roleOrder(){const st=(S.profile.persona||{}).stage;const fw=FRAMEWORKS[S.fw]||{roles:{}};return Object.keys(ROLES).sort(function(a,b){const sa=(fw.roles[a].st||[]).indexOf(st)>=0?0:1,sb=(fw.roles[b].st||[]).indexOf(st)>=0?0:1;return sa-sb;});}
+function rGoal(){
+  const p=S.profile;let h='';
+  if(!S.fw||!S.setup.lv){$("#tab-goal").innerHTML='<div class="card"><h2>先完成「① 現況」</h2><div class="note">目標角色與能力差距是依你的工作類型、階段與自評算出來的，請先完成現況設定。</div><div class="row" style="margin-block-start:12px"><span class="sp"></span><button class="btn" data-go="now">前往 ① 現況 →</button></div></div>';return;}
+  h+='<div class="sec"><h2>🎯 你想成為誰？'+(S.setup.target?'<span class="chip">已選：'+esc(p.target)+'</span>':'<span class="small muted" style="font-weight:400">選一個角色，系統會帶入 '+COMPS.length+' 項能力的目標等級</span>')+'</h2><div class="grid g3">'+roleOrder().map(function(r){const on=S.setup.target&&r===p.target;const pct=(function(){let c=0,t=0;COMPS.forEach(function(x){c+=Math.min(S.lv[x.id].cur,ROLES[r][x.id]);t+=ROLES[r][x.id];});return Math.round(c/t*100);})();return '<div class="rec rolecard'+(on?" on":"")+'" data-role="'+esc(r)+'"><div class="row"><b class="sp">'+esc(r)+'</b>'+(on?'<span class="gap l small">✓ 目前目標</span>':'')+'</div><div class="small muted">'+esc(ROLE_D[r])+((FRAMEWORKS[S.fw].roles[r].st||[]).indexOf((p.persona||{}).stage)>=0?' <span class="chip">適合你的階段</span>':'')+'</div><div class="row small"><span class="sp">以你的現況，達成度</span><b>'+pct+'%</b></div><div class="bar"><i style="width:'+pct+'%"></i></div></div>';}).join("")+'</div></div>';
+  if(!S.setup.target){h+='<div class="note">選好角色後，下面會出現差距分析與可爭取的機會。</div>';$("#tab-goal").innerHTML=h;return;}
+  h+=rmSection();
+  const g=gaps();
+  const lvSel=function(x,f,val){return '<select class="lv" data-lv="'+x.c.id+'" data-f="'+f+'">'+[1,2,3,4,5].map(function(n){return '<option'+(n===val?" selected":"")+'>'+n+'</option>';}).join("")+'</select>';};
+  h+='<div class="sec"><h2>📊 能力差距 <span class="small muted" style="font-weight:400">目標達成度 '+overall()+'%｜優先度 = 差距 × 重要度</span></h2><div class="grid g2">'+
+   '<div class="card"><div class="note" style="margin-block-end:10px">'+(g.filter(function(x){return x.g>0;}).slice(0,3).map(function(x){return '• <b>'+esc(x.c.n)+'</b>：'+x.v.cur+' → '+x.v.tgt+'（重要度'+IMP[x.v.imp]+'）';}).join("<br>")||"你已達成所有目標等級，可以調高目標。")+'<br><br>建議一次聚焦 <b>2–3 項</b>。可以在表格裡微調目標等級與重要度。</div>'+
+   '<div class="tbl"><table><tr><th>能力</th><th>目前</th><th>目標</th><th>重要度</th><th>差距</th></tr>'+g.map(function(x){return '<tr><td>'+esc(short(x.c.id))+'<div class="small muted">'+x.c.cat+'</div></td><td><b>'+x.v.cur+'</b></td><td>'+lvSel(x,"tgt",x.v.tgt)+'</td><td><select class="lv" data-lv="'+x.c.id+'" data-f="imp">'+[1,2,3].map(function(n){return '<option value="'+n+'"'+(n===x.v.imp?" selected":"")+'>'+IMP[n]+'</option>';}).join("")+'</select></td><td class="gap '+(x.g>=2?"h":x.g===1?"m":"l")+'">'+(x.g?("−"+x.g):"✓")+'</td></tr>';}).join("")+'</table></div></div>'+
+   '<div class="card"><h2>能力雷達</h2>'+radar(440)+'</div></div></div>';
+  const list=oppList();
+  const shown=oppAll?list:list.slice(0,5);const cur=list.find(function(o){return o.id===pitchId;});
+  h+='<div class="sec"><h2>🚀 可以爭取的機會 <span class="small muted" style="font-weight:400">依你差距最大的能力產生；準備度 ≥ 70% 就可以開口，剩下的邊做邊學</span><span class="sp"></span>'+(hasClaude()?'<button class="btn ghost sm" id="btnAIOpp"'+(aiBusy?" disabled":"")+'>'+(aiBusy==="opp"?"✨ 改寫中…":"✨ AI 改寫成我的情境")+'</button>':'')+'</h2><div class="grid g2"><div class="grid" style="align-content:start">'+shown.map(function(o){return '<div class="rec"><div class="row"><span class="chip o">'+(o.gen?esc(OPP_TPL[o.tpl].n):"精選機會")+'</span>'+(o.ai?'<span class="chip">✨ AI</span>':'')+'<span class="sp"></span><b class="'+(o.r.pct===100?"gap l":"")+'">'+(o.r.pct===100?"✓ 已準備好":"準備度 "+o.r.pct+"%")+'</b></div><div class="t">'+esc(o.t)+'</div><div class="small muted">'+esc(o.d)+'</div><div class="bar"><i style="width:'+o.r.pct+'%"></i></div><div class="why">'+esc(o.why)+'</div><div class="row"><span class="sp"></span><button class="btn ghost sm" data-pitch="'+o.id+'">產生提案說帖</button>'+(inPlan(o.id)?'<span class="muted small">✓ 已在計畫中</span>':'<button class="btn sm" data-add="'+o.id+'">列為爭取目標</button>')+'</div></div>';}).join("")+(list.length>5?'<button class="btn ghost sm" id="btnOppAll">'+(oppAll?"只看前 5 個":"顯示全部 "+list.length+" 個機會")+'</button>':'')+'</div>'+
+   '<div class="card" style="align-self:start"><h2>📝 向主管爭取的說帖</h2>'+(cur?'<pre class="pitch" id="pitchTxt">'+esc(pitch(cur))+'</pre><div class="row" style="margin-block-start:8px"><span class="sp"></span><button class="btn sm" id="btnCopy">複製文字</button></div>':'<div class="note">點任一機會的「產生提案說帖」，系統會用你的能力等級、佐證與已完成項目，產生可直接修改的提案大綱。</div>')+'</div></div></div>'+
+   '<div class="row"><span class="sp"></span><button class="btn lg" data-go="plan">下一步：建立成長計畫 →</button></div>';
+  $("#tab-goal").innerHTML=h;
+}
+// ===== ③ 成長計畫 =====
+let recFilter="all",recAll=false,logOpen=false,logPreset="",openItems={};
+const REVIEW_Q="1. 這一季最有價值的成果是什麼？能量化嗎？\n2. 哪一項能力真的升級了？證據是什麼？\n3. 哪個計畫卡住了？要刪除、延後還是調整？\n4. 誰看見了我的成果？下一季要讓誰看見？\n5. 下一季要爭取哪一個機會？\n\n";
+function newPlanItem(it,extra){return Object.assign({id:uid(),ref:it.id||"",type:it.type,t:it.t,comps:it.comps,h:it.h,st:"todo",pg:0,due:"",next:"",ai:!!it.ai,steps:mkSteps(it.type,it.h)},extra||{});}
+function stepHoursLeft(p){return p.steps&&p.steps.length?p.steps.reduce(function(a,x){return a+(x.done?0:x.h);},0):p.h*(1-p.pg/100);}
+function completeItem(p){if(p.st==="done")return;p.st="done";p.pg=100;S.log.push({id:uid(),d:today(),ty:p.type==="c"?"學習 / 考證":"成果 / 交付",c:p.comps[0]||"",t:"完成："+p.t});toast("恭喜完成！已寫入成長紀錄，記得回①更新能力等級");}
+// 勾步驟後重算進度；全部完成就移到「已完成」
+function syncPg(p){if(!p.steps||!p.steps.length)return;const d=p.steps.filter(function(x){return x.done;}).length;p.pg=Math.round(d/p.steps.length*100);if(d===p.steps.length){completeItem(p);}else{if(p.st==="done")p.st="doing";if(d>0&&p.st==="todo")p.st="doing";}}
+// 本週要做：進行中優先、截止日近的優先，每個項目取下一步，排到每週時數（最多 3 件）
+function weekTasks(){
+  const budget=Math.max(1,Number(S.profile.hours||5));const order={doing:0,review:1,todo:2};
+  const items=S.plan.map(function(p,i){return {p:p,i:i};}).filter(function(x){return x.p.st!=="done"&&x.p.steps&&x.p.steps.some(function(z){return !z.done;});}).sort(function(a,b){return (order[a.p.st]-order[b.p.st])||(a.p.due||"9999").localeCompare(b.p.due||"9999")||(a.i-b.i);});
+  const out=[];let used=0;
+  items.some(function(x){const st=x.p.steps.find(function(z){return !z.done;});if(out.length&&used+st.h>budget*1.5)return false;out.push({p:x.p,s:st});used+=st.h;return out.length>=3||used>=budget;});
+  return {tasks:out,used:used,budget:budget};
+}
+function weekLabel(){const d=new Date();const m=new Date(d);m.setDate(d.getDate()-((d.getDay()+6)%7));const e=new Date(m);e.setDate(m.getDate()+6);const f=function(x){return (x.getMonth()+1)+"/"+x.getDate();};return f(m)+"–"+f(e);}
+function daysSince(ds){return ds?Math.floor((Date.now()-new Date(ds+"T00:00:00").getTime())/864e5):0;}
+function stepLine(p,st,showItem,editable){
+  const lb='<label class="stepline'+(st.done?" done":"")+'"><input type="checkbox" data-step="'+p.id+'|'+st.id+'"'+(st.done?" checked":"")+'><span class="sp">'+esc(st.t)+(showItem?' <span class="chip '+p.type+'">'+esc(p.t)+'</span>':'')+'</span><span class="muted">'+st.h+'h</span></label>';
+  return editable?'<div class="steprow">'+lb+'<button class="btn ghost sm" data-dstep="'+p.id+'|'+st.id+'" aria-label="刪除步驟">✕</button></div>':lb;
+}
+function weekCard(limitMsg){
+  const w=weekTasks();const active=S.plan.filter(function(p){return p.st!=="done";});
+  return '<div class="week">'+(w.tasks.length?w.tasks.map(function(x){return stepLine(x.p,x.s,true,false);}).join("")+(limitMsg?'<div class="small muted">勾完會自動推進進度；項目的步驟全部完成就會移到「已完成」並記入成長紀錄。</div>':''):'<div class="muted small">'+(!S.plan.length?'還沒有計畫項目。':active.length?'目前的項目都沒有待辦步驟，展開項目新增步驟吧。':'計畫裡的項目都完成了 🎉 再加幾項吧。')+'</div>')+'</div>';
+}
+function planCard(p,col){
+  const open=!!openItems[p.id];const steps=p.steps||[];const dn=steps.filter(function(x){return x.done;}).length;const nx=steps.find(function(x){return !x.done;});
+  let h='<div class="item"><div class="row"><span class="chip '+p.type+'">'+(TYPE[p.type]||"")+'</span>'+(p.ai?'<span class="chip">✨ AI</span>':'')+'<span class="sp"></span><button class="btn ghost sm" data-del="'+p.id+'" aria-label="刪除">✕</button></div><div class="t">'+esc(p.t)+'</div>'+(p.next?'<div class="small muted">'+esc(p.next)+'</div>':'')+
+  '<div class="row small muted" style="margin-block-start:4px"><span class="sp">步驟 '+dn+' / '+steps.length+(p.due?'｜截止 '+esc(p.due):'')+'</span><span>剩 '+Math.round(stepHoursLeft(p))+'h</span></div><div class="bar"><i style="width:'+p.pg+'%"></i></div>';
+  if(open){
+    h+=steps.map(function(x){return stepLine(p,x,false,true);}).join("")+
+    '<div class="row" style="margin-block-start:6px;flex-wrap:nowrap"><input id="addStep-'+p.id+'" placeholder="新增步驟" style="flex:1"><input id="addStepH-'+p.id+'" type="number" min="1" value="2" style="width:56px" title="預估小時"><button class="btn ghost sm" data-addstep="'+p.id+'">＋</button></div>'+
+    (hasClaude()?'<button class="btn ghost sm" data-aisteps="'+p.id+'" style="margin-block-start:6px"'+(aiBusy?" disabled":"")+'>'+(aiBusy===p.id?"✨ 規劃中…":"✨ AI 依我的背景重新拆解步驟")+'</button>':'')+
+    '<label>截止日</label><input type="date" value="'+esc(p.due)+'" data-due="'+p.id+'">';
+  }else if(nx){h+=stepLine(p,nx,false,false);}
+  h+='<div class="row" style="margin-block-start:6px"><button class="btn ghost sm" data-openitem="'+p.id+'">'+(open?"收合":"全部步驟 / 編輯")+'</button></div>'+
+  '<div class="row" style="margin-block-start:4px">'+STAT.filter(function(x){return x[0]!==col;}).map(function(x){return '<button class="btn ghost sm" data-mv="'+p.id+'" data-to="'+x[0]+'">→'+x[1]+'</button>';}).join("")+'</div></div>';
+  return h;
+}
+function rPlan(){
+  let h='';
+  if(S.plan.length){
+    const w=weekTasks();
+    h+='<div class="sec"><h2>📅 本週要做 <span class="small muted" style="font-weight:400">'+weekLabel()+'｜依每週 '+w.budget+' 小時排出，約 '+Math.round(w.used)+' 小時</span></h2><div class="card">'+weekCard(true)+'</div></div>';
+    const wk=Math.max(1,Number(S.profile.hours||5));
+    const remain=S.plan.filter(function(p){return p.st!=="done";}).reduce(function(a,p){return a+stepHoursLeft(p);},0);
+    const weeks=Math.ceil(remain/wk);const over=weeks>Number(S.profile.horizon||12)*4.3;
+    h+='<div class="sec"><h2>🗂 行動看板 <span class="small muted" style="font-weight:400">剩餘約 '+Math.round(remain)+' 小時，以每週 '+wk+' 小時計約 '+weeks+' 週</span>'+(over?'<span class="gap h small">⚠ 超出規劃期間，建議刪減或延後</span>':'<span class="gap l small">✓ 可在規劃期間內完成</span>')+'</h2>'+
+    '<div class="kanban">'+STAT.map(function(st){const items=S.plan.filter(function(p){return p.st===st[0];});return '<div class="col"><h3>'+st[1]+'（'+items.length+'）</h3>'+items.map(function(p){return planCard(p,st[0]);}).join("")+'</div>';}).join("")+'</div></div>';
+  }
+  const list=CATX.filter(function(i){return i.type!=="o"&&!held(i)&&!inPlan(i.id)&&(recFilter==="all"||i.type===recFilter);}).map(function(i){return Object.assign({},i,scoreItem(i));}).sort(function(a,b){return (b.ai?1:0)-(a.ai?1:0)||b.sc-a.sc;});
+  const shown=recAll?list:list.slice(0,6);
+  h+='<div class="sec"><h2>⭐ '+(S.plan.length?"再加入更多":"推薦給你")+' <span class="small muted" style="font-weight:400">依「能補多少差距 × 重要度 ÷ 投入成本」排序，加權你的興趣</span><span class="sp"></span>'+(hasClaude()?'<button class="btn ghost sm" id="btnAIRec"'+(aiBusy?" disabled":"")+'>'+(aiBusy==="rec"?"✨ 推薦中…":"✨ AI 依我的差距再推薦")+'</button>':'')+'</h2>'+
+  '<div class="filters">'+[["all","全部"],["c","證照"],["s","技能"],["a","能力"]].map(function(f){return '<button data-rf="'+f[0]+'" class="'+(recFilter===f[0]?"on":"")+'">'+f[1]+'</button>';}).join("")+'</div>'+
+  '<div class="grid g3">'+shown.map(function(r){return '<div class="rec"><div class="row"><span class="chip '+r.type+'">'+TYPE[r.type]+'</span>'+(r.ai?'<span class="chip">✨ AI</span>':'')+'<span class="sp"></span><span class="score">推薦分 '+r.sc+'</span></div><div class="t">'+esc(r.t)+'</div><div class="small muted">'+esc(r.d)+'</div><div>'+r.comps.map(function(k){return '<span class="chip">'+esc(short(k))+'</span>';}).join("")+'</div><div class="why">'+esc(r.reason||(r.why.length?r.why.join("、"):"已達標，可作為加分項"))+'　|　約 '+r.h+' 小時</div><div class="row"><span class="sp"></span><button class="btn sm" data-add="'+r.id+'">加入計畫</button></div></div>';}).join("")+
+  '<div class="rec"><div class="t">➕ 自訂項目</div><select id="cType"><option value="c">證照</option><option value="s">技能</option><option value="a">能力</option></select><input id="cTitle" placeholder="名稱，例如：AWS AI Practitioner"><select id="cComp">'+COMPS.map(function(c){return '<option value="'+c.id+'">'+esc(c.n)+'</option>';}).join("")+'</select><input id="cHours" type="number" min="1" value="30" placeholder="預估時數"><div class="small muted">加入後會自動產生起步清單，可再編輯。</div><button class="btn sm" id="btnCustom">加入計畫</button></div></div>'+
+  (list.length>6?'<div style="margin-block-start:10px"><button class="btn ghost sm" id="btnRecAll">'+(recAll?"收合":"顯示更多（共 "+list.length+" 項）")+'</button></div>':'')+'</div>';
+  const types=["成果 / 交付","學習 / 考證","回饋 / 肯定","反思 / 教訓","季度回顧"];
+  h+='<div class="sec"><h2>📓 成長紀錄（'+S.log.length+'）<span class="small muted" style="font-weight:400">上次季度回顧：'+(S.lastReview?esc(S.lastReview)+'（'+daysSince(S.lastReview)+' 天前）':"尚未")+'</span><span class="sp"></span><button class="btn ghost sm" id="btnReviewOpen">🔁 做季度回顧</button><button class="btn ghost sm" id="btnLogOpen">'+(logOpen?"收合":"＋ 新增紀錄")+'</button></h2>'+
+  (logOpen?'<div class="card" style="margin-block-end:12px"><div class="row"><div style="width:150px"><label>日期</label><input type="date" id="lDate" value="'+today()+'"></div><div class="sp"><label>類型</label><select id="lType">'+types.map(function(x){return '<option'+(x===logPreset?" selected":"")+'>'+x+'</option>';}).join("")+'</select></div><div class="sp"><label>相關能力</label><select id="lComp"><option value="">（不指定）</option>'+COMPS.map(function(c){return '<option value="'+c.id+'">'+esc(c.n)+'</option>';}).join("")+'</select></div></div><label>內容（盡量量化）</label><textarea id="lTxt" style="min-height:'+(logPreset?"180px":"64px")+'" placeholder="例：上線請款自動化機器人，每月節省 40 小時人工">'+(logPreset==="季度回顧"?esc(REVIEW_Q):"")+'</textarea><div class="row" style="margin-block-start:8px"><label class="row small" style="margin:0"><input type="checkbox" id="lEv" style="width:auto"'+(logPreset?"":" checked")+'> 同步寫入該能力的佐證</label><span class="sp"></span><button class="btn" id="btnLog">'+(logPreset==="季度回顧"?"完成回顧":"新增")+'</button></div>'+(logPreset==="季度回顧"?'<div class="note small" style="margin-block-start:10px">回顧完建議：到「① 現況」點能力重新評估、刪掉卡住的計畫項目、到「④」再跑一局模擬比較。</div>':'')+'</div>':'')+
+  (S.log.slice().sort(function(a,b){return b.d.localeCompare(a.d);}).slice(0,8).map(function(l){return '<div class="item"><div class="row"><b class="small">'+esc(l.d)+'</b><span class="chip">'+esc(l.ty)+'</span>'+(l.c?'<span class="chip">'+esc(short(l.c))+'</span>':'')+'<span class="sp"></span><button class="btn ghost sm" data-dlog="'+l.id+'" aria-label="刪除">✕</button></div><div style="white-space:pre-wrap">'+esc(l.t)+'</div></div>';}).join("")||'<div class="muted small">尚無紀錄。看板項目完成會自動記一筆。</div>')+'</div>'+
+  '<div class="row"><span class="sp"></span><button class="btn lg" data-go="sim">下一步：跑一局職涯模擬 →</button></div>';
+  $("#tab-plan").innerHTML=h;
+}
+// ===== ③ AI：補推薦、拆解步驟 =====
+function aiRecommend(){
+  const ids=COMPS.map(function(c){return c.id;});
+  const g=gaps().filter(function(x){return x.g>0;}).slice(0,6).map(function(x){return {id:x.c.id,能力:x.c.n,目前:x.v.cur,目標:x.v.tgt,重要度:IMP[x.v.imp]};});
+  const have=CATX.map(function(i){return i.t;}).concat(S.plan.map(function(x){return x.t;}),S.certs.map(function(c){return c.t;}));
+  const q="你是職涯教練。依這位使用者的背景與能力差距，推薦 3–5 個具體的成長項目：證照 c、技能 s、能力培養 a。優先補差距大且重要的能力；要符合他的產業、職務與階段，在台灣取得得到；名稱要具體（真實的證照或課程主題）；不要和「已有」重複。每項：type、t 名稱、d 一句說明它對他有什麼用、comps 對應的能力 id（只能從清單選 1–3 個）、h 預估投入小時、lv 難度 1–4、why 一句推薦理由（提到他差距的能力）。繁體中文。\n背景："+JSON.stringify(profileCtx())+"\n能力清單："+JSON.stringify(COMPS.map(function(c){return {id:c.id,n:c.n};}))+"\n差距："+JSON.stringify(g)+"\n已有："+JSON.stringify(have.slice(0,60));
+  const sch={type:"object",properties:{items:{type:"array",items:{type:"object",properties:{type:{type:"string",enum:["c","s","a"]},t:{type:"string"},d:{type:"string"},comps:{type:"array",items:{type:"string"}},h:{type:"integer"},lv:{type:"integer"},why:{type:"string"}},required:["type","t","d","comps","h","lv","why"],additionalProperties:false}}},required:["items"],additionalProperties:false};
+  return claudeCall({max_tokens:2048,messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:sch}}}).then(function(t){
+    const j=JSON.parse(t);
+    const items=(j.items||[]).map(function(x){return {id:"ai_"+uid(),type:x.type,t:x.t,d:x.d,comps:(x.comps||[]).filter(function(k){return ids.indexOf(k)>=0;}).slice(0,3),h:clamp(Math.round(x.h)||20,3,300),lv:clamp(Math.round(x.lv)||2,1,4),ai:true,reason:x.why};}).filter(function(x){return x.comps.length&&x.t&&["c","s","a"].indexOf(x.type)>=0;}).slice(0,5);
+    if(!items.length)throw new Error("AI 沒有回傳可用的推薦");
+    S.aiRecs={fw:S.fw,items:((S.aiRecs&&S.aiRecs.fw===S.fw)?S.aiRecs.items:[]).concat(items).slice(-12)};
+    applyFramework(S);save();return items.length;
+  });
+}
+function aiSteps(p){
+  const done=p.steps.filter(function(x){return x.done;});
+  const q="你是學習教練。把這個成長項目拆成 3–8 個具體、可勾選的步驟，每步一個動作、以動詞開頭、不超過 25 字，附預估小時（整數）；總時數約 "+p.h+" 小時，依使用者每週可投入 "+(S.profile.hours||5)+" 小時排出先後。要符合他的背景，並具體到在台灣可取得的資源（課程、考試、社群、書）。已完成的步驟不要重複："+JSON.stringify(done.map(function(x){return x.t;}))+"。繁體中文。\n項目："+JSON.stringify({類型:TYPE[p.type],名稱:p.t,對應能力:p.comps.map(short)})+"\n背景："+JSON.stringify(profileCtx());
+  const sch={type:"object",properties:{steps:{type:"array",items:{type:"object",properties:{t:{type:"string"},h:{type:"integer"}},required:["t","h"],additionalProperties:false}}},required:["steps"],additionalProperties:false};
+  return claudeCall({max_tokens:2048,messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:sch}}}).then(function(t){
+    const j=JSON.parse(t);const ns=(j.steps||[]).filter(function(x){return x.t;}).slice(0,8).map(function(x){return {id:uid(),t:x.t,h:clamp(Math.round(x.h)||1,1,80),done:false};});
+    if(ns.length<2)throw new Error("AI 沒有回傳可用的步驟");
+    p.steps=done.concat(ns);syncPg(p);save();return ns.length;
+  });
+}
+// ===== ④ 職涯模擬：規則引擎 =====
+const QMAX=20;
+const STATS=[["depth","專業深度"],["impact","商業影響力"],["vis","能見度"],["energy","精力餘裕"]];
+const REST={id:"rest",type:"r",t:"休養 / 維持現狀",d:"不開新戰線，恢復精力、鞏固既有成果。",comps:[],h:0};
+const clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};
+const avgLv=function(lv,ids){return ids.reduce(function(a,k){return a+lv[k].cur;},0)/ids.length;};
+// 可重現的隨機數：狀態存在 run.rs，同一 seed + 同樣選擇 → 同樣結果
+function roll(run){run.rs=((run.rs*1664525)+1013904223)>>>0;return run.rs/4294967296;}
+function deriveStats(lv){return {depth:Math.round(avgLv(lv,TECH)*20),impact:Math.round(avgLv(lv,BIZ)*20),vis:Math.round(avgLv(lv,SOFT)*20),energy:70};}
+function copyLv(src){const lv={};COMPS.forEach(function(c){lv[c.id]={cur:src[c.id].cur};});return lv;}
+function newRun(name){
+  const lv=copyLv(S.lv);const seed=(Date.now()^Math.floor(Math.random()*1e9))>>>0;
+  const heldC=CATX.filter(function(i){return i.type==="c"&&held(i);}).map(function(i){return i.id;});
+  return {id:uid(),name:name||("路線 "+(S.sims.length+1)),createdAt:today(),seed:seed,rs:seed,status:"running",q:0,
+    lv0:copyLv(S.lv),lv:lv,stats:deriveStats(lv),heldC:heldC,done:[],inProgress:{},steps:[],picked:[],result:null};
+}
+function energyCost(it){if(it.type==="r")return 0;const wk=Math.max(1,Number(S.profile.hours||5));return Math.min(60,Math.round(it.h/(wk*13)*50));}
+function simScore(run,it){let sc=0;it.comps.forEach(function(k){sc+=Math.max(0,S.lv[k].tgt-run.lv[k].cur)*S.lv[k].imp;});return (sc+0.5)/Math.sqrt(Math.max(1,it.h)/20);}
+// 每季出 4 張行動卡 + 休養：進行中的優先，其餘依「差距×重要度÷成本」排序並盡量分散類型
+function dealCards(run){
+  const pool=CATX.concat(genOpps(run.lv));
+  const cands=pool.filter(function(it,i){if(pool.findIndex(function(x){return x.id===it.id;})!==i)return false;if(run.done.indexOf(it.id)>=0||run.heldC.indexOf(it.id)>=0)return false;if(it.type==="o")return readinessIn(run.lv,it).pct>=60;return true;});
+  const inprog=cands.filter(function(it){return run.inProgress[it.id];});
+  const rest=cands.filter(function(it){return !run.inProgress[it.id];}).sort(function(a,b){return simScore(run,b)-simScore(run,a);});
+  const pick=inprog.slice(0,2);
+  ["c","s","a","o","c","s","a","o"].forEach(function(t){if(pick.length>=4)return;const x=rest.find(function(r){return r.type===t&&pick.indexOf(r)<0;});if(x)pick.push(x);});
+  rest.forEach(function(x){if(pick.length<4&&pick.indexOf(x)<0)pick.push(x);});
+  return pick.concat([REST]);
+}
+function judgeRules(run,it){
+  if(it.type==="r")return {p:1,src:"rules"};
+  const avg=avgLv(run.lv,it.comps),need=it.lv||3;
+  let p=0.4+0.12*(avg-need)+0.001*run.stats.depth;
+  if(it.type==="o"){p+=0.002*run.stats.impact+(readinessIn(run.lv,it).pct-60)/250;}
+  if(it.type==="a")p+=0.002*run.stats.vis;
+  if(run.stats.energy<30)p-=0.2;
+  if(run.inProgress[it.id])p+=0.25;
+  return {p:clamp(p,0.1,0.9),src:"rules"};
+}
+// 每季擲一次；一般狀態下總機率約 35%，能見度／影響力越高，正面事件越常出現
+const EVENTS=[
+ {id:"mentor",t:"貴人出現：一位業界前輩主動邀你合作",w:function(r){return 0.01+r.stats.vis/1500;},fx:{impact:4,vis:3},lv:{biz:0.3}},
+ {id:"invite",t:"受邀在研討會演講",w:function(r){return 0.01+r.stats.vis/1200;},fx:{vis:5,energy:-6}},
+ {id:"burnout",t:"倦怠：連續過勞，被迫停下來休息一季",w:function(r){return r.stats.energy<15?1:0;},fx:{energy:30,depth:-3,impact:-3,vis:-3}},
+ {id:"obsolete",t:"技術淘汰：你倚賴的工具被新一代平台取代",w:function(r){const t=TECH.map(function(k){return r.lv[k].cur;});const mx=Math.max.apply(null,t),av=t.reduce(function(a,b){return a+b;},0)/t.length;return 0.02+Math.max(0,mx-av-1)*0.05;},fx:{depth:-8},lv:{rpa:-0.5}},
+ {id:"freeze",t:"市場轉向：主要客戶／部門預算凍結",w:function(){return 0.04;},fx:{impact:-6,energy:-5}},
+ {id:"viral",t:"一篇分享內容意外爆紅",w:function(r){return r.stats.vis/2000;},fx:{vis:8}},
+ {id:"bigdeal",t:"商業影響力累積出一個大型案子的機會",w:function(r){return r.stats.impact/1500;},fx:{impact:6,energy:-8}},
+ {id:"aishift",t:"AI 技術大躍進：市場重新定義「自動化專家」",w:function(){return 0.03;},fx:{depth:-5,vis:2}},
+ {id:"health",t:"家庭／健康因素，必須放慢節奏",w:function(r){return 0.02+(r.stats.energy<40?0.04:0);},fx:{energy:-15}},
+ {id:"referral",t:"客戶公開推薦，口碑擴散",w:function(r){return r.stats.impact/2000;},fx:{vis:4,impact:3}}
+];
+function applyFx(run,ev){Object.keys(ev.fx||{}).forEach(function(k){run.stats[k]+=ev.fx[k];});Object.keys(ev.lv||{}).forEach(function(k){const m=run.lv[k]?k:(CMAP[k]&&run.lv[CMAP[k]]?CMAP[k]:null);if(m)run.lv[m].cur=clamp(run.lv[m].cur+ev.lv[k],1,5);});}
+function rollEvent(run){
+  let ev=EVENTS.find(function(e){return e.w(run)>=1;});
+  if(!ev){const r=roll(run);let acc=0;for(let i=0;i<EVENTS.length;i++){acc+=EVENTS[i].w(run);if(r<acc){ev=EVENTS[i];break;}}}
+  if(!ev)return null;applyFx(run,ev);return {id:ev.id,t:ev.t,fx:ev.fx};
+}
+function clampStats(run){Object.keys(run.stats).forEach(function(k){run.stats[k]=clamp(Math.round(run.stats[k]),0,100);});}
+function rolePct(lv,role){let c=0,t=0;COMPS.forEach(function(x){c+=Math.min(lv[x.id].cur,role[x.id]);t+=role[x.id];});return Math.round(c/t*100);}
+function finishRun(run){
+  let best=null;Object.keys(ROLES).forEach(function(r){const p=rolePct(run.lv,ROLES[r]);if(!best||p>best.pct)best={role:r,pct:p};});
+  const hl=[];run.steps.forEach(function(s){if(s.event)hl.push("第 "+s.q+" 季："+s.event.t);s.results.forEach(function(r){if(r.ok&&(r.type==="o"||r.type==="c"))hl.push("第 "+s.q+" 季：完成「"+r.t+"」");});});
+  run.result={role:best.role,pct:best.pct,targetPct:rolePct(run.lv,ROLES[S.profile.target]),highlights:hl.slice(0,6)};
+  run.status="done";
+}
+function stateJSON(run){return {profile:S.profile.role,target:S.profile.target,quarter:run.q+1,stats:run.stats,levels:COMPS.map(function(c){return short(c.id)+"="+run.lv[c.id].cur.toFixed(1);}).join(", "),done:run.done.map(function(id){return (findItem(id)||{}).t;}).filter(Boolean)};}
+// ===== AI 判斷 / 敘事提供者（失敗一律退回規則） =====
+function withTimeout(p,ms){return Promise.race([p,new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"));},ms);})]);}
+function claudeCall(body){
+  return withTimeout(fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":S.ai.claudeKey,"anthropic-version":"2026-10-21","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(Object.assign({model:S.ai.model||"claude-haiku-5-5",max_tokens:1024},body))}),body.max_tokens>1024?30000:15000)
+  .then(function(r){if(!r.ok)return r.text().then(function(t){throw new Error("HTTP "+r.status+" "+t.slice(0,120));});return r.json();})
+  .then(function(j){const b=(j.content||[]).find(function(x){return x.type==="text";});if(!b)throw new Error("no text");return b.text;});
+}
+function judgeClaude(run,it){
+  const q="你是職涯模擬器的評審。以下是一位專業人士目前的狀態（JSON），以及他下一季打算投入的行動。請判斷他在這一季內成功完成該行動的機率 p（0–1），並用一句繁體中文說明理由。\n狀態："+JSON.stringify(stateJSON(run))+"\n行動："+it.t+"（"+TYPE[it.type]+"，約 "+it.h+" 小時）"+it.d;
+  return claudeCall({messages:[{role:"user",content:q}],output_config:{format:{type:"json_schema",schema:{type:"object",properties:{p:{type:"number"},reason:{type:"string"}},required:["p","reason"],additionalProperties:false}}}})
+  .then(function(t){const j=JSON.parse(t);if(typeof j.p!=="number")throw new Error("bad p");return {p:clamp(j.p,0.05,0.98),src:"claude",reason:j.reason};});
+}
+function jevCall(state,instr){
+  return withTimeout(fetch("https://api.typesafe.ai/v1/systemone",{method:"POST",headers:{"content-type":"application/json","authorization":"Bearer "+S.ai.jevKey},body:JSON.stringify({model:"jev-latest",state:state,questions:{q:{type:"noul",instructions:instr}}})}),15000)
+  .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();});
+}
+function judgeJev(run,it){
+  return jevCall(stateJSON(run),"此人能在接下來一季（3 個月）內成功完成「"+it.t+"」（"+TYPE[it.type]+"，約 "+it.h+" 小時）。")
+  .then(function(j){const p=j&&j.answers&&j.answers.q&&j.answers.q.noul;if(typeof p!=="number")throw new Error("bad noul");return {p:clamp(p,0.05,0.98),src:"jev"};});
+}
+let aiWarned=false;
+function aiFail(e){if(!aiWarned){aiWarned=true;toast("AI 呼叫失敗，已改用規則引擎："+(e&&e.message||e).toString().slice(0,60));}}
+function judge(run,it){
+  const base=judgeRules(run,it);if(it.type==="r")return Promise.resolve(base);
+  let p=null;
+  if(S.ai.provider==="claude"&&S.ai.claudeKey)p=judgeClaude(run,it);
+  else if(S.ai.provider==="jev"&&S.ai.jevKey)p=judgeJev(run,it);
+  if(!p)return Promise.resolve(base);
+  // AI 機率與規則機率各半混合，避免單一來源極端值
+  return p.then(function(r){return {p:(r.p+base.p)/2,src:r.src,reason:r.reason};}).catch(function(e){aiFail(e);return base;});
+}
+function templateNarr(run,step){
+  const ok=step.results.filter(function(r){return r.ok&&r.type!=="r";}).map(function(r){return "「"+r.t+"」";});
+  const ng=step.results.filter(function(r){return !r.ok;}).map(function(r){return "「"+r.t+"」";});
+  const rest=step.results.some(function(r){return r.type==="r";});
+  let s="第 "+step.q+" 季：";
+  if(ok.length)s+="完成 "+ok.join("、")+"。";
+  if(ng.length)s+=ng.join("、")+" 進度落後，下季可再接續。";
+  if(rest)s+="這一季刻意放慢腳步，精力回升。";
+  if(step.event)s+=" ⚡ "+step.event.t+"。";
+  return s;
+}
+function narrate(run,step){
+  const tpl=templateNarr(run,step);
+  if(!(S.ai.provider==="claude"&&S.ai.claudeKey&&S.ai.narrative))return Promise.resolve(tpl);
+  const q="你是職涯模擬遊戲的旁白。請用繁體中文、第二人稱、2–3 句話，把這一季的經歷寫成像人生紀錄般有畫面的短文，不要列點、不要加標題。\n本季事實："+tpl+"\n目前狀態："+JSON.stringify(run.stats)+"\n目標角色："+S.profile.target;
+  return claudeCall({messages:[{role:"user",content:q}]}).then(function(t){return t.trim()||tpl;}).catch(function(e){aiFail(e);return tpl;});
+}
+function resolveQuarter(run){
+  const cards=dealCards(run);
+  let picks=run.picked.map(function(id){return cards.find(function(c){return c.id===id;});}).filter(Boolean);
+  if(!picks.length)picks=[REST];
+  const results=[];const before=Object.assign({},run.stats);
+  return picks.reduce(function(chain,it){return chain.then(function(){return judge(run,it).then(function(j){
+    const ok=roll(run)<j.p;
+    if(it.type==="r"){run.stats.energy+=30;}
+    else{
+      run.stats.energy-=energyCost(it);
+      if(ok){
+        // 主要能力 +0.4、次要 +0.2；已達 4 級以上成長減半（越高越難進步）
+        it.comps.forEach(function(k,i){const g=(i===0?0.4:0.2)*(run.lv[k].cur>=4?0.5:1);run.lv[k].cur=Math.min(5,Math.round((run.lv[k].cur+g)*10)/10);});
+        run.done.push(it.id);delete run.inProgress[it.id];
+        if(it.type==="c"){run.stats.depth+=2;run.heldC.push(it.id);}
+        if(it.type==="s")run.stats.depth+=2;
+        if(it.type==="a"){run.stats.impact+=2;run.stats.vis+=2;}
+        if(it.type==="o"){run.stats.impact+=5;run.stats.vis+=3;}
+      }else{run.inProgress[it.id]=(run.inProgress[it.id]||0)+0.5;run.stats.depth+=1;}
+    }
+    results.push({id:it.id,t:it.t,type:it.type,ok:ok,p:Math.round(j.p*100),src:j.src,reason:j.reason||""});
+  });});},Promise.resolve()).then(function(){
+    run.stats.energy+=15;
+    const ev=rollEvent(run);
+    clampStats(run);
+    run.q++;
+    const step={q:run.q,actions:picks.map(function(p){return p.id;}),results:results,event:ev,narrative:"",statsBefore:before};
+    return narrate(run,step).then(function(n){step.narrative=n;run.steps.push(step);run.picked=[];if(run.q>=QMAX)finishRun(run);save();});
+  });
+}
+// ===== ④ 職涯模擬：畫面 =====
+let simView=null,simBusy=false,cmpSel=[];
+function statBars(run,prev){
+  return '<div class="stats">'+STATS.map(function(s){const v=run.stats[s[0]];const d=prev?v-prev[s[0]]:0;return '<div class="stat '+s[0]+'"><div class="l"><span>'+s[1]+'</span><span><b>'+v+'</b>'+(d?' <span class="d '+(d>0?"up":"dn")+'">'+(d>0?"+":"")+d+'</span>':'')+'</span></div><div class="bar"><i style="width:'+v+'%"></i></div></div>';}).join("")+'</div>';
+}
+function routeStrip(run,noLegend){
+  let s='<div class="route">';
+  for(let i=0;i<QMAX;i++){const st=run.steps[i];if(!st){s+='<i></i>';continue;}const main=st.results.find(function(r){return r.type!=="r";})||st.results[0];s+='<i class="'+(main?main.type:"r")+(st.event?" ev":"")+'" title="第 '+st.q+' 季：'+esc(st.results.map(function(r){return r.t;}).join("、"))+(st.event?"｜"+esc(st.event.t):"")+'"></i>';}
+  s+='</div>';
+  if(!noLegend)s+='<div class="row small muted" style="margin-block-start:4px"><span style="color:#2457b8">■ 證照</span><span style="color:#0f7a5d">■ 技能</span><span style="color:#c77d1a">■ 能力</span><span style="color:#7d2d99">■ 專案</span><span>■ 休養</span><span style="color:var(--bad)">▢ 有事件</span></div>';
+  return s;
+}
+function qLabel(q){return "第 "+(Math.floor(q/4)+1)+" 年 Q"+(q%4+1);}
+function rSimLobby(){
+  const list=S.sims.slice().reverse();
+  const cmp=S.sims.filter(function(r){return cmpSel.indexOf(r.id)>=0&&r.status==="done";});
+  $("#tab-sim").innerHTML='<div class="grid g2"><div class="card"><h2>🎲 如果接下來 5 年這樣走，會變成誰？</h2><div class="note">以你在「①」填的能力為起點，每一季（3 個月）選 1–2 個行動：考證照、練技能、接專案或休養。行動會改變四個狀態值，狀態值會影響成功率與隨機事件。20 季後結算你最接近哪個角色。<br><br>同一局可重現（固定 seed）。開多局比較不同路線，再把最滿意的路線「匯出成行動計畫」。</div>'+
+  '<div class="row" style="margin-block-start:12px"><input id="simName" placeholder="這一局的名稱，例如：先考證照再接案" style="flex:1"><button class="btn" id="btnNewSim">開新局</button></div>'+
+  '<div class="small muted" style="margin-block-start:8px">AI 模式：<b>'+({rules:"純規則",claude:"Claude 判斷 + 敘事",jev:"Jev 判斷"}[S.ai.provider]||"純規則")+'</b>（右上「⚙ AI 設定」可切換，不設定也能玩）</div></div>'+
+  '<div class="card"><h2>歷史局（'+S.sims.length+'）</h2>'+(list.map(function(r){return '<div class="item"><div class="row"><label class="row small" style="margin:0"><input type="checkbox" data-cmp="'+r.id+'" style="width:auto"'+(cmpSel.indexOf(r.id)>=0?" checked":"")+(r.status!=="done"?" disabled":"")+'></label><b>'+esc(r.name)+'</b><span class="chip">'+(r.status==="done"?"已結算":qLabel(r.q)+"・進行中")+'</span><span class="sp"></span>'+(r.status==="done"?'<span class="small">'+esc(r.result.role)+' <b>'+r.result.pct+'%</b></span>':'')+'<button class="btn sm" data-open="'+r.id+'">'+(r.status==="done"?"查看":"繼續")+'</button><button class="btn ghost sm" data-dsim="'+r.id+'" aria-label="刪除">✕</button></div>'+(r.steps.length?'<div style="margin-block-start:6px">'+routeStrip(r,true)+'</div>':'')+'</div>';}).join("")||'<div class="muted">尚無模擬紀錄。開一局試試看吧。</div>')+'</div>'+
+  (cmp.length>=2?'<div class="card" style="grid-column:1/-1"><h2>並排比較</h2><div class="tbl"><table><tr><th>路線</th><th>結果角色</th><th>達成度</th>'+STATS.map(function(s){return '<th>'+s[1]+'</th>';}).join("")+'<th>完成項目</th></tr>'+cmp.map(function(r){return '<tr><td><b>'+esc(r.name)+'</b></td><td>'+esc(r.result.role)+'</td><td><b>'+r.result.pct+'%</b></td>'+STATS.map(function(s){return '<td>'+r.stats[s[0]]+'</td>';}).join("")+'<td>'+r.done.length+'</td></tr>';}).join("")+'</table></div></div>':(S.sims.filter(function(r){return r.status==="done";}).length>=2?'<div class="muted small" style="grid-column:1/-1">勾選 2 局以上可並排比較。</div>':''))+'</div>';
+}
+function rSimRun(run){
+  const cards=dealCards(run);
+  const cost=run.picked.reduce(function(a,id){const c=cards.find(function(x){return x.id===id;});return a+(c?energyCost(c):0);},0);
+  const last=run.steps.slice(-4).reverse();
+  $("#tab-sim").innerHTML='<div class="card" style="margin-block-end:14px"><div class="row"><button class="btn ghost sm" id="btnSimBack">← 大廳</button><h2 style="margin:0">'+esc(run.name)+'</h2><span class="chip">'+qLabel(run.q)+'（第 '+(run.q+1)+' / '+QMAX+' 季）</span><span class="sp"></span><span class="small muted">seed '+run.seed+'</span></div><div style="margin-block-start:12px">'+statBars(run,run.steps.length?run.steps[run.steps.length-1].statsBefore:null)+'</div></div>'+
+  '<div class="grid g2"><div><h3 style="margin:0 0 8px">這一季要做什麼？（可選 1–2 項）</h3><div class="grid g3">'+cards.map(function(c){const on=run.picked.indexOf(c.id)>=0;const ec=energyCost(c);const off=!on&&(run.picked.length>=2||(c.type!=="r"&&cost+ec>run.stats.energy));const j=judgeRules(run,c);return '<div class="rec pick'+(on?" on":"")+(off?" off":"")+'" data-pick="'+c.id+'"><div class="row"><span class="chip '+c.type+'">'+(TYPE[c.type]||"休養")+'</span><span class="sp"></span>'+(run.inProgress[c.id]?'<span class="chip">進行中</span>':'')+'<span class="score">'+(c.type==="r"?"精力 +30":"預估成功率 "+Math.round(j.p*100)+"%")+'</span></div><div class="t">'+esc(c.t)+'</div><div class="small muted">'+esc(c.d)+'</div><div class="small">'+(c.type==="r"?"":"消耗精力 "+ec+"　|　約 "+c.h+" 小時")+'</div></div>';}).join("")+'</div>'+
+  '<div class="row" style="margin-block-start:12px"><span class="small muted">已選 '+run.picked.length+' 項，消耗精力 '+cost+' / '+run.stats.energy+'</span><span class="sp"></span><button class="btn" id="btnResolve"'+(simBusy?" disabled":"")+'>'+(simBusy?"結算中…":(run.picked.length?"結算本季 →":"不做選擇，直接休養 →"))+'</button></div></div>'+
+  '<div class="card qlog"><h2>本季以前的紀錄</h2>'+(last.map(function(s){return '<div class="item"><div class="row"><b class="small">'+qLabel(s.q-1)+'</b>'+s.results.map(function(r){return '<span class="small '+(r.ok?"ok":"ng")+'">'+(r.ok?"✓":"✗")+' '+esc(r.t)+(r.type!=="r"?"（"+r.p+"%"+(r.src&&r.src!=="rules"?"・"+r.src:"")+"）":"")+'</span>';}).join("")+'</div><div>'+esc(s.narrative)+'</div>'+(s.results.some(function(r){return r.reason;})?'<div class="small muted">'+esc(s.results.filter(function(r){return r.reason;}).map(function(r){return r.reason;}).join("；"))+'</div>':'')+'</div>';}).join("")||'<div class="muted">還沒開始。選好行動後按「結算本季」。</div>')+(run.steps.length?routeStrip(run):'')+'</div></div>';
+}
+function rSimDone(run){
+  const r=run.result;const tgtOk=r.role===S.profile.target;
+  $("#tab-sim").innerHTML='<div class="card" style="margin-block-end:14px"><div class="row"><button class="btn ghost sm" id="btnSimBack">← 大廳</button><h2 style="margin:0">🏁 '+esc(run.name)+'　職涯紀錄卡</h2><span class="sp"></span><button class="btn sm" id="btnExportPlan">把這條路線匯出成行動計畫</button></div></div>'+
+  '<div class="grid g2"><div class="card"><div class="small muted">5 年後，你最接近的角色是</div><div class="big">'+esc(r.role)+'</div><div class="row"><span>達成度 <b>'+r.pct+'%</b></span><span class="muted">｜</span><span>原目標「'+esc(S.profile.target)+'」達成度 <b>'+r.targetPct+'%</b>'+(tgtOk?' <span class="gap l">✓ 命中</span>':'')+'</span></div><div style="margin-block-start:12px">'+statBars(run)+'</div><h3 style="margin-block-start:16px">路線圖</h3>'+routeStrip(run)+'<h3 style="margin-block-start:16px">亮點</h3>'+(r.highlights.map(function(h){return '<div class="small">• '+esc(h)+'</div>';}).join("")||'<div class="muted small">這一局平穩度過，沒有特別的事件。</div>')+'</div>'+
+  '<div class="card"><h2>起點 vs 終點</h2>'+radar(440,run.lv0,run.lv,"起點","5 年後")+'</div>'+
+  '<div class="card qlog" style="grid-column:1/-1"><h2>完整紀錄</h2>'+run.steps.map(function(s){return '<div class="item"><div class="row"><b class="small">'+qLabel(s.q-1)+'</b>'+s.results.map(function(x){return '<span class="small '+(x.ok?"ok":"ng")+'">'+(x.ok?"✓":"✗")+' '+esc(x.t)+'</span>';}).join("")+(s.event?'<span class="chip">⚡ '+esc(s.event.t)+'</span>':'')+'</div><div>'+esc(s.narrative)+'</div></div>';}).join("")+'</div></div>';
+}
+function rSim(){const run=S.sims.find(function(r){return r.id===simView;});if(!run){simView=null;rSimLobby();return;}if(run.status==="done")rSimDone(run);else rSimRun(run);}
+// ===== AI 設定 =====
+function rAI(){
+  const a=S.ai;const mask=function(k){return k?k.slice(0,7)+"…"+k.slice(-4):"";};
+  $("#aiPanel").innerHTML='<div class="row"><h2 style="margin:0" class="sp">⚙ AI 設定</h2><button class="btn ghost sm" id="btnAIClose">✕</button></div>'+
+  '<div class="note small" style="margin-block-start:8px">AI 用在：① 現況的「依背景調整能力描述」與「AI 追問校正自評」、② 把機會改寫成你的情境與產生自訂 role model、③ 計畫的「依差距再推薦」與「拆解學習步驟」、④ 模擬的成功率判斷與每季敘事。<b>不設定也能用</b>，相關按鈕會隱藏、模擬改用內建規則。</div>'+
+  '<label>判斷提供者</label><select id="aiProv"><option value="rules"'+(a.provider==="rules"?" selected":"")+'>純規則（離線、免費）</option><option value="claude"'+(a.provider==="claude"?" selected":"")+'>Claude：判斷機率 + 寫敘事</option><option value="jev"'+(a.provider==="jev"?" selected":"")+'>Jev（TypeSafe System One）：判斷機率</option></select>'+
+  '<label>Claude API key（只存在此瀏覽器，匯出時不會帶出）</label><input id="aiClaudeKey" type="password" placeholder="sk-ant-…" value="'+esc(a.claudeKey)+'">'+(a.claudeKey?'<div class="small muted">目前：'+esc(mask(a.claudeKey))+'</div>':'<div class="small muted">到 console.anthropic.com 建立 API key。</div>')+
+  '<label>Claude 模型</label><select id="aiModel">'+["claude-haiku-5-5","claude-sonnet-5-5","claude-opus-5-5"].map(function(m){return '<option'+(a.model===m?" selected":"")+'>'+m+'</option>';}).join("")+'</select>'+
+  '<label class="row" style="margin-block-start:10px"><input type="checkbox" id="aiNarr" style="width:auto"'+(a.narrative?" checked":"")+'> 用 Claude 寫每季敘事（每季多一次呼叫）</label>'+
+  '<label style="margin-block-start:14px">Jev API key（選用）</label><input id="aiJevKey" type="password" placeholder="需向 TypeSafe AI 申請 early access" value="'+esc(a.jevKey)+'">'+
+  '<div class="small muted">Jev 目前是 early access，要先到 typesafe.ai 申請、核准後在後台取得 key。沒有 key 就選 Claude 或純規則即可。</div>'+
+  '<div class="row" style="margin-block-start:12px"><span class="small muted sp">AI 失敗時會自動退回規則引擎，不會中斷遊戲。</span><button class="btn ghost sm" id="btnAITest">測試連線</button><button class="btn sm" id="btnAISave">儲存</button></div>';
+}
+function testAI(){
+  const prov=S.ai.provider;
+  if(prov==="rules"){toast("純規則模式不需要連線");return;}
+  if(prov==="claude"&&!S.ai.claudeKey){toast("請先填 Claude API key");return;}
+  if(prov==="jev"&&!S.ai.jevKey){toast("請先填 Jev API key");return;}
+  toast("測試中…");
+  const p=prov==="claude"?claudeCall({messages:[{role:"user",content:"回覆 OK"}],max_tokens:16}):jevCall("測試","這是一則測試訊息。");
+  p.then(function(){toast("✓ 連線成功");}).catch(function(e){toast("✗ 連線失敗："+(e.message||e).toString().slice(0,80));});
+}
+// ===== 導覽與事件 =====
+const R={dash:rDash,now:rNow,goal:rGoal,plan:rPlan,sim:rSim};
+let tab="dash";
+function render(){rNav();R[tab]();const p=S.profile;$("#hdrSub").textContent=ready()?((p.name?p.name+"｜":"")+p.role+" → "+p.target+(getRM()?"（向 "+getRM().n.split(" ")[0]+" 看齊）":"")+"｜目標達成度 "+overall()+"%"):"先完成「現況」與「目標」，就能看到差距、計畫與模擬";}
+function show(t){if(stageLocked(t)){toast("先完成「① 現況」與「② 目標」再解鎖這一步");t=nextStage();}tab=t;Object.keys(R).forEach(function(k){$("#tab-"+k).classList.toggle("hide",k!==t);});render();window.scrollTo(0,0);}
+function addPlan(id){const it=findItem(id);if(!it||inPlan(id))return;const p=newPlanItem(it);S.plan.push(p);openItems[p.id]=true;save();render();toast("已加入計畫，並產生起步清單");}
+function loadSample(){if(S.setup.profile&&!window.confirm("會覆蓋目前的資料，確定載入範例？"))return;const keys=S.ai,ext=S.extFws;S=sample();S.ai=keys;S.extFws=ext||[];nowStep=null;save();show("dash");toast("已載入範例資料，可以到各階段看看填好的樣子");}
+$("#nav").addEventListener("click",function(e){const b=e.target.closest("button[data-tab]");if(b)show(b.dataset.tab);});
+const main=document.querySelector("main");
+function curRun(){return S.sims.find(function(r){return r.id===simView;});}
+function markProfile(){S.setup.profile=!!(S.profile.role&&Number(S.profile.hours)>0&&Number(S.profile.horizon)>0);}
+main.addEventListener("click",function(e){
+  const go=e.target.closest("[data-go]");if(go){show(go.dataset.go);return;}
+  const ns=e.target.closest("[data-ns]");if(ns){nowStep=Number(ns.dataset.ns);render();return;}
+  const rg=e.target.closest("[data-rego]");if(rg){rateIdx=Number(rg.dataset.rego);nowStep=1;render();return;}
+  const dx=e.target.closest("[data-delext]");if(dx){const id=dx.dataset.delext;if(S.fw===id&&!window.confirm("你正在使用這個框架，移除後需要重新選擇工作類型並自評，確定？"))return;S.extFws=S.extFws.filter(function(x){return x.id!==id;});delete FRAMEWORKS[id];delete FW_RECS[id];if(S.profile.persona.ext===id)S.profile.persona.ext="";if(S.fw===id){S.fw="";S.setup.lv=false;S.setup.target=false;applyFramework(S);nowStep=0;}save();render();toast("已移除框架包");return;}
+  const ex=e.target.closest(".rolecard[data-extfw]");if(ex){S.profile.persona.ext=S.profile.persona.ext===ex.dataset.extfw?"":ex.dataset.extfw;save();render();return;}
+  const tk=e.target.closest(".rolecard[data-track]");if(tk){S.profile.persona.track=tk.dataset.track;save();render();return;}
+  const sg=e.target.closest(".rolecard[data-stage]");if(sg){S.profile.persona.stage=sg.dataset.stage;save();render();return;}
+  const rm=e.target.closest(".rolecard[data-rm]");if(rm){S.roleModel=rm.dataset.rm;rmAll=false;applyTargets();save();render();toast("已疊加「"+getRM().n+"」的特質到目標等級");return;}
+  const rc=e.target.closest(".rolecard[data-role]");if(rc){S.profile.target=rc.dataset.role;applyTargets();S.setup.target=true;save();render();toast("已套用「"+rc.dataset.role+"」的目標等級");return;}
+  const lo=e.target.closest(".lvopt[data-rate]");if(lo){const c=COMPS[rateIdx];S.lv[c.id].cur=Number(lo.dataset.rate);S.lv[c.id].rated=true;if(COMPS.every(function(x){return S.lv[x.id].rated;}))S.setup.lv=true;if(rateIdx<COMPS.length-1)rateIdx++;save();render();return;}
+  const qc=e.target.closest(".chip[data-qcert]");if(qc){S.certs.push({id:uid(),t:qc.dataset.qcert,y:""});syncCerts(S);save();render();return;}
+  const pk=e.target.closest(".pick[data-pick]");
+  if(pk&&!simBusy){const run=curRun();if(!run||run.status!=="running")return;if(pk.classList.contains("off"))return;const id=pk.dataset.pick;const i=run.picked.indexOf(id);if(i>=0)run.picked.splice(i,1);else run.picked.push(id);save();render();return;}
+  const t=e.target.closest("button");if(!t)return;
+  if(t.id==="btnSample"){loadSample();return;}
+  if(t.id==="btnFwExport"){exportPack();return;}
+  if(t.id==="btnReset"){if(window.confirm("確定要清除所有資料、回到全新狀態？")){const keys=S.ai,ext=S.extFws;S=defaults();S.ai=keys;S.extFws=ext||[];applyFramework(S);nowStep=null;rateIdx=0;save();show("dash");toast("已清除");}return;}
+  // ① 現況精靈
+  if(t.id==="btnNow0"){markProfile();if(!S.setup.profile){toast("請先填目前職務、每週時數與規劃期間");return;}const ps=S.profile.persona;if(!ps.track||!ps.stage){toast("請選擇工作類型與階段");return;}setFramework(ps.ext&&FRAMEWORKS[ps.ext]?ps.ext:(ps.track==="tech"&&ps.stage==="expert"&&ps.auto?"automation":ps.track));nowStep=1;rateIdx=COMPS.findIndex(function(c){return !S.lv[c.id].rated;});if(rateIdx<0)rateIdx=0;render();return;}
+  if(t.id==="btnRatePrev"){rateIdx=Math.max(0,rateIdx-1);render();return;}
+  if(t.id==="btnRateSkip"){const c=COMPS[rateIdx];S.lv[c.id].rated=true;if(COMPS.every(function(x){return S.lv[x.id].rated;}))S.setup.lv=true;if(rateIdx<COMPS.length-1)rateIdx++;save();render();return;}
+  if(t.id==="btnNow1"){S.setup.lv=true;save();nowStep=2;render();toast("自評完成！");return;}
+  if(t.id==="btnAICustom"){if(aiBusy)return;aiBusy="custom";render();customizeAI().then(function(x){toast("已依你的背景調整"+(x?"，並新增 "+x+" 項自訂能力":""));}).catch(function(e){toast("AI 調整失敗，維持預建："+(e.message||e).toString().slice(0,60));}).then(function(){aiBusy=false;render();});return;}
+  if(t.id==="btnAICustomReset"){S.custom=null;applyFramework(S);save();render();toast("已退回預建框架");return;}
+  if(t.id==="btnGrill"){grillStart();return;}
+  if(t.id==="btnGrillSend"){const v=($("#grillA")||{}).value||"";if(!v.trim()){toast("請輸入回答，或按「不知道」");return;}grillAnswer(v.trim());return;}
+  if(t.id==="btnGrillDunno"){grillAnswer("不知道 / 沒做過");return;}
+  if(t.id==="btnGrillEnd"){grillEnd();return;}
+  if(t.id==="btnGrillRetry"){grillTurn();return;}
+  if(t.id==="btnGrillQuit"){grill=null;nowStep=1;render();return;}
+  if(t.id==="btnGrillApply"){grillApply();return;}
+  if(t.id==="btnAddCert"){const v=$("#certT").value.trim();if(!v){toast("請輸入證照名稱");return;}S.certs.push({id:uid(),t:v,y:$("#certY").value.trim()});syncCerts(S);save();render();return;}
+  if(t.dataset.dcert){S.certs=S.certs.filter(function(c){return c.id!==t.dataset.dcert;});syncCerts(S);save();render();return;}
+  if(t.id==="btnNow2"){nowStep=3;render();return;}
+  if(t.id==="btnAddExp"){const v=$("#expT").value.trim();if(!v){toast("請輸入經歷名稱");return;}const d=$("#expD").value.trim(),c=$("#expC").value;S.exps.push({id:uid(),t:v,d:d,c:c});const ev=v+(d?"（"+d+"）":"");S.lv[c].ev=S.lv[c].ev?S.lv[c].ev+"；"+ev:ev;save();render();return;}
+  if(t.dataset.dexp){S.exps=S.exps.filter(function(x){return x.id!==t.dataset.dexp;});save();render();return;}
+  if(t.id==="btnNow3"){markProfile();S.setup.evidence=true;save();nowStep=4;render();toast("現況設定完成！接著選目標角色");return;}
+  // ② 目標
+  if(t.id==="btnOppAll"){oppAll=!oppAll;render();return;}
+  if(t.id==="btnRMAll"){rmAll=!rmAll;render();return;}
+  if(t.id==="btnRMClear"){S.roleModel="";rmAll=false;applyTargets();save();render();toast("已取消 role model，目標回到角色預設");return;}
+  if(t.id==="btnRMAct"){const r=getRM();if(!r||inPlan("rm_"+r.id))return;const w=rmWeights(r);const top=Object.keys(w).sort(function(a,b){return w[b]-w[a];});const p=newPlanItem({id:"rm_"+r.id,type:"a",t:"向 "+r.n.split(" ")[0]+" 學："+r.act,comps:top.slice(0,2).length?top.slice(0,2):[COMPS[0].id],h:5});S.plan.push(p);openItems[p.id]=true;save();render();toast("已加入計畫");return;}
+  if(t.id==="btnRMAI"){if(aiBusy)return;const nm=($("#rmName")||{}).value||"";if(!nm.trim()){toast("請輸入人物名字");return;}aiBusy="rm";render();aiRoleModel(nm.trim()).then(function(r){toast("已產生並套用「"+r.n+"」");}).catch(function(e){toast("AI 產生失敗："+(e.message||e).toString().slice(0,60));}).then(function(){aiBusy=false;render();});return;}
+  if(t.id==="btnAIOpp"){if(aiBusy)return;aiBusy="opp";render();aiOppText(oppList().slice(0,oppAll?99:5)).then(function(n){toast("AI 已改寫 "+n+" 個機會");}).catch(function(e){toast("AI 改寫失敗："+(e.message||e).toString().slice(0,60));}).then(function(){aiBusy=false;render();});return;}
+  if(t.dataset.pitch){pitchId=t.dataset.pitch;render();return;}
+  if(t.id==="btnCopy"){const txt=$("#pitchTxt").textContent;const sel=function(){const r=document.createRange();r.selectNodeContents($("#pitchTxt"));const s=window.getSelection();s.removeAllRanges();s.addRange(r);toast("已選取文字，請按 Ctrl+C 複製");};try{navigator.clipboard.writeText(txt).then(function(){toast("已複製");},sel);}catch(x){sel();}return;}
+  // ③ 計畫
+  if(t.dataset.add){addPlan(t.dataset.add);return;}
+  if(t.dataset.rf){recFilter=t.dataset.rf;render();return;}
+  if(t.id==="btnRecAll"){recAll=!recAll;render();return;}
+  if(t.id==="btnLogOpen"){logOpen=!logOpen;logPreset="";render();return;}
+  if(t.dataset.del){S.plan=S.plan.filter(function(p){return p.id!==t.dataset.del;});save();render();return;}
+  if(t.dataset.mv){const p=S.plan.find(function(x){return x.id===t.dataset.mv;});const to=t.dataset.to,st=p.steps||[];
+    if(to==="done"){st.forEach(function(x){x.done=true;});completeItem(p);}
+    else{if(p.st==="done"&&st.length)st[st.length-1].done=false;p.st=to;if(st.length)p.pg=Math.round(st.filter(function(x){return x.done;}).length/st.length*100);else if(p.pg===100)p.pg=90;}
+    save();render();return;}
+  if(t.dataset.openitem){openItems[t.dataset.openitem]=!openItems[t.dataset.openitem];render();return;}
+  if(t.dataset.addstep){const p=S.plan.find(function(x){return x.id===t.dataset.addstep;});const v=($("#addStep-"+p.id)||{}).value||"";if(!v.trim()){toast("請輸入步驟內容");return;}p.steps.push({id:uid(),t:v.trim(),h:Math.max(1,Number(($("#addStepH-"+p.id)||{}).value)||2),done:false});syncPg(p);save();render();const nx=$("#addStep-"+p.id);if(nx)nx.focus();return;}
+  if(t.dataset.dstep){const k=t.dataset.dstep.split("|");const p=S.plan.find(function(x){return x.id===k[0];});p.steps=p.steps.filter(function(x){return x.id!==k[1];});syncPg(p);save();render();return;}
+  if(t.dataset.aisteps){if(aiBusy)return;const p=S.plan.find(function(x){return x.id===t.dataset.aisteps;});if(p.steps.some(function(x){return !x.done;})&&!window.confirm("會用 AI 的版本取代尚未完成的步驟（已完成的保留），確定？"))return;aiBusy=p.id;render();aiSteps(p).then(function(n){toast("AI 已拆解成 "+n+" 個步驟");}).catch(function(e){toast("AI 拆解失敗，維持原步驟："+(e.message||e).toString().slice(0,60));}).then(function(){aiBusy=false;render();});return;}
+  if(t.id==="btnAIRec"){if(aiBusy)return;aiBusy="rec";render();aiRecommend().then(function(n){recFilter="all";toast("AI 新增 "+n+" 項推薦（標 ✨）");}).catch(function(e){toast("AI 推薦失敗："+(e.message||e).toString().slice(0,60));}).then(function(){aiBusy=false;render();});return;}
+  if(t.id==="btnReviewOpen"||t.id==="btnGoReview"){logOpen=true;logPreset="季度回顧";show("plan");setTimeout(function(){const ta=$("#lTxt");if(ta){ta.scrollIntoView({block:"center"});ta.focus();}},50);return;}
+  if(t.dataset.dlog){S.log=S.log.filter(function(l){return l.id!==t.dataset.dlog;});save();render();return;}
+  if(t.id==="btnCustom"){const ti=$("#cTitle").value.trim();if(!ti){toast("請輸入名稱");return;}const p=newPlanItem({type:$("#cType").value,t:ti,comps:[$("#cComp").value],h:Number($("#cHours").value)||30});S.plan.push(p);openItems[p.id]=true;save();render();toast("已加入計畫，並產生起步清單");return;}
+  if(t.id==="btnLog"){const tx=$("#lTxt").value.trim();if(!tx){toast("請輸入內容");return;}const c=$("#lComp").value;const ty=$("#lType").value;S.log.push({id:uid(),d:$("#lDate").value||today(),ty:ty,c:c,t:tx});if(c&&$("#lEv").checked){S.lv[c].ev=S.lv[c].ev?S.lv[c].ev+"；"+tx:tx;}if(ty==="季度回顧")S.lastReview=$("#lDate").value||today();logOpen=false;logPreset="";save();render();toast(ty==="季度回顧"?"季度回顧完成，下次提醒在 90 天後":"已記錄");return;}
+  // ④ 模擬
+  if(t.id==="btnNewSim"){const run=newRun($("#simName").value.trim());S.sims.push(run);simView=run.id;save();render();toast("新的一局開始了，先選這一季要做的事");return;}
+  if(t.dataset.open){simView=t.dataset.open;render();return;}
+  if(t.dataset.dsim){if(window.confirm("確定刪除這一局？")){S.sims=S.sims.filter(function(r){return r.id!==t.dataset.dsim;});cmpSel=cmpSel.filter(function(x){return x!==t.dataset.dsim;});save();render();}return;}
+  if(t.id==="btnSimBack"){simView=null;render();return;}
+  if(t.id==="btnResolve"){const run=curRun();if(!run||simBusy)return;simBusy=true;render();resolveQuarter(run).catch(function(e){toast("結算失敗："+(e.message||e));}).then(function(){simBusy=false;render();if(run.status==="done")toast("5 年走完了，來看看你的職涯紀錄卡");});return;}
+  if(t.id==="btnExportPlan"){const run=curRun();if(!run)return;let n=0;run.done.forEach(function(id){const it=findItem(id);if(it&&!inPlan(id)){S.plan.push(newPlanItem(it,{next:"來自模擬「"+run.name+"」"}));n++;}});save();toast(n?"已把 "+n+" 個項目加入計畫":"這些項目都已在計畫中");if(n)show("plan");return;}
+});
+main.addEventListener("change",function(e){
+  const t=e.target;
+  if(t.id==="useAuto"){S.profile.persona.auto=t.checked;save();return;}
+  if(t.id==="fwImport"){const f=t.files&&t.files[0];if(f)importPack(f);t.value="";return;}
+  if(t.dataset.p){S.profile[t.dataset.p]=t.value;markProfile();save();return;}
+  if(t.dataset.cmp){const id=t.dataset.cmp;if(t.checked){if(cmpSel.indexOf(id)<0)cmpSel.push(id);}else cmpSel=cmpSel.filter(function(x){return x!==id;});render();return;}
+  if(t.dataset.lv){S.lv[t.dataset.lv][t.dataset.f]=Number(t.value);save();render();return;}
+  if(t.dataset.step){const k=t.dataset.step.split("|");const p=S.plan.find(function(x){return x.id===k[0];});if(!p)return;const st=p.steps.find(function(x){return x.id===k[1];});if(!st)return;st.done=t.checked;syncPg(p);save();render();return;}
+  if(t.dataset.due){S.plan.find(function(x){return x.id===t.dataset.due;}).due=t.value;save();return;}
+  if(t.dataset.next){S.plan.find(function(x){return x.id===t.dataset.next;}).next=t.value;save();return;}
+});
+main.addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&e.ctrlKey&&e.target.id==="grillA"){e.preventDefault();$("#btnGrillSend").click();return;}
+  if(e.key!=="Enter"||e.target.tagName!=="INPUT")return;
+  if(e.target.id==="certT"||e.target.id==="certY"){e.preventDefault();$("#btnAddCert").click();}
+  if(e.target.id==="rmName"){e.preventDefault();$("#btnRMAI").click();}
+  if(e.target.id.indexOf("addStep")===0){e.preventDefault();const b=document.querySelector('[data-addstep="'+e.target.id.replace(/^addStepH?-/,"")+'"]');if(b)b.click();}
+  if(e.target.id==="expT"||e.target.id==="expD"){e.preventDefault();$("#btnAddExp").click();}
+  if(e.target.id==="simName"){e.preventDefault();$("#btnNewSim").click();}
+});
+$("#btnAI").addEventListener("click",function(){const p=$("#aiPanel");if(p.classList.contains("hide")){rAI();p.classList.remove("hide");}else p.classList.add("hide");});
+$("#aiPanel").addEventListener("click",function(e){
+  const t=e.target.closest("button");if(!t)return;
+  if(t.id==="btnAIClose"){$("#aiPanel").classList.add("hide");return;}
+  if(t.id==="btnAISave"||t.id==="btnAITest"){
+    S.ai.provider=$("#aiProv").value;S.ai.claudeKey=$("#aiClaudeKey").value.trim();S.ai.jevKey=$("#aiJevKey").value.trim();S.ai.model=$("#aiModel").value;S.ai.narrative=$("#aiNarr").checked;
+    aiWarned=false;save();
+    if(t.id==="btnAISave"){toast("AI 設定已儲存");$("#aiPanel").classList.add("hide");render();}else testAI();
+  }
+});
+$("#btnExport").addEventListener("click",function(){const out=Object.assign({},S,{ai:Object.assign({},S.ai,{claudeKey:"",jevKey:""})});const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:"application/json"}));a.download="我的成長系統_"+today()+".json";document.body.appendChild(a);a.click();a.remove();dirty=false;stat();toast("已匯出，下次可用「匯入」接續");});
+$("#fileImport").addEventListener("change",function(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.addEventListener("load",function(){try{const d=JSON.parse(rd.result);if(!d.lv||!d.profile)throw new Error("bad");const keys={claudeKey:S.ai.claudeKey,jevKey:S.ai.jevKey};S=migrate(d);if(!S.ai.claudeKey)S.ai.claudeKey=keys.claudeKey;if(!S.ai.jevKey)S.ai.jevKey=keys.jevKey;nowStep=null;save();show("dash");toast("匯入成功");}catch(x){toast("檔案格式不正確");}});rd.readAsText(f);e.target.value="";});
+show(ready()?"dash":"dash");stat();
+})();
+</script>
+</body>
+</html>

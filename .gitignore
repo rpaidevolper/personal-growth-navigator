@@ -1,0 +1,29 @@
+# 使用者從 App 匯出的個人資料（含個人履歷、能力自評，不應進版控）
+我的成長系統_*.json
+# 使用者匯出的框架包請放 data/packs/ 並補上來源，再提交；下載資料夾的原始檔不進版控
+框架包_*.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node（目前沒有用到，預防日後加入工具）
+node_modules/
+
+# 編輯器與作業系統
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# OneDrive / Office 暫存
+~$*
+*.tmp
+
+# 備份
+*.bak
+*.orig

@@ -1,0 +1,1391 @@
+{
+ "meta": {
+  "schema": 1,
+  "updated": "2026-10-23",
+  "description": "推薦目錄：catalog 為舊 14 項能力 id 的通用目錄（tech 與 automation 使用，含擁有者精選機會），byTrack 為各職類自己的清單，catalogMap 把舊 id 對應到新框架",
+  "contributors": [
+   "Eddy",
+   "Claude"
+  ],
+  "sources": [
+   "各認證官方網站",
+   "擁有者實務經驗"
+  ],
+  "license": "待定（擁有者決定後填入）"
+ },
+ "catalog": [
+  {
+   "id": "c1",
+   "type": "c",
+   "t": "Microsoft PL-500：Power Automate RPA Developer Associate",
+   "comps": [
+    "rpa",
+    "lowcode"
+   ],
+   "h": 60,
+   "lv": 2,
+   "d": "證明桌面流程 + 雲端流程的 RPA 開發能力，與 Microsoft 生態系高度相容。"
+  },
+  {
+   "id": "c2",
+   "type": "c",
+   "t": "UiPath Certified Professional Automation Developer Associate",
+   "comps": [
+    "rpa"
+   ],
+   "h": 60,
+   "lv": 2,
+   "d": "業界主流 RPA 平台認證，適合多平台或跨企業專案。"
+  },
+  {
+   "id": "c3",
+   "type": "c",
+   "t": "Microsoft AI-900：Azure AI Fundamentals",
+   "comps": [
+    "genai",
+    "ml",
+    "cloud"
+   ],
+   "h": 15,
+   "lv": 1,
+   "d": "AI 與 Azure AI 服務入門，快速建立共同語言。"
+  },
+  {
+   "id": "c4",
+   "type": "c",
+   "t": "Microsoft AI-102：Azure AI Engineer Associate",
+   "comps": [
+    "genai",
+    "prog",
+    "cloud"
+   ],
+   "h": 80,
+   "lv": 3,
+   "d": "設計與實作 Azure AI / OpenAI 解決方案，對應 AI 應用工程職能。"
+  },
+  {
+   "id": "c5",
+   "type": "c",
+   "t": "經濟部 iPAS AI 應用規劃師（初級 / 中級）",
+   "comps": [
+    "genai",
+    "biz",
+    "gov"
+   ],
+   "h": 40,
+   "lv": 1,
+   "d": "台灣在地 AI 應用規劃能力鑑定，強化企業內 AI 導入規劃的說服力。"
+  },
+  {
+   "id": "c6",
+   "type": "c",
+   "t": "Microsoft PL-400：Power Platform Developer Associate",
+   "comps": [
+    "lowcode",
+    "prog"
+   ],
+   "h": 70,
+   "lv": 3,
+   "d": "進階 Power Platform 擴充開發（自訂連接器、外掛、API）。"
+  },
+  {
+   "id": "c7",
+   "type": "c",
+   "t": "Microsoft PL-600：Power Platform Solution Architect Expert",
+   "comps": [
+    "lowcode",
+    "process",
+    "cloud",
+    "biz"
+   ],
+   "h": 90,
+   "lv": 4,
+   "d": "解決方案架構師專家級認證，對應架構與需求整合職責。"
+  },
+  {
+   "id": "c8",
+   "type": "c",
+   "t": "Microsoft PL-300：Power BI Data Analyst Associate",
+   "comps": [
+    "data"
+   ],
+   "h": 50,
+   "lv": 2,
+   "d": "以資料呈現自動化成效與營運洞察。"
+  },
+  {
+   "id": "c9",
+   "type": "c",
+   "t": "Lean Six Sigma 綠帶",
+   "comps": [
+    "process",
+    "biz",
+    "data"
+   ],
+   "h": 60,
+   "lv": 2,
+   "d": "系統化流程改善方法，先「改善」再「自動化」。"
+  },
+  {
+   "id": "c10",
+   "type": "c",
+   "t": "PMP 專案管理師",
+   "comps": [
+    "pm",
+    "lead",
+    "comm"
+   ],
+   "h": 120,
+   "lv": 3,
+   "d": "國際專案管理認證，爭取 PM / 主導角色的敲門磚。"
+  },
+  {
+   "id": "c11",
+   "type": "c",
+   "t": "AZ-900：Azure Fundamentals",
+   "comps": [
+    "cloud"
+   ],
+   "h": 15,
+   "lv": 1,
+   "d": "雲端基礎概念與服務，奠定架構知識。"
+  },
+  {
+   "id": "c12",
+   "type": "c",
+   "t": "ITIL 4 Foundation",
+   "comps": [
+    "process",
+    "gov"
+   ],
+   "h": 25,
+   "lv": 1,
+   "d": "IT 服務管理框架，適合維運、治理與 CoE 角色。"
+  },
+  {
+   "id": "c13",
+   "type": "c",
+   "t": "Prosci 變革管理認證",
+   "comps": [
+    "change",
+    "lead"
+   ],
+   "h": 30,
+   "lv": 3,
+   "d": "結構化推動組織採用新工具與新流程。"
+  },
+  {
+   "id": "c14",
+   "type": "c",
+   "t": "AZ-305：Azure Solutions Architect Expert",
+   "comps": [
+    "cloud",
+    "gov"
+   ],
+   "h": 90,
+   "lv": 3,
+   "d": "把上雲論證、雲端架構與節費經驗正式化，對大型企業提案很有說服力。"
+  },
+  {
+   "id": "c15",
+   "type": "c",
+   "t": "ISO/IEC 42001 AI 管理系統主導稽核員 / 主導實施者",
+   "comps": [
+    "gov",
+    "change",
+    "process"
+   ],
+   "h": 40,
+   "lv": 2,
+   "d": "AI 治理國際標準，金融、醫藥等高監管產業導入 AI 時的關鍵門票。"
+  },
+  {
+   "id": "c16",
+   "type": "c",
+   "t": "ISO/IEC 27001 資訊安全主導稽核員",
+   "comps": [
+    "gov"
+   ],
+   "h": 40,
+   "lv": 2,
+   "d": "把資安評估實務經驗轉為正式資格，強化 AI 專案的資安論述。"
+  },
+  {
+   "id": "c17",
+   "type": "c",
+   "t": "Microsoft Certified Trainer（MCT）",
+   "comps": [
+    "comm",
+    "lead",
+    "change"
+   ],
+   "h": 20,
+   "lv": 3,
+   "d": "取得微軟官方講師身分，可教授官方課程，與授課經歷高度加乘。"
+  },
+  {
+   "id": "s12",
+   "type": "s",
+   "t": "多代理系統（Multi-Agent）與 MCP 工具整合",
+   "comps": [
+    "genai",
+    "prog",
+    "rpa"
+   ],
+   "h": 40,
+   "lv": 3,
+   "d": "Agentic Automation 的下一階段：多個 AI 代理協作、串接企業系統。"
+  },
+  {
+   "id": "s13",
+   "type": "s",
+   "t": "AI 成效量測與 LLM 評估（Evals）",
+   "comps": [
+    "genai",
+    "data",
+    "biz"
+   ],
+   "h": 25,
+   "lv": 2,
+   "d": "建立準確率、成本、節省工時的衡量框架，讓 AI 專案可被驗收。"
+  },
+  {
+   "id": "s14",
+   "type": "s",
+   "t": "產業法規知識（醫藥 GxP、金融監理、長照個資）",
+   "comps": [
+    "gov",
+    "biz"
+   ],
+   "h": 30,
+   "lv": 2,
+   "d": "把既有產業案例深化為「懂產業法規的 AI 顧問」定位。"
+  },
+  {
+   "id": "a9",
+   "type": "a",
+   "t": "顧問產品化（標準方法論、報價與課程包）",
+   "comps": [
+    "biz",
+    "pm",
+    "comm"
+   ],
+   "h": 30,
+   "lv": 3,
+   "d": "把一次性的顧問與授課經驗，整理成可複製、可報價的服務包。"
+  },
+  {
+   "id": "a10",
+   "type": "a",
+   "t": "個人品牌與內容經營（文章、Podcast、社群）",
+   "comps": [
+    "comm",
+    "change"
+   ],
+   "h": 30,
+   "lv": 2,
+   "d": "把講座內容轉成持續曝光的內容資產，累積帶來機會的影響力。"
+  },
+  {
+   "id": "a11",
+   "type": "a",
+   "t": "高階主管溝通與 AI 策略規劃",
+   "comps": [
+    "biz",
+    "lead",
+    "comm"
+   ],
+   "h": 25,
+   "lv": 3,
+   "d": "從講工具升級到談策略：AI 投資組合、組織能力、治理框架。"
+  },
+  {
+   "id": "s1",
+   "type": "s",
+   "t": "Python 自動化與 API 串接",
+   "comps": [
+    "prog",
+    "rpa"
+   ],
+   "h": 40,
+   "lv": 1,
+   "d": "requests、pandas、REST / Graph API，補齊 RPA 做不到的部分。"
+  },
+  {
+   "id": "s2",
+   "type": "s",
+   "t": "Prompt Engineering 與 LLM 工作流程設計",
+   "comps": [
+    "genai"
+   ],
+   "h": 20,
+   "lv": 1,
+   "d": "結構化提示、少樣本、輸出格式控制、評估方法。"
+  },
+  {
+   "id": "s3",
+   "type": "s",
+   "t": "RAG 檢索增強生成實作",
+   "comps": [
+    "genai",
+    "prog",
+    "data"
+   ],
+   "h": 40,
+   "lv": 2,
+   "d": "文件切分、向量檢索、引用來源，打造企業知識問答。"
+  },
+  {
+   "id": "s4",
+   "type": "s",
+   "t": "AI Agent / Copilot Studio 代理設計",
+   "comps": [
+    "genai",
+    "lowcode",
+    "rpa"
+   ],
+   "h": 35,
+   "lv": 2,
+   "d": "把 RPA 從「規則執行」升級為「智慧代理」，是下一波自動化趨勢。"
+  },
+  {
+   "id": "s5",
+   "type": "s",
+   "t": "流程挖掘（Process Mining）",
+   "comps": [
+    "process",
+    "data"
+   ],
+   "h": 30,
+   "lv": 2,
+   "d": "用系統日誌找出瓶頸與自動化熱點，用數據挑選專案。"
+  },
+  {
+   "id": "s6",
+   "type": "s",
+   "t": "Power BI 與 DAX",
+   "comps": [
+    "data"
+   ],
+   "h": 35,
+   "lv": 1,
+   "d": "自動化成效儀表板、節省工時追蹤。"
+  },
+  {
+   "id": "s7",
+   "type": "s",
+   "t": "Git、CI/CD 與自動化部署",
+   "comps": [
+    "cloud",
+    "prog"
+   ],
+   "h": 25,
+   "lv": 2,
+   "d": "讓自動化方案可版控、可測試、可維運。"
+  },
+  {
+   "id": "s8",
+   "type": "s",
+   "t": "SQL 與資料建模",
+   "comps": [
+    "data",
+    "prog"
+   ],
+   "h": 30,
+   "lv": 1,
+   "d": "資料清理、整合與報表的基本功。"
+  },
+  {
+   "id": "s9",
+   "type": "s",
+   "t": "機器學習基礎（scikit-learn / Azure ML）",
+   "comps": [
+    "ml",
+    "data"
+   ],
+   "h": 50,
+   "lv": 2,
+   "d": "分類、預測、異常偵測，延伸智慧自動化。"
+  },
+  {
+   "id": "s10",
+   "type": "s",
+   "t": "文件智慧（OCR / Document Intelligence）",
+   "comps": [
+    "genai",
+    "rpa"
+   ],
+   "h": 25,
+   "lv": 2,
+   "d": "發票、表單、合約自動擷取，RPA 最常見的高價值情境。"
+  },
+  {
+   "id": "s11",
+   "type": "s",
+   "t": "AI 風險評估與負責任 AI 實務",
+   "comps": [
+    "gov"
+   ],
+   "h": 20,
+   "lv": 1,
+   "d": "個資、資安、幻覺風險控管與使用規範設計。"
+  },
+  {
+   "id": "a1",
+   "type": "a",
+   "t": "自動化 ROI 與商業案例撰寫",
+   "comps": [
+    "biz",
+    "comm"
+   ],
+   "h": 15,
+   "lv": 1,
+   "d": "把「節省工時」轉成「金額、風險、品質」的語言，讓主管願意買單。"
+  },
+  {
+   "id": "a2",
+   "type": "a",
+   "t": "需求訪談與流程拆解",
+   "comps": [
+    "process",
+    "comm"
+   ],
+   "h": 20,
+   "lv": 1,
+   "d": "從使用者痛點找出可自動化的步驟與例外情境。"
+  },
+  {
+   "id": "a3",
+   "type": "a",
+   "t": "技術簡報與 Demo 說故事",
+   "comps": [
+    "comm",
+    "change"
+   ],
+   "h": 15,
+   "lv": 1,
+   "d": "3 分鐘 Demo 結構：痛點 → 前後對比 → 成效 → 下一步。"
+  },
+  {
+   "id": "a4",
+   "type": "a",
+   "t": "跨部門協作與利害關係人管理",
+   "comps": [
+    "lead",
+    "pm",
+    "comm"
+   ],
+   "h": 20,
+   "lv": 2,
+   "d": "建立業務端 Champion 網路，降低推動阻力。"
+  },
+  {
+   "id": "a5",
+   "type": "a",
+   "t": "教學與知識傳承（內訓講師）",
+   "comps": [
+    "lead",
+    "change",
+    "comm"
+   ],
+   "h": 20,
+   "lv": 2,
+   "d": "把個人能力擴散成團隊能力，是晉升的關鍵證據。"
+  },
+  {
+   "id": "a6",
+   "type": "a",
+   "t": "系統化思考與架構設計",
+   "comps": [
+    "cloud",
+    "process",
+    "biz"
+   ],
+   "h": 30,
+   "lv": 3,
+   "d": "從單一機器人思維升級為平台與治理思維。"
+  },
+  {
+   "id": "a7",
+   "type": "a",
+   "t": "優先順序與時間管理",
+   "comps": [
+    "pm"
+   ],
+   "h": 10,
+   "lv": 1,
+   "d": "在多專案並行中，用價值與影響度排序。"
+  },
+  {
+   "id": "a8",
+   "type": "a",
+   "t": "教練式領導與團隊培育",
+   "comps": [
+    "lead"
+   ],
+   "h": 25,
+   "lv": 3,
+   "d": "透過提問與回饋帶人，為管理職做準備。"
+  },
+  {
+   "id": "o1",
+   "type": "o",
+   "t": "主導一個部門的「高頻手工作業」自動化專案",
+   "comps": [
+    "rpa",
+    "process",
+    "biz"
+   ],
+   "req": {
+    "rpa": 3,
+    "process": 2,
+    "biz": 2
+   },
+   "h": 80,
+   "d": "挑選每月耗時最多的重複流程，交付可量化的節省工時。"
+  },
+  {
+   "id": "o2",
+   "type": "o",
+   "t": "建立企業內部 GenAI 知識問答助理（PoC）",
+   "comps": [
+    "genai",
+    "prog",
+    "data"
+   ],
+   "req": {
+    "genai": 3,
+    "prog": 2,
+    "data": 2
+   },
+   "h": 100,
+   "d": "用 RAG 解決制度、SOP、產品文件查詢問題。"
+  },
+  {
+   "id": "o3",
+   "type": "o",
+   "t": "發起自動化卓越中心（CoE）與治理規範",
+   "comps": [
+    "lead",
+    "gov",
+    "change",
+    "pm"
+   ],
+   "req": {
+    "lead": 3,
+    "gov": 3,
+    "change": 3,
+    "pm": 3
+   },
+   "h": 120,
+   "d": "建立開發規範、上線流程、機器人盤點與成效追蹤。"
+  },
+  {
+   "id": "o4",
+   "type": "o",
+   "t": "擔任公司內 AI / 自動化內訓講師",
+   "comps": [
+    "comm",
+    "change",
+    "genai"
+   ],
+   "req": {
+    "comm": 3,
+    "genai": 2
+   },
+   "h": 30,
+   "d": "每季開一門課，建立個人品牌與影響力。"
+  },
+  {
+   "id": "o5",
+   "type": "o",
+   "t": "打造自動化成效儀表板，向高層定期報告",
+   "comps": [
+    "data",
+    "biz",
+    "comm"
+   ],
+   "req": {
+    "data": 3,
+    "biz": 2,
+    "comm": 2
+   },
+   "h": 40,
+   "d": "讓你的貢獻被高層「看見」。"
+  },
+  {
+   "id": "o6",
+   "type": "o",
+   "t": "將既有 RPA 升級為 AI Agent 智慧流程",
+   "comps": [
+    "genai",
+    "rpa",
+    "lowcode"
+   ],
+   "req": {
+    "genai": 3,
+    "rpa": 3,
+    "lowcode": 3
+   },
+   "h": 80,
+   "d": "處理非結構化文件與判斷型任務，展現下一代自動化能力。"
+  },
+  {
+   "id": "o7",
+   "type": "o",
+   "t": "參與客戶 / 跨部門售前與解決方案提案",
+   "comps": [
+    "biz",
+    "comm",
+    "process"
+   ],
+   "req": {
+    "biz": 3,
+    "comm": 3,
+    "process": 3
+   },
+   "h": 40,
+   "d": "從執行者走向方案設計者，累積商業曝光。"
+  },
+  {
+   "id": "o8",
+   "type": "o",
+   "t": "外部演講、技術社群或部落格分享",
+   "comps": [
+    "comm",
+    "lead"
+   ],
+   "req": {
+    "comm": 3
+   },
+   "h": 20,
+   "d": "技術社群、研討會投稿，建立業界能見度。"
+  },
+  {
+   "id": "o9",
+   "type": "o",
+   "t": "擔任新人導師（Mentor）",
+   "comps": [
+    "lead",
+    "comm"
+   ],
+   "req": {
+    "lead": 2,
+    "comm": 3
+   },
+   "h": 20,
+   "d": "累積帶人經驗，為主管職鋪路。"
+  },
+  {
+   "id": "o11",
+   "type": "o",
+   "t": "申請 Microsoft MVP（AI Platform / Business Applications）",
+   "comps": [
+    "comm",
+    "genai",
+    "lowcode"
+   ],
+   "req": {
+    "comm": 4,
+    "genai": 3,
+    "lowcode": 3
+   },
+   "h": 60,
+   "d": "把講座與社群貢獻整理成紀錄即可申請，取得國際級技術影響力認可。"
+  },
+  {
+   "id": "o12",
+   "type": "o",
+   "t": "出版書籍或推出系統化線上課程",
+   "comps": [
+    "comm",
+    "genai",
+    "rpa"
+   ],
+   "req": {
+    "comm": 4,
+    "rpa": 4,
+    "genai": 3
+   },
+   "h": 150,
+   "d": "把多年授課內容產品化，建立長期收入與權威地位。"
+  },
+  {
+   "id": "o13",
+   "type": "o",
+   "t": "打造產業別 AI 自動化解決方案包（醫藥 / 金融 / 長照）",
+   "comps": [
+    "process",
+    "biz",
+    "gov"
+   ],
+   "req": {
+    "process": 4,
+    "biz": 4,
+    "gov": 3
+   },
+   "h": 100,
+   "d": "以既有成功案例為基礎，做成可複製的產業方案，提高單案價值。"
+  },
+  {
+   "id": "o14",
+   "type": "o",
+   "t": "擔任企業 AI 轉型顧問 / 外部顧問委員",
+   "comps": [
+    "biz",
+    "lead",
+    "change",
+    "gov"
+   ],
+   "req": {
+    "biz": 4,
+    "lead": 3,
+    "change": 4,
+    "gov": 3
+   },
+   "h": 80,
+   "d": "從專案執行者進入策略層，參與企業 AI 藍圖與治理決策。"
+  },
+  {
+   "id": "o15",
+   "type": "o",
+   "t": "在大型研討會發表主題演講",
+   "comps": [
+    "comm",
+    "lead",
+    "genai"
+   ],
+   "req": {
+    "comm": 5,
+    "lead": 3,
+    "genai": 4
+   },
+   "h": 30,
+   "d": "從講座講師升級為主題講者，擴大能見度。"
+  },
+  {
+   "id": "o16",
+   "type": "o",
+   "t": "主導 AI 雲端成本治理（FinOps for AI）專案",
+   "comps": [
+    "cloud",
+    "biz",
+    "gov"
+   ],
+   "req": {
+    "cloud": 3,
+    "biz": 4
+   },
+   "h": 60,
+   "d": "結合 FinOps 認證與節費經驗，切入企業正頭痛的 AI 成本問題。"
+  },
+  {
+   "id": "o10",
+   "type": "o",
+   "t": "主導 AI 使用政策與風險評估機制",
+   "comps": [
+    "gov",
+    "genai",
+    "change"
+   ],
+   "req": {
+    "gov": 3,
+    "genai": 3
+   },
+   "h": 50,
+   "d": "站上 AI 治理的關鍵位置，與資安、法務協作。"
+  }
+ ],
+ "byTrack": {
+  "biz": [
+   {
+    "id": "biz_c1",
+    "type": "c",
+    "t": "Google Ads 認證",
+    "comps": [
+     "growth"
+    ],
+    "h": 20,
+    "lv": 1,
+    "d": "證明你能規劃與優化付費廣告，行銷職缺的常見門檻。"
+   },
+   {
+    "id": "biz_c2",
+    "type": "c",
+    "t": "Google Analytics 4 認證",
+    "comps": [
+     "growth",
+     "market"
+    ],
+    "h": 20,
+    "lv": 1,
+    "d": "看懂流量與轉換數據，讓行銷決策有依據。"
+   },
+   {
+    "id": "biz_c3",
+    "type": "c",
+    "t": "HubSpot Inbound Sales 認證",
+    "comps": [
+     "relation",
+     "pitch"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "系統化的集客式銷售方法，免費且可快速完成。"
+   },
+   {
+    "id": "biz_c4",
+    "type": "c",
+    "t": "Salesforce Administrator",
+    "comps": [
+     "relation",
+     "product"
+    ],
+    "h": 60,
+    "lv": 2,
+    "d": "CRM 管理能力，往業務營運（Sales Ops）發展的敲門磚。"
+   },
+   {
+    "id": "biz_s1",
+    "type": "s",
+    "t": "顧問式銷售（SPIN / Challenger）",
+    "comps": [
+     "pitch",
+     "relation"
+    ],
+    "h": 20,
+    "lv": 2,
+    "d": "從推銷產品轉為挖掘痛點、帶客戶重新思考問題。"
+   },
+   {
+    "id": "biz_s2",
+    "type": "s",
+    "t": "數據分析：GA4 + Looker Studio 儀表板",
+    "comps": [
+     "growth",
+     "market"
+    ],
+    "h": 25,
+    "lv": 2,
+    "d": "自己拉數據、做週報，不再等別人給報表。"
+   },
+   {
+    "id": "biz_s3",
+    "type": "s",
+    "t": "AI 輔助銷售與行銷（提案、個人化信件、素材）",
+    "comps": [
+     "growth",
+     "learn"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "用生成式 AI 把提案與內容產出速度提高數倍。"
+   },
+   {
+    "id": "biz_s4",
+    "type": "s",
+    "t": "談判技巧（BATNA、讓步策略）",
+    "comps": [
+     "pitch",
+     "solve"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "在價格與條件上守住利潤，同時維持關係。"
+   },
+   {
+    "id": "biz_a1",
+    "type": "a",
+    "t": "客戶訪談與需求挖掘",
+    "comps": [
+     "market",
+     "relation"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "用 5 個問題找出客戶真正願意付錢的痛點。"
+   },
+   {
+    "id": "biz_a2",
+    "type": "a",
+    "t": "提案簡報與說故事",
+    "comps": [
+     "comm",
+     "pitch"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "痛點 → 方案 → 證據 → 下一步，讓決策者 3 分鐘聽懂。"
+   },
+   {
+    "id": "biz_a3",
+    "type": "a",
+    "t": "關鍵客戶經營計畫（Account Plan）",
+    "comps": [
+     "relation",
+     "exec"
+    ],
+    "h": 20,
+    "lv": 3,
+    "d": "為前 3 大客戶寫年度經營計畫，提高續約與擴大。"
+   },
+   {
+    "id": "biz_a4",
+    "type": "a",
+    "t": "設計一個通路夥伴合作方案",
+    "comps": [
+     "channel",
+     "pitch"
+    ],
+    "h": 30,
+    "lv": 3,
+    "d": "從找夥伴、談分潤到共同行銷，打開新市場。"
+   }
+  ],
+  "ops": [
+   {
+    "id": "ops_c1",
+    "type": "c",
+    "t": "PMP 專案管理師",
+    "comps": [
+     "exec",
+     "strategy"
+    ],
+    "h": 120,
+    "lv": 3,
+    "d": "國際專案管理認證，爭取主導角色的敲門磚。"
+   },
+   {
+    "id": "ops_c2",
+    "type": "c",
+    "t": "Lean Six Sigma 綠帶",
+    "comps": [
+     "process",
+     "solve"
+    ],
+    "h": 60,
+    "lv": 2,
+    "d": "系統化流程改善方法，先改善再自動化。"
+   },
+   {
+    "id": "ops_c3",
+    "type": "c",
+    "t": "ITIL 4 Foundation",
+    "comps": [
+     "process",
+     "risk"
+    ],
+    "h": 25,
+    "lv": 1,
+    "d": "服務管理框架，適合營運、維運與治理角色。"
+   },
+   {
+    "id": "ops_c4",
+    "type": "c",
+    "t": "Microsoft PL-900 Power Platform Fundamentals",
+    "comps": [
+     "digital"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "低程式碼入門，自己動手自動化部門例行工作。"
+   },
+   {
+    "id": "ops_s1",
+    "type": "s",
+    "t": "流程圖與 SOP 撰寫（BPMN）",
+    "comps": [
+     "process"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "把隱性作業變成可交接、可改善的標準流程。"
+   },
+   {
+    "id": "ops_s2",
+    "type": "s",
+    "t": "低程式碼自動化（Power Automate / Make）",
+    "comps": [
+     "digital",
+     "process"
+    ],
+    "h": 30,
+    "lv": 2,
+    "d": "簽核、通知、報表彙整，每週省下數小時。"
+   },
+   {
+    "id": "ops_s3",
+    "type": "s",
+    "t": "預算編列與成本分析",
+    "comps": [
+     "resource"
+    ],
+    "h": 20,
+    "lv": 2,
+    "d": "看懂成本結構，提出有數字支撐的資源需求。"
+   },
+   {
+    "id": "ops_s4",
+    "type": "s",
+    "t": "OKR 目標設定與追蹤",
+    "comps": [
+     "strategy",
+     "exec"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "把公司目標拆成團隊可衡量的關鍵結果。"
+   },
+   {
+    "id": "ops_a1",
+    "type": "a",
+    "t": "一對一面談與回饋",
+    "comps": [
+     "people",
+     "comm"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "固定節奏的一對一，及早發現問題、培養成員。"
+   },
+   {
+    "id": "ops_a2",
+    "type": "a",
+    "t": "跨部門會議主持與共識建立",
+    "comps": [
+     "strategy",
+     "comm"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "會前對齊、會中收斂、會後追蹤，讓決策真的落地。"
+   },
+   {
+    "id": "ops_a3",
+    "type": "a",
+    "t": "風險盤點與控管表",
+    "comps": [
+     "risk",
+     "solve"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "為負責的流程列出前 10 大風險與對策。"
+   },
+   {
+    "id": "ops_a4",
+    "type": "a",
+    "t": "授權與帶人：把一件事完整交出去",
+    "comps": [
+     "people"
+    ],
+    "h": 25,
+    "lv": 3,
+    "d": "從自己做到讓團隊做，是升主管的關鍵轉變。"
+   }
+  ],
+  "pro": [
+   {
+    "id": "pro_c1",
+    "type": "c",
+    "t": "PMP 專案管理師",
+    "comps": [
+     "exec",
+     "stakeholder"
+    ],
+    "h": 120,
+    "lv": 3,
+    "d": "帶客戶專案的共通語言，提升提案可信度。"
+   },
+   {
+    "id": "pro_c2",
+    "type": "c",
+    "t": "你領域的進階專業證照（CPA、CFA、SHRM、律師等）",
+    "comps": [
+     "domain"
+    ],
+    "h": 150,
+    "lv": 3,
+    "d": "專業服務最直接的信任背書，依你的領域選擇。"
+   },
+   {
+    "id": "pro_c3",
+    "type": "c",
+    "t": "ISO 主導稽核員（27001 / 9001 / 42001）",
+    "comps": [
+     "domain",
+     "analysis"
+    ],
+    "h": 40,
+    "lv": 2,
+    "d": "切入稽核與合規顧問服務的正式資格。"
+   },
+   {
+    "id": "pro_c4",
+    "type": "c",
+    "t": "iPAS AI 應用規劃師",
+    "comps": [
+     "digital"
+    ],
+    "h": 40,
+    "lv": 1,
+    "d": "台灣在地 AI 應用規劃鑑定，展現數位轉型能力。"
+   },
+   {
+    "id": "pro_s1",
+    "type": "s",
+    "t": "結構化分析（MECE、議題樹、假設驅動）",
+    "comps": [
+     "analysis",
+     "solve"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "顧問的基本功：把模糊問題拆成可回答的子問題。"
+   },
+   {
+    "id": "pro_s2",
+    "type": "s",
+    "t": "商業文件寫作（金字塔原理）",
+    "comps": [
+     "deliverable",
+     "comm"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "結論先行、論點分層，讓高層一頁看懂。"
+   },
+   {
+    "id": "pro_s3",
+    "type": "s",
+    "t": "AI 輔助研究與報告產出",
+    "comps": [
+     "digital",
+     "deliverable"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "用 AI 做文獻整理、初稿與資料分析，交付更快。"
+   },
+   {
+    "id": "pro_s4",
+    "type": "s",
+    "t": "Excel / Power BI 資料分析",
+    "comps": [
+     "analysis",
+     "digital"
+    ],
+    "h": 30,
+    "lv": 2,
+    "d": "自己處理數據，讓診斷與建議有量化依據。"
+   },
+   {
+    "id": "pro_a1",
+    "type": "a",
+    "t": "客戶需求訪談與期待管理",
+    "comps": [
+     "stakeholder",
+     "advisory"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "開案前對齊範圍與成功標準，避免期待落差。"
+   },
+   {
+    "id": "pro_a2",
+    "type": "a",
+    "t": "高階簡報與建議說服",
+    "comps": [
+     "advisory",
+     "comm"
+    ],
+    "h": 20,
+    "lv": 3,
+    "d": "讓決策者採納你的建議，而不只是收下報告。"
+   },
+   {
+    "id": "pro_a3",
+    "type": "a",
+    "t": "把經驗整理成方法論或課程",
+    "comps": [
+     "domain",
+     "learn"
+    ],
+    "h": 30,
+    "lv": 3,
+    "d": "把個人經驗產品化，建立可複製的專業品牌。"
+   },
+   {
+    "id": "pro_a4",
+    "type": "a",
+    "t": "建立同業人脈並公開分享",
+    "comps": [
+     "stakeholder",
+     "comm"
+    ],
+    "h": 20,
+    "lv": 2,
+    "d": "社群、演講、文章，讓案子主動找上門。"
+   }
+  ],
+  "creative": [
+   {
+    "id": "cre_c1",
+    "type": "c",
+    "t": "Google UX Design 證書",
+    "comps": [
+     "ux"
+    ],
+    "h": 80,
+    "lv": 1,
+    "d": "完整的 UX 流程訓練，附作品集專案。"
+   },
+   {
+    "id": "cre_c2",
+    "type": "c",
+    "t": "Adobe Certified Professional",
+    "comps": [
+     "craft",
+     "visual"
+    ],
+    "h": 40,
+    "lv": 2,
+    "d": "證明主流設計工具的熟練度。"
+   },
+   {
+    "id": "cre_c3",
+    "type": "c",
+    "t": "NN/g UX Certification",
+    "comps": [
+     "ux",
+     "concept"
+    ],
+    "h": 40,
+    "lv": 3,
+    "d": "國際 UX 權威機構認證，適合往 UX 研究與策略發展。"
+   },
+   {
+    "id": "cre_c4",
+    "type": "c",
+    "t": "HubSpot Content Marketing 認證",
+    "comps": [
+     "portfolio",
+     "comm"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "內容策略與經營方法，免費且快速。"
+   },
+   {
+    "id": "cre_s1",
+    "type": "s",
+    "t": "Figma 元件與設計系統",
+    "comps": [
+     "craft",
+     "visual"
+    ],
+    "h": 25,
+    "lv": 2,
+    "d": "從單張畫面升級到可維護、可擴充的設計系統。"
+   },
+   {
+    "id": "cre_s2",
+    "type": "s",
+    "t": "AI 生成工具工作流（Midjourney、Firefly 等）",
+    "comps": [
+     "tooling",
+     "concept"
+    ],
+    "h": 15,
+    "lv": 1,
+    "d": "用 AI 加速發想與素材產出，同時守住品質。"
+   },
+   {
+    "id": "cre_s3",
+    "type": "s",
+    "t": "可用性測試與使用者訪談",
+    "comps": [
+     "ux"
+    ],
+    "h": 20,
+    "lv": 2,
+    "d": "用 5 位使用者的測試，找出最關鍵的體驗問題。"
+   },
+   {
+    "id": "cre_s4",
+    "type": "s",
+    "t": "動態設計／短影音剪輯",
+    "comps": [
+     "craft",
+     "tooling"
+    ],
+    "h": 30,
+    "lv": 2,
+    "d": "補上動態與影音能力，作品與接案範圍更廣。"
+   },
+   {
+    "id": "cre_a1",
+    "type": "a",
+    "t": "設計提案與說故事",
+    "comps": [
+     "comm",
+     "concept"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "說清楚設計背後的理由，讓提案一次過。"
+   },
+   {
+    "id": "cre_a2",
+    "type": "a",
+    "t": "作品集重整（每件寫脈絡與成果）",
+    "comps": [
+     "portfolio"
+    ],
+    "h": 20,
+    "lv": 1,
+    "d": "從展示畫面改為展示思考與成果，提高錄取與成交率。"
+   },
+   {
+    "id": "cre_a3",
+    "type": "a",
+    "t": "建立個人品牌內容節奏",
+    "comps": [
+     "portfolio",
+     "comm"
+    ],
+    "h": 30,
+    "lv": 2,
+    "d": "固定頻率分享作品與觀點，累積能見度。"
+   },
+   {
+    "id": "cre_a4",
+    "type": "a",
+    "t": "跨職能協作（與 PM、工程師）",
+    "comps": [
+     "exec",
+     "ux"
+    ],
+    "h": 15,
+    "lv": 2,
+    "d": "早期參與需求、清楚交付規格，減少來回修改。"
+   }
+  ]
+ },
+ "catalogMap": {
+  "rpa": "ai",
+  "lowcode": "ai",
+  "genai": "ai",
+  "ml": "data",
+  "data": "data",
+  "prog": "code",
+  "cloud": "design",
+  "process": "process",
+  "biz": "solve",
+  "pm": "exec",
+  "comm": "comm",
+  "lead": "people",
+  "change": "comm",
+  "gov": "security"
+ }
+}
