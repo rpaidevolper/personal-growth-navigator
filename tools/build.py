@@ -98,6 +98,15 @@ def validate(d):
     url = (site.get("contrib") or {}).get("formUrl", "")
     if url and not url.startswith("https://"):
         err.append("site.json：contrib.formUrl 必須是 https 網址")
+    # 組織內語境（主管、跨部門）要有獨立專家版本 tx / dx（#14）
+    org = ("主管", "跨部門")
+    for it in rec["catalog"] + [x for v in rec["byTrack"].values() for x in v]:
+        if any(w in it["t"] + it.get("d", "") for w in org) and not (it.get("tx") or it.get("dx")):
+            err.append("推薦 %s：含「主管／跨部門」，需提供獨立專家版本 tx 或 dx" % it["id"])
+    for t, steps in d["templates"]["steps"].items():
+        for st in steps:
+            if any(w in st[0] for w in org) and len(st) < 3:
+                err.append("templates.steps.%s「%s」：含組織語境，需提供第 3 欄的獨立專家版本" % (t, st[0]))
     for t, steps in d["templates"]["steps"].items():
         if t not in TYPES:
             err.append("templates.steps.%s：type 必須是 c/s/a/o" % t)

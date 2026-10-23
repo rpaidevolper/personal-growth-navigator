@@ -53,6 +53,8 @@ personal-growth-system-for-career-2026-10-12/
 | 授權 CC BY-NC-SA 4.0 + 頁尾聲明 | ✅ 完成 | `LICENSE`、`data/site.json`、`rFoot()` |
 | 🤝 分享經驗（App 內投稿表單） | ✅ 完成，Google 表單待擁有者建立 | `rShare()` / `shSubmit()`；投稿格式 `growth-nav-contribution`（#11） |
 | GitHub Pages 部署 | ✅ 上線 https://rpaidevolper.github.io/personal-growth-navigator/ | `.github/workflows/deploy-pages.yml`；push 到 main 自動發佈（#10） |
+| 測試回饋修正 #12–#16（表單儲存、舊計畫處理、獨立專家語境、準備度部分計分、模擬提示） | ✅ 完成 | 回歸測試 `tools/regression.js` |
+| Role model 推薦相關度與目標合理化 | 🔜 | BACKLOG #17 |
 | 真 key 實測（Claude / Jev） | 🔜 | BACKLOG #8 |
 
 ## 4. 技術約定（改程式前必讀）
@@ -66,7 +68,9 @@ personal-growth-system-for-career-2026-10-12/
 - **AI 忙碌狀態**：`aiBusy` 是字串（"custom" / "rec" / "opp" / "rm" / 計畫項目 id），同一時間只跑一個 AI 動作。
 - **投稿**：「🤝 分享經驗」是不在導覽列的分頁（`tab="share"`），草稿存 `S.share`；投稿只送出、不寫回框架，審核通過後由人／AI 手動整理進 `data/`。投稿頁的聲明與同意文字一律讀 `DATA.site.contrib`，不要寫死在程式裡。
 - **狀態**：全域 `S` 物件，`save()` 寫 localStorage key `growth-nav-v8`。**改資料結構時**：(1) bump key 版本，(2) 把舊 key 加進 `OLDKEYS`，(3) 在 `migrate()` 補預設值。永遠不要讓舊資料載入時炸掉。
-- **畫面**：每個分頁一個 `rXxx()` 渲染函式，寫入 `#tab-xxx`；事件統一委派到 `main` 的 click / change / keydown 監聽器，用 `data-*` 屬性分派。
+- **畫面**：每個分頁一個 `rXxx()` 渲染函式，寫入 `#tab-xxx`；事件統一委派到 `main` 的 click / change / input / keydown 監聽器，用 `data-*` 屬性分派。
+- **表單欄位一律「邊打邊存」**：新增文字欄位時，要同時在 `input` 監聽器寫入 `S`，並讓 `flushInputs()` 涵蓋它；不要只靠 `change`（重畫前不一定會觸發，見 D-026）。必填錯誤用欄位旁提示，不要用 toast。
+- **獨立專家語境**：顯示給使用者的文字若含「主管、跨部門」等組織內說法，要提供 expert 版本（資料用 `tx`／`dx`／步驟第 3 欄，程式用 `isExpert()` 分支）；`build.py` 會擋資料中缺少的。
 - **AI 呼叫**：只在 `claudeCall()` / `jevCall()` 兩個地方發請求；任何 AI 功能都必須有**無 key 的 fallback**，失敗不可中斷流程（`aiFail()` 只 toast 一次）。
 - **金鑰**：只存 localStorage；`匯出` 時一律清空 `ai.claudeKey` / `ai.jevKey`。
 - **模型 ID**：`claude-haiku-5-5`（預設）、`claude-sonnet-5-5`、`claude-opus-5-5`；API 版本 header `anthropic-version: 2026-10-21`；瀏覽器直連需 `anthropic-dangerous-direct-browser-access: true`；結構化輸出用 `output_config.format.json_schema`。
@@ -77,6 +81,7 @@ personal-growth-system-for-career-2026-10-12/
 
 沒有測試框架。每次改完：
 0. 動到 `data/` 時：`python tools/build.py`，最後再跑一次 `python tools/build.py --check` 確認一致。
+0.5 **回歸測試**：開 App 後在 console 執行 `eval(await (await fetch('../tools/regression.js',{cache:'no-store'})).text()); await runRegression()`，必須全數通過（會清除該瀏覽器的 App 資料）。修 bug 時把重現步驟加進去。注意瀏覽器快取：改完 HTML 請用 `?v=…` 或強制重新整理，確認跑的是新版。
 1. 用本機 http 伺服器開檔案（例：在專案根目錄 `python -m http.server 8765`，開 `/output/個人成長導航系統.html`；這樣也能讀到 `data/packs/` 測匯入），`file://` 下 localStorage 行為不同。
 2. `localStorage.clear()` 後走一次**全新用戶流程**：總覽 → ① 四步 → ② 選角色 → ③ 加入計畫 → ④ 開一局跑完 20 季。
 3. 載入範例、匯出再匯入、手機寬度（375px）無橫向捲動、console 無錯誤。
