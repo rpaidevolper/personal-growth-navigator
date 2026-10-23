@@ -54,6 +54,9 @@ personal-growth-system-for-career-2026-10-12/
 | 🤝 分享經驗（App 內投稿表單） | ✅ 完成，Google 表單待擁有者建立 | `rShare()` / `shSubmit()`；投稿格式 `growth-nav-contribution`（#11） |
 | GitHub Pages 部署 | ✅ 上線 https://rpaidevolper.github.io/personal-growth-navigator/ | `.github/workflows/deploy-pages.yml`；push 到 main 自動發佈（#10） |
 | 測試回饋修正 #12–#16（表單儲存、舊計畫處理、獨立專家語境、準備度部分計分、模擬提示） | ✅ 完成 | 回歸測試 `tools/regression.js` |
+| 機會卡去重 + 職稱、AI 擴充機會與角色 | ✅ 完成 | `genOpps()` / `aiNewOpps()` / `aiRole()`（#18） |
+| 外部資料來源與誠實標示 | ✅ 第一階段 | `docs/sources.md`、框架 `maturity`／`refs`、`fwBasis()`；逐項對照 iCAP 待做（#19） |
+| 遊戲化（闖關地圖、XP、等級、成就） | ✅ 完成 | `xpTotal()` / `BADGES` / `rHud()` / `checkProgress()`（#20） |
 | Role model 推薦相關度與目標合理化 | 🔜 | BACKLOG #17 |
 | 真 key 實測（Claude / Jev） | 🔜 | BACKLOG #8 |
 

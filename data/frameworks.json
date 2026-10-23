@@ -8,9 +8,9 @@
    "Claude"
   ],
   "sources": [
-   "SFIA 8（Skills Framework for the Information Age）",
-   "O*NET OnLine",
-   "擁有者實務經驗"
+   "擁有者實務經驗（RPAI 數位優化器）",
+   "對照參考（未逐字引用）：勞動部勞動力發展署 iCAP 職能基準、行政院主計總處職業標準分類（第 6 次修訂）、O*NET 31.0（USDOL/ETA，CC BY 4.0）",
+   "資料來源與授權細節見 docs/sources.md"
   ],
   "license": "CC BY-NC-SA 4.0（© RPAI 數位優化器、Eddy Wu 吳宗賢）"
  },
@@ -282,9 +282,24 @@
     "ISO/IEC 27001 主導稽核員",
     "PMP"
    ],
-   "source": "自訂；分級精神參考 SFIA 8 與 O*NET",
+   "source": "RPAI 依實務經驗撰寫的草擬版，尚未逐項對照官方職能基準",
    "contributor": "Eddy + Claude",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "草擬版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "中華民國職業標準分類（行政院主計總處）",
+     "u": "https://www.stat.gov.tw/standardoccupationalclassification.aspx?n=3145"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    }
+   ]
   },
   "biz": {
    "id": "biz",
@@ -450,9 +465,24 @@
     "Salesforce Administrator",
     "PMP"
    ],
-   "source": "自訂；分級精神參考 SFIA 8 與 O*NET",
+   "source": "RPAI 依實務經驗撰寫的草擬版，尚未逐項對照官方職能基準",
    "contributor": "Eddy + Claude",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "草擬版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "中華民國職業標準分類（行政院主計總處）",
+     "u": "https://www.stat.gov.tw/standardoccupationalclassification.aspx?n=3145"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    }
+   ]
   },
   "ops": {
    "id": "ops",
@@ -616,9 +646,24 @@
     "Prosci 變革管理",
     "Microsoft PL-900"
    ],
-   "source": "自訂；分級精神參考 SFIA 8 與 O*NET",
+   "source": "RPAI 依實務經驗撰寫的草擬版，尚未逐項對照官方職能基準",
    "contributor": "Eddy + Claude",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "草擬版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "中華民國職業標準分類（行政院主計總處）",
+     "u": "https://www.stat.gov.tw/standardoccupationalclassification.aspx?n=3145"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    }
+   ]
   },
   "pro": {
    "id": "pro",
@@ -784,9 +829,28 @@
     "Microsoft Certified Trainer（MCT）",
     "iPAS AI 應用規劃師"
    ],
-   "source": "自訂；分級精神參考 SFIA 8 與 O*NET",
+   "source": "RPAI 依實務經驗撰寫的草擬版，尚未逐項對照官方職能基準",
    "contributor": "Eddy + Claude",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "草擬版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "中華民國職業標準分類（行政院主計總處）",
+     "u": "https://www.stat.gov.tw/standardoccupationalclassification.aspx?n=3145"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    },
+    {
+     "t": "可對照：O*NET 11-3031.00 Financial Managers",
+     "u": "https://www.onetonline.org/link/summary/11-3031.00"
+    }
+   ]
   },
   "creative": {
    "id": "creative",
@@ -949,9 +1013,24 @@
     "NN/g UX Certification",
     "HubSpot Content Marketing"
    ],
-   "source": "自訂；分級精神參考 SFIA 8 與 O*NET",
+   "source": "RPAI 依實務經驗撰寫的草擬版，尚未逐項對照官方職能基準",
    "contributor": "Eddy + Claude",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "草擬版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "中華民國職業標準分類（行政院主計總處）",
+     "u": "https://www.stat.gov.tw/standardoccupationalclassification.aspx?n=3145"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    }
+   ]
   },
   "automation": {
    "id": "automation",
@@ -1268,7 +1347,18 @@
    "certs": [],
    "source": "擁有者 Eddy 的自動化 / AI 顧問實務框架",
    "contributor": "Eddy",
-   "updated": "2026-10-23"
+   "updated": "2026-10-23",
+   "maturity": "實務版",
+   "refs": [
+    {
+     "t": "iCAP 職能基準（勞動部勞動力發展署）",
+     "u": "https://icap.wda.gov.tw/"
+    },
+    {
+     "t": "O*NET 31.0 Database（USDOL/ETA，CC BY 4.0）",
+     "u": "https://www.onetcenter.org/database.html"
+    }
+   ]
   }
  }
 }

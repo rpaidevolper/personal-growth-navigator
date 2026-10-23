@@ -121,6 +121,25 @@ window.runRegression = async function () {
   check("B AI 產生角色卡並設為目標", S().profile.target === "財務長" && S().lv.domain.tgt === 5 && $$(".rolecard[data-role]")[0].innerText.indexOf("AI 產生") >= 0, { target: S().profile.target });
   window.fetch = realFetch;
 
+  // G：遊戲化。載入範例只記錄不慶祝；勾一個步驟 XP +15；取消勾選扣回
+  await nav("dash"); $("#btnReset").click(); await sleep(60);
+  $("#btnSample").click(); await sleep(120);
+  const xpOf = () => Number(($(".hud .ttl")?.textContent || "").split(" ")[0]);
+  check("G 載入範例不跳慶祝且有 HUD", !$(".cele") && S().gx && /Lv\.\d/.test($(".hud").textContent), { hud: $(".hud")?.textContent });
+  await nav("plan"); $("#tab-plan [data-add]").click(); await sleep(50); await nav("dash");
+  $$(".cele").forEach((c) => c.remove());
+  const x0 = xpOf(), box = $$('#tab-dash input[data-step]').find((b) => !b.checked);
+  box.click(); await sleep(60);
+  const x1 = xpOf();
+  await nav("plan");
+  const doneBox = () => $$('#tab-plan input[data-step]').find((b) => b.dataset.step === box.dataset.step && b.checked);
+  for (let i = 0; i < 2 && !doneBox(); i++) { $("#tab-plan [data-openitem]").click(); await sleep(40); }
+  doneBox().click(); await sleep(60);
+  check("G 勾步驟 +15 XP、取消扣回", x1 - x0 === 15 && xpOf() === x0, { x0, x1, x2: xpOf() });
+  $("#btnHud").click(); await sleep(40);
+  check("G 點 HUD 開啟成就面板", !$("#gamePanel").classList.contains("hide") && $$("#gamePanel .badge").length === 14, {});
+  $$(".cele").forEach((c) => c.remove());
+
   localStorage.clear();
   const failed = results.filter((r) => !r.ok);
   console.table(results.map((r) => ({ 項目: r.name, 結果: r.ok ? "✓" : "✗" })));

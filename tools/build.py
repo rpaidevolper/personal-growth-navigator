@@ -42,6 +42,10 @@ def validate(d):
         for k in ("source", "contributor", "updated"):
             if not f.get(k):
                 err.append("frameworks.%s：缺少 %s 欄位" % (fid, k))
+        if f.get("maturity") not in ("草擬版", "實務版", "已對照官方"):
+            err.append("frameworks.%s：maturity 需為 草擬版／實務版／已對照官方" % fid)
+        if "SFIA" in f.get("source", ""):
+            err.append("frameworks.%s：SFIA 需另行授權，不可列為來源（見 docs/sources.md）" % fid)
         comps = f["comps"] if f.get("full") else fw["core"] + f["comps"]
         ids = [c["id"] for c in comps]
         track_comp_ids[fid] = set(ids)
