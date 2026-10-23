@@ -52,7 +52,7 @@ personal-growth-system-for-career-2026-10-12/
 | 框架資料外部化 + 匯入／匯出框架包 | ✅ 完成 | `data/*.json` + `tools/build.py`；GitHub repo 待擁有者建立（#5） |
 | 授權 CC BY-NC-SA 4.0 + 頁尾聲明 | ✅ 完成 | `LICENSE`、`data/site.json`、`rFoot()` |
 | 🤝 分享經驗（App 內投稿表單） | ✅ 完成，Google 表單待擁有者建立 | `rShare()` / `shSubmit()`；投稿格式 `growth-nav-contribution`（#11） |
-| GitHub Pages 部署 | ✅ Action 已寫，待擁有者啟用 Pages | `.github/workflows/deploy-pages.yml`（#10） |
+| GitHub Pages 部署 | ✅ 上線 https://rpaidevolper.github.io/personal-growth-navigator/ | `.github/workflows/deploy-pages.yml`；push 到 main 自動發佈（#10） |
 | 真 key 實測（Claude / Jev） | 🔜 | BACKLOG #8 |
 
 ## 4. 技術約定（改程式前必讀）

@@ -82,10 +82,11 @@
   - 驗證：biz × senior 新用戶 → 推薦為業務題材；加入 2 項自動產生 5 步；勾步驟→進行中、全勾→已完成+紀錄、移回→最後一步取消；新增 / 刪除步驟；mock AI 推薦（無效能力 id 過濾）、mock AI 拆解（保留已完成）、401 退回；季度回顧表單；v5 舊資料 40% → 2/5 步；100 天提醒卡
   - 未做：真 key 實測 AI 推薦與拆解品質（→ #8）；步驟沒有排序 / 拖曳；本週視圖每項只取一步
 
-### #10 ｜P1｜GitHub Pages 部署｜🔧 待擁有者啟用（Claude / 2026-10-23）
+### #10 ｜P1｜GitHub Pages 部署｜✅ 上線（Claude / 2026-10-23）
 - [x] `.github/workflows/deploy-pages.yml`：main 更新 → `build.py --check` → `index.html` + `LICENSE.txt` + `packs/` → 發佈
-- [ ] **擁有者**：repo Settings → Pages → Source 選「GitHub Actions」（只需一次）
-- [ ] 首次部署後確認 https://rpaidevolper.github.io/personal-growth-navigator/ 可用、localStorage 正常
+- [x] 擁有者已在 Settings → Pages 選「GitHub Actions」（第一次設定沒存到，部署報 Pages Not Found；重設後成功）
+- [x] 上線確認：https://rpaidevolper.github.io/personal-growth-navigator/ 、`LICENSE.txt`、`packs/hr-example.json` 皆 200；線上載入範例、跑 4 季模擬、開投稿頁，console 無錯誤
+- [x] CI 套件升級：`actions/checkout@v5`、`actions/setup-python@v6`（Node.js 24）
 - [ ] 之後可綁 RPAI 自有網域（Settings → Pages → Custom domain）
 
 ### #11 ｜P1｜社群投稿：App 內表單 + Google 表單審核｜部分完成（Claude / 2026-10-23）
