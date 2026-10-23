@@ -87,6 +87,40 @@ window.runRegression = async function () {
   off?.click(); await sleep(30);
   check("#16 精力不足的卡片顯示差額並說明原因", off && off.innerText.indexOf("還差") >= 0 && $("#toast").textContent.indexOf("精力不足") >= 0, { toast: $("#toast").textContent });
 
+  // A：同一型態只出一張機會卡；標題帶入職稱；專業服務不出現「客戶交付」
+  await nav("dash"); $("#btnReset").click(); await sleep(60);
+  await wizardBasic("財務主管", "5", "12", "pro", "lead"); await finishWizard(1);
+  await nav("goal"); if ($("#btnOppAll")) { $("#btnOppAll").click(); await sleep(40); }
+  const oppCards = $$("#tab-goal .rec:not(.rolecard)").filter((r) => r.querySelector(".chip.o"));
+  const genTn = oppCards.map((r) => r.querySelector(".chip.o").textContent).filter((t) => t !== "精選機會");
+  check("A 同一型態只出一張機會卡", genTn.length === new Set(genTn).size, { genTn });
+  const titles = oppCards.map((r) => r.querySelector(".t").textContent);
+  check("A 機會標題帶入職稱", titles.some((t) => t.indexOf("財務主管") >= 0), { first: titles[0] });
+  check("A 專業服務不出現「客戶交付」", titles.every((t) => t.indexOf("客戶交付") < 0), {});
+
+  // B：AI 新增機會、AI 產生角色（模擬 AI 回應，不需要真的 key）
+  $("#btnAI").click(); await sleep(40);
+  $("#aiProv").value = "claude"; $("#aiClaudeKey").value = "sk-ant-test"; $("#btnAISave").click(); await sleep(60);
+  const realFetch = window.fetch;
+  const mock = (obj) => Promise.resolve({ ok: true, json: () => Promise.resolve({ content: [{ type: "text", text: JSON.stringify(obj) }] }) });
+  window.fetch = (u, o) => {
+    const q = JSON.parse(o.body).messages[0].content;
+    if (q.indexOf("爭取或主動發起") >= 0) return mock({ items: [
+      { tn: "結帳流程", t: "把月結從 8 天縮到 5 天", d: "盤點月結步驟，找出等待最久的兩步先自動化。", comps: ["domain", "analysis", "bogus"], req: [{ id: "domain", level: 3 }], mini: "記錄這個月每個結帳步驟花幾小時", h: 40 },
+      { tn: "預算管理", t: "主導下年度部門預算編列", d: "整理三年實績，提出有依據的預算與假設。", comps: ["analysis"], req: [], mini: "下載過去三年的實際數", h: 30 },
+      { tn: "無效", t: "x", d: "x", comps: ["bogus"], req: [], mini: "x", h: 5 }] });
+    if (q.indexOf("想成為「") >= 0) return mock({ name: "財務長", d: "負責公司財務策略、資金與風險", tgt: [{ id: "domain", level: 5 }, { id: "comm", level: 5 }] });
+    return realFetch(u, o);
+  };
+  await nav("goal"); $("#btnAINewOpp").click(); await sleep(200);
+  const aiCards = $$("#tab-goal .rec").filter((r) => r.innerText.indexOf("✨ AI 產生") >= 0 && r.querySelector(".chip.o"));
+  check("B AI 新增機會：有效的才加入並標示", aiCards.length === 2 && S().aiOpps.items.length === 2, { n: aiCards.length });
+  aiCards[0].querySelector("[data-add]").click(); await sleep(50);
+  check("B AI 機會加入計畫時記錄來源", S().plan.some((p) => p.src === "ai"), {});
+  $("#aiRoleName").value = "財務長"; $("#btnAIRole").click(); await sleep(200);
+  check("B AI 產生角色卡並設為目標", S().profile.target === "財務長" && S().lv.domain.tgt === 5 && $$(".rolecard[data-role]")[0].innerText.indexOf("AI 產生") >= 0, { target: S().profile.target });
+  window.fetch = realFetch;
+
   localStorage.clear();
   const failed = results.filter((r) => !r.ok);
   console.table(results.map((r) => ({ 項目: r.name, 結果: r.ok ? "✓" : "✗" })));
