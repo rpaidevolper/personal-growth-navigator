@@ -53,7 +53,8 @@
 - [x] App 內「⬆ 匯入框架包」（① 第 1 步，可選、可移除，重設時保留）、「⬇ 匯出我的框架」（① 總覽，含 AI／自訂調整）；`validatePack()` 擋錯並說明原因
 - [x] `data/README.md`：格式、框架包規格、PR 貢獻流程與審核標準；範例 `data/packs/hr-example.json`
 - [x] 本機 git repo（`main`）、`.gitignore`、`.gitattributes`、根目錄 `README.md`、GitHub Action `.github/workflows/check-data.yml`（2026-10-23）
-- [ ] **推上 GitHub**：擁有者建立遠端 repo（決定帳號、公開與否、授權）後 `git remote add origin … && git push -u origin main`（`AGENTS.md` 的 email 已於 2026-10-23 移除）
+- [x] **推上 GitHub**（2026-10-23）：公開 repo https://github.com/rpaidevolper/personal-growth-navigator ，Action「檢查框架資料」首次執行通過；repo 內 git 作者設為 `rpaidevolper <264352534+rpaidevolper@users.noreply.github.com>`（只設在本 repo）
+- [ ] 授權（license）待擁有者決定，決定後更新 `README.md` 與 `data/*.json` 的 `meta.license`
 - 交接摘要：
   - 改了什麼：14 個資料常數改成讀 `DATA`；`OPP_TPL` / `EVENTS` 含函式邏輯，留在程式內不外部化；新增 `S.extFws` + `registerExt()`（載入時註冊回 `FRAMEWORKS` / `FW_RECS`）
   - 驗證：抽出後 `--check` 一致；舊 v7 資料正常載入；匯入 HR 範例 → 10 項自評、證照、3 角色、生成機會、role model（無對應維度顯示提示）、5 項推薦；缺目標等級的壞檔被擋；匯出 automation（14 項 / 6 角色 / 42 推薦）再匯入成功；移除框架包；故意改壞 rolemodels.json → `--check` 列出 2 個錯誤並回傳 1

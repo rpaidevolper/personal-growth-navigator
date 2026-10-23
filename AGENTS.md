@@ -81,7 +81,7 @@ personal-growth-system-for-career-2026-10-12/
 3. **做完要留下**：(a) BACKLOG 狀態更新，(b) 若有新決策寫入 DECISIONS，(c) 若改了資料模型或流程，更新 SPEC 對應章節與本文件 §3 快照，(d) 在 BACKLOG 的項目下留 3 行交接摘要：改了什麼 / 怎麼驗證的 / 還沒做什麼。
 4. **不確定就問擁有者**，不要猜產品方向。Eddy 的偏好：先討論規格再動手、分階段、每輪可驗證、避免資訊過載。
 5. **不要**：加外部套件、拆檔案、接後端、改掉單一 HTML 約定——除非 DECISIONS 有新決策。
-6. **版控**：本資料夾是 git repo（預設分支 `main`，尚未設定遠端）。一個 BACKLOG 項目一個 commit 或一條分支；commit 前先跑 `python tools/build.py --check`。不要提交使用者匯出的個人資料檔（`.gitignore` 已排除 `我的成長系統_*.json`）。
+6. **版控**：本資料夾是 git repo，遠端為公開的 https://github.com/rpaidevolper/personal-growth-navigator （分支 `main`，每次 push / PR 會跑 Action「檢查框架資料」）。repo 內的 git 作者已設為 rpaidevolper 的 GitHub 匿名信箱，不要改成真實 email。一個 BACKLOG 項目一個 commit 或一條分支；commit 前先跑 `python tools/build.py --check`。不要提交使用者匯出的個人資料檔（`.gitignore` 已排除 `我的成長系統_*.json`）。
 7. **資料可以並行改**：`data/*.json` 與程式是不同檔案，一人改資料、一人改程式可以同時進行；但最後只能有一個人執行 `build.py` 寫入 HTML，並在寫入前先同步對方的變更。
 
 ## 7. 擁有者與背景
