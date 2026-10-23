@@ -15,7 +15,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, "output", "個人成長導航系統.html")
 DATA_DIR = os.path.join(ROOT, "data")
-FILES = ["frameworks", "recommendations", "rolemodels", "templates"]
+FILES = ["frameworks", "recommendations", "rolemodels", "templates", "site"]
 BEGIN = "/*@@DATA-BEGIN"
 END = "/*@@DATA-END*/"
 TYPES = {"c", "s", "a", "o"}
@@ -89,6 +89,15 @@ def validate(d):
             err.append("people.%s：未知的特質維度：%s" % (p["id"], ",".join(bad)))
         if any(v not in (1, 2) for v in p["w"].values()):
             err.append("people.%s：加權只能是 1 或 2" % p["id"])
+    site = d["site"]
+    for k in ("copyright", "license", "contrib"):
+        if not site.get(k):
+            err.append("site.json：缺少 %s" % k)
+    if site.get("contrib") and not (site["contrib"].get("consent") and site["contrib"].get("declaration")):
+        err.append("site.json：contrib 需要 consent 與 declaration 文字")
+    url = (site.get("contrib") or {}).get("formUrl", "")
+    if url and not url.startswith("https://"):
+        err.append("site.json：contrib.formUrl 必須是 https 網址")
     for t, steps in d["templates"]["steps"].items():
         if t not in TYPES:
             err.append("templates.steps.%s：type 必須是 c/s/a/o" % t)

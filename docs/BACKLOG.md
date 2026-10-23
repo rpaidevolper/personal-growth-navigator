@@ -54,7 +54,7 @@
 - [x] `data/README.md`：格式、框架包規格、PR 貢獻流程與審核標準；範例 `data/packs/hr-example.json`
 - [x] 本機 git repo（`main`）、`.gitignore`、`.gitattributes`、根目錄 `README.md`、GitHub Action `.github/workflows/check-data.yml`（2026-10-23）
 - [x] **推上 GitHub**（2026-10-23）：公開 repo https://github.com/rpaidevolper/personal-growth-navigator ，Action「檢查框架資料」首次執行通過；repo 內 git 作者設為 `rpaidevolper <264352534+rpaidevolper@users.noreply.github.com>`（只設在本 repo）
-- [ ] 授權（license）待擁有者決定，決定後更新 `README.md` 與 `data/*.json` 的 `meta.license`
+- [x] 授權（2026-10-23）：CC BY-NC-SA 4.0，© RPAI 數位優化器、Eddy Wu 吳宗賢；`LICENSE`、README、`data/*.json` 的 `meta.license`、App 頁尾
 - 交接摘要：
   - 改了什麼：14 個資料常數改成讀 `DATA`；`OPP_TPL` / `EVENTS` 含函式邏輯，留在程式內不外部化；新增 `S.extFws` + `registerExt()`（載入時註冊回 `FRAMEWORKS` / `FW_RECS`）
   - 驗證：抽出後 `--check` 一致；舊 v7 資料正常載入；匯入 HR 範例 → 10 項自評、證照、3 角色、生成機會、role model（無對應維度顯示提示）、5 項推薦；缺目標等級的壞檔被擋；匯出 automation（14 項 / 6 角色 / 42 推薦）再匯入成功；移除框架包；故意改壞 rolemodels.json → `--check` 列出 2 個錯誤並回傳 1
@@ -81,6 +81,20 @@
   - 改了什麼：③ 整段重寫（`rPlan / planCard / weekCard / weekTasks / syncPg / completeItem`）；`aiBusy` 改字串（"custom" / "rec" / 項目 id）；localStorage 升 `growth-nav-v6`，舊項目依進度補 steps
   - 驗證：biz × senior 新用戶 → 推薦為業務題材；加入 2 項自動產生 5 步；勾步驟→進行中、全勾→已完成+紀錄、移回→最後一步取消；新增 / 刪除步驟；mock AI 推薦（無效能力 id 過濾）、mock AI 拆解（保留已完成）、401 退回；季度回顧表單；v5 舊資料 40% → 2/5 步；100 天提醒卡
   - 未做：真 key 實測 AI 推薦與拆解品質（→ #8）；步驟沒有排序 / 拖曳；本週視圖每項只取一步
+
+### #10 ｜P1｜GitHub Pages 部署｜🔧 待擁有者啟用（Claude / 2026-10-23）
+- [x] `.github/workflows/deploy-pages.yml`：main 更新 → `build.py --check` → `index.html` + `LICENSE.txt` + `packs/` → 發佈
+- [ ] **擁有者**：repo Settings → Pages → Source 選「GitHub Actions」（只需一次）
+- [ ] 首次部署後確認 https://rpaidevolper.github.io/personal-growth-navigator/ 可用、localStorage 正常
+- [ ] 之後可綁 RPAI 自有網域（Settings → Pages → Custom domain）
+
+### #11 ｜P1｜社群投稿：App 內表單 + Google 表單審核｜部分完成（Claude / 2026-10-23）
+- [x] App「🤝 分享經驗」頁（標頭按鈕、② 頁提示、頁尾連結）：投稿者資料、職業、3–10 項能力（每項需要等級＋≥ 15 字親身例子，可從框架帶入）、證照資源、親身經驗聲明與授權同意；草稿存 `S.share`
+- [x] 送出：表單未設定 → 下載 JSON；已設定 → 開啟 Google 表單並預填（精簡 JSON 編碼 < 6000 字元）或複製到剪貼簿；複製失敗 → 下載
+- [x] `docs/contribution-form.md`：表單題目、取得 entryId、審核標準
+- [ ] **擁有者**：用 RPAI 帳號建立 Google 表單與試算表，把 `formUrl` / `entryId` 給 Claude 填進 `data/site.json`
+- [ ] `tools/import_contributions.py`：試算表 CSV → 依職業彙整的草稿（≥ 3 份再整理成框架包）
+- 交接摘要：驗證過未填阻擋、缺勾選阻擋、未開放時下載、測試網址下預填（3 項約 3000 字元，解碼回原內容）、長內容改剪貼簿、375px 無橫向捲動；投稿格式見 `shPayload()`
 
 ### #8 ｜P2｜Claude / Jev 真實連線驗證
 - [ ] 用真 key 跑一局含敘事；確認 JSON schema 回傳；記錄 Jev 是否能從瀏覽器呼叫（CORS）

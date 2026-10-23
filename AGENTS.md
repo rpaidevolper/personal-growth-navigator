@@ -15,16 +15,20 @@ personal-growth-system-for-career-2026-10-12/
 ├── AGENTS.md            ← 你正在讀的交接文件（入口）
 ├── CLAUDE.md            ← 只是指向 AGENTS.md
 ├── README.md            ← GitHub 首頁說明（給使用者與貢獻者）
+├── LICENSE              ← CC BY-NC-SA 4.0，© RPAI 數位優化器、Eddy Wu 吳宗賢；含社群投稿授權條款
 ├── .github/workflows/check-data.yml  ← 每次 push / PR 跑 build.py --check
+├── .github/workflows/deploy-pages.yml ← main 更新後發佈到 GitHub Pages（index.html = App）
 ├── .gitignore / .gitattributes       ← 排除使用者匯出的個資檔；統一 LF 換行
 ├── docs/
 │   ├── SPEC.md          ← 產品規格（願景、模組、資料模型、演算法、路線圖）
 │   ├── DECISIONS.md     ← 決策紀錄（為什麼這樣做；新決策往下追加）
 │   ├── BACKLOG.md       ← 待辦看板（認領 / 進行中 / 完成；交接時更新）
+│   ├── contribution-form.md  ← 社群投稿：Google 表單題目、接回 App、審核標準
 │   ├── frameworks-draft.md / rolemodels-draft.md  ← 給擁有者審閱用的草稿
 ├── data/                ← 框架資料的唯一來源（改資料只改這裡）
 │   ├── README.md        ← 資料格式、框架包規格、貢獻流程
 │   ├── frameworks.json / recommendations.json / rolemodels.json / templates.json
+│   ├── site.json        ← 版權、授權、投稿表單網址（formUrl / entryId）
 │   └── packs/           ← 可在 App 內匯入的框架包範例
 ├── tools/
 │   └── build.py         ← 驗證 data/ 並注入 HTML 的 DATA 區塊（--check 只檢查）
@@ -46,6 +50,9 @@ personal-growth-system-for-career-2026-10-12/
 | AI 框架客製 + AI grill 追問 | ✅ 完成 | `customizeAI()` / `grill*()`；有 Claude key 才出現；未用真 key 實測（#8） |
 | Role model 原型庫（20 位 + AI 自訂） | ✅ 完成，待擁有者驗收 | `ROLE_MODELS` / `TRAIT_MAP` / `applyTargets()`（#4） |
 | 框架資料外部化 + 匯入／匯出框架包 | ✅ 完成 | `data/*.json` + `tools/build.py`；GitHub repo 待擁有者建立（#5） |
+| 授權 CC BY-NC-SA 4.0 + 頁尾聲明 | ✅ 完成 | `LICENSE`、`data/site.json`、`rFoot()` |
+| 🤝 分享經驗（App 內投稿表單） | ✅ 完成，Google 表單待擁有者建立 | `rShare()` / `shSubmit()`；投稿格式 `growth-nav-contribution`（#11） |
+| GitHub Pages 部署 | ✅ Action 已寫，待擁有者啟用 Pages | `.github/workflows/deploy-pages.yml`（#10） |
 | 真 key 實測（Claude / Jev） | 🔜 | BACKLOG #8 |
 
 ## 4. 技術約定（改程式前必讀）
@@ -57,7 +64,8 @@ personal-growth-system-for-career-2026-10-12/
 - **框架**：能力清單不是常數。`S.fw` 指向 `FRAMEWORKS` 的一套，`applyFramework(S)` 派生全域 `COMPS / ROLES / ROLE_D / CATX / TECH / BIZ / SOFT`；任何重建 `S` 的地方（載入、匯入、重設、範例）都要跟著呼叫。推薦來源：biz / ops / pro / creative 用各自的 `FW_RECS[track]`（用新框架的能力 id）；tech 與 automation 用舊目錄 `CAT`（舊 14 項 id，經 `CMAP` 翻譯）；再疊上 `S.aiRecs`，合成 `CATX`。機會（type o）不在 `CATX` 裡（擁有者框架的 16 個精選除外），而是每次由 `genOpps(lv)` 依差距生成，id 為 `g_型態_能力`；**要用 id 找項目時一律呼叫 `findItem(id)`**，不要直接 `CATX.find`。`FW_RECS` / `STEP_TPL` 必須定義在 `KEY` 之前（載入時 `migrate()` 就會用到）。
 - **目標等級**：一律透過 `applyTargets()` 計算（角色目標 + role model 加權，上限 5），不要直接寫 `S.lv[k].tgt = ROLES[...]`；使用者在差距表手動改的目標會在下次換角色或 role model 時被覆蓋。
 - **AI 忙碌狀態**：`aiBusy` 是字串（"custom" / "rec" / "opp" / "rm" / 計畫項目 id），同一時間只跑一個 AI 動作。
-- **狀態**：全域 `S` 物件，`save()` 寫 localStorage key `growth-nav-v7`。**改資料結構時**：(1) bump key 版本，(2) 把舊 key 加進 `OLDKEYS`，(3) 在 `migrate()` 補預設值。永遠不要讓舊資料載入時炸掉。
+- **投稿**：「🤝 分享經驗」是不在導覽列的分頁（`tab="share"`），草稿存 `S.share`；投稿只送出、不寫回框架，審核通過後由人／AI 手動整理進 `data/`。投稿頁的聲明與同意文字一律讀 `DATA.site.contrib`，不要寫死在程式裡。
+- **狀態**：全域 `S` 物件，`save()` 寫 localStorage key `growth-nav-v8`。**改資料結構時**：(1) bump key 版本，(2) 把舊 key 加進 `OLDKEYS`，(3) 在 `migrate()` 補預設值。永遠不要讓舊資料載入時炸掉。
 - **畫面**：每個分頁一個 `rXxx()` 渲染函式，寫入 `#tab-xxx`；事件統一委派到 `main` 的 click / change / keydown 監聽器，用 `data-*` 屬性分派。
 - **AI 呼叫**：只在 `claudeCall()` / `jevCall()` 兩個地方發請求；任何 AI 功能都必須有**無 key 的 fallback**，失敗不可中斷流程（`aiFail()` 只 toast 一次）。
 - **金鑰**：只存 localStorage；`匯出` 時一律清空 `ai.claudeKey` / `ai.jevKey`。

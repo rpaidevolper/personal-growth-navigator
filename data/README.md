@@ -16,6 +16,7 @@ HTML 仍是單一檔案、可離線使用；`build.py` 只是把 JSON 注入 HTM
 | `frameworks.json` | 能力框架 | `core`（4 項共通核心）、`tracks`、`stages`、`frameworks.{tech,biz,ops,pro,creative,automation}` |
 | `recommendations.json` | 推薦目錄 | `catalog`（舊 14 項 id 的通用目錄，tech / automation 用）、`byTrack.{biz,ops,pro,creative}`、`catalogMap` |
 | `rolemodels.json` | Role model | `note`（免責）、`dimensions`（11 個特質維度）、`traitMap.{框架}`（維度 → 能力 id）、`people` |
+| `site.json` | 網站設定 | `copyright`、`license`、`repo`、`contrib.{formUrl,entryId,consent,declaration}`（投稿表單網址與同意文字） |
 | `templates.json` | 模板 | `steps.{c,s,a,o}`（起步清單 `[步驟, 時數權重]`）、`oppScenes`（機會型態的職類用語） |
 | `packs/` | 可在 App 內「匯入框架包」的範例 | 見下方「框架包格式」 |
 
@@ -65,5 +66,7 @@ HTML 仍是單一檔案、可離線使用；`build.py` 只是把 JSON 注入 HTM
 2. **必填來源**：框架填 `source` / `contributor` / `updated`；role model 每位填 `source`；推薦項目若有特定來源可加 `src`。
 3. 執行 `python tools/build.py`，確認驗證通過並把更新後的 HTML 一起提交。
 4. PR 說明：改了什麼、依據為何（實務經驗、官方職能標準、公開報導），擁有者審核後合併。
+
+授權：所有資料採 CC BY-NC-SA 4.0（© RPAI 數位優化器、Eddy Wu 吳宗賢），提交 PR 即表示你同意以相同條款授權，並授予 RPAI 數位優化器與 Eddy Wu 吳宗賢包含商業用途的使用權（見根目錄 `LICENSE`）。一般使用者請改用 App 內「🤝 分享經驗」投稿。
 
 審核標準：描述具體可觀察（「能獨立交付 X」優於「熟悉 X」）、5 級有明確遞進、不含特定公司機密、人物描述只用公開可查證的資訊。

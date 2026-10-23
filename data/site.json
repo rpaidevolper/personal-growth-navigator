@@ -1,0 +1,23 @@
+{
+ "meta": {
+  "schema": 1,
+  "updated": "2026-10-23",
+  "description": "網站層級設定：版權、授權、投稿表單網址",
+  "contributors": ["Eddy", "Claude"],
+  "sources": [],
+  "license": "CC BY-NC-SA 4.0（© RPAI 數位優化器、Eddy Wu 吳宗賢）"
+ },
+ "copyright": "© 2026 RPAI 數位優化器・Eddy Wu 吳宗賢",
+ "license": {
+  "name": "CC BY-NC-SA 4.0",
+  "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant",
+  "commercial": "商業使用請先取得 RPAI 數位優化器的書面授權"
+ },
+ "repo": "https://github.com/rpaidevolper/personal-growth-navigator",
+ "contrib": {
+  "formUrl": "",
+  "entryId": "",
+  "consent": "我同意投稿內容以 CC BY-NC-SA 4.0 公開，並授予 RPAI 數位優化器與 Eddy Wu 吳宗賢非專屬、永久、全球、可再授權的使用權（包含商業用途）。",
+  "declaration": "我聲明以上內容都是我親身做過、或在工作中直接觀察到的經驗，不是推測或想像，也沒有洩漏任何公司的營業秘密。"
+ }
+}

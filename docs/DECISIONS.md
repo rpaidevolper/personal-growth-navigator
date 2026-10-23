@@ -87,5 +87,17 @@
 決定：`data/*.json` 是資料的唯一來源；`python tools/build.py` 驗證後把資料注入 HTML 中 `/*@@DATA-BEGIN … @@DATA-END*/` 區塊（`const DATA={…}`），程式只讀 `DATA`。`--check` 用於 PR / CI。含函式邏輯的 `OPP_TPL`、`EVENTS` 不外部化。使用者端另有「匯入／匯出框架包」，不需重建即可使用社群分享的框架（存在 `S.extFws`）。
 替代方案（未採）：獨立 `data/bundle.js`（HTML 變成多檔，分享不便）；執行期 fetch（`file://` 無法使用）。
 
+### D-023｜2026-10-23｜✅ 以 GitHub Pages 公開部署
+決定：`deploy-pages.yml` 在 main 更新時先跑 `build.py --check`，再把 App 發佈為 `index.html`。網站不收集任何資料，使用者資料與 API key 仍只存在自己的瀏覽器。之後可綁 RPAI 網域。
+替代方案（未採）：先發私人 Claude Artifact 試用。
+
+### D-024｜2026-10-23｜✅ 社群共編：App 內投稿 + Google 表單收件 + 擁有者審核
+背景：擁有者希望大家能貢獻職業與對應技能，但只能分享親身經驗、採審核制。
+決定：App「🤝 分享經驗」做結構化欄位與檢查（每項能力必附 ≥ 15 字親身例子、親身經驗聲明、授權同意），Google 表單只收 JSON；擁有者在試算表審核，通過後由人／AI 整理進 `data/`（同職業 ≥ 3 份再成框架包）。「不能掰」無法技術上杜絕，靠具體例子、年資職稱合理性與人工審核把關。
+替代方案（未採）：GitHub Issue 表單（需 GitHub 帳號，一般人門檻高）；自建共編平台（需後端，列 Phase 3）。
+
+### D-025｜2026-10-23｜✅ 授權 CC BY-NC-SA 4.0，權利人 RPAI 數位優化器、Eddy Wu 吳宗賢
+決定：程式與資料統一採 CC BY-NC-SA 4.0；商業使用須取得 RPAI 書面授權。社群投稿者同意以相同條款公開，並另授予 RPAI 數位優化器與 Eddy Wu 吳宗賢非專屬、永久、全球、可再授權（含商業）的使用權，讓投稿內容可用於課程與企業服務。條款文字未經法律審閱，商業化前建議請專業確認。
+
 ### D-016｜2026-10-23｜✅ 專案以「多 AI 協作」為前提建立文件
 `AGENTS.md`（交接入口）、`docs/SPEC.md`、`docs/DECISIONS.md`、`docs/BACKLOG.md`；協作規則見 AGENTS.md §6。
