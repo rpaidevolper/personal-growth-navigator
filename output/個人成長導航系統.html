@@ -212,6 +212,56 @@ nav button.on .n,nav button.on.done .n{border-color:#fff;color:#fff;background:t
 @keyframes floatup{to{transform:translateY(-40px);opacity:0}}
 .week label.stepline{background:var(--card);transition:background .2s}
 .week label.stepline:hover{background:var(--soft)}
+/* ===== 版面：置中三區（頁首、導覽、角色欄 + 主內容）===== */
+header,nav,.app,footer{max-width:1440px;margin-inline:auto}
+.app{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px;padding:20px 24px 48px;align-items:start}
+.app>main{padding:0;max-width:none;min-width:0}
+#side{position:sticky;top:12px;display:grid;gap:14px}
+#hdrSub{display:none}
+.idc{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.idc .strip{display:flex;justify-content:space-between;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#fff;background:linear-gradient(90deg,var(--xp1),var(--xp2))}
+.idc .body{display:flex;gap:12px;padding:14px}
+.idc .pic{width:76px;height:88px;border-radius:10px;display:grid;place-items:center;font-size:40px;flex:none;background:linear-gradient(160deg,color-mix(in srgb,var(--xp1) 22%,var(--card)),color-mix(in srgb,var(--accent2) 18%,var(--card)));position:relative}
+.idc .pic b{position:absolute;bottom:-6px;inset-inline:6px;text-align:center;font-size:10px;border-radius:999px;background:var(--ink);color:var(--card);padding:1px 0}
+.idc .nm{font-size:19px;font-weight:800;line-height:1.2;word-break:break-all}
+.idc dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:8px 0 0;font-size:12px}
+.idc dt{color:var(--muted)}.idc dd{margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.idc .lvrow{padding:0 14px 12px}
+.idc .lvrow .xpbar{width:100%}
+.idc .mrz{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;letter-spacing:.06em;color:var(--muted);border-top:1px dashed var(--line);padding:8px 14px;white-space:nowrap;overflow:hidden;line-height:1.6}
+.sbox{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px}
+.sbox h2{font-size:15px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+.sbox h2 small{font-size:11px;color:var(--muted);font-weight:600}
+.stat{display:grid;grid-template-columns:4.6em 1fr 2.2em;gap:8px;align-items:center;margin:7px 0;font-size:13px}
+.stat .tr{height:9px;border-radius:9px;background:var(--chip);overflow:hidden}
+.stat .tr i{display:block;height:100%;border-radius:9px;transition:width .6s}
+.stat .v{text-align:end;font-weight:800;font-variant-numeric:tabular-nums}
+.sbox details{font-size:12px;color:var(--muted);margin-top:8px}.sbox details summary{cursor:pointer}
+.wmap{display:grid;grid-template-columns:repeat(13,1fr);gap:3px}
+.wmap i{aspect-ratio:1;border-radius:3px;background:var(--chip)}
+.wmap i.a1{background:color-mix(in srgb,var(--accent2) 40%,var(--chip))}.wmap i.a2{background:color-mix(in srgb,var(--accent2) 70%,var(--chip))}.wmap i.a3{background:var(--accent2)}
+.wmap i.now{outline:2px solid var(--bad);outline-offset:-1px}
+.wleg{display:flex;gap:10px;font-size:11px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.sidemore{display:grid;gap:14px}
+.sidetoggle{display:none}
+@media (max-width:1000px){
+ header{padding:12px 14px 0;gap:8px}h1{font-size:18px}#hdrSub{display:none}
+ .tools{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}.tools>*{flex:none}
+ .app{grid-template-columns:1fr;padding:12px 12px 40px;gap:12px}
+ #side{position:static;gap:10px}
+ .idc .body{padding:12px}.idc .pic{width:58px;height:66px;font-size:30px}.idc .nm{font-size:16px}
+ .idc dl,.idc .mrz{display:none}
+ .stat{margin:4px 0;font-size:12px}
+ .sbox{padding:12px 14px}
+ .sidestats{display:grid;grid-template-columns:1fr 1fr;column-gap:14px}.sidestats .stat{grid-template-columns:4.2em 1fr 2em}
+ .sidemore{display:none}.sidemore.open{display:grid}
+ .sidetoggle{display:block;width:100%;text-align:center}
+ .side-open .idc dl,.side-open .idc .mrz{display:grid}.side-open .idc .mrz{display:block}
+ .card{padding:14px}.sec>h2{font-size:16px;flex-wrap:wrap;row-gap:4px}
+ /* 手機在基地以外的分頁只留一條等級列，把空間讓給內容 */
+ #side.slim .strip,#side.slim .body,#side.slim .mrz,#side.slim .sbox,#side.slim .sidetoggle,#side.slim .sidemore{display:none}
+ #side.slim .lvrow{padding:10px 14px}
+}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 .hero h2{white-space:nowrap}
 @media (max-width:620px){.xpbar{width:84px}.hud .tt{display:none}.mnode{min-width:0}.mnode .orb{width:44px;height:44px;font-size:20px;border-width:2px}.mnode:not(:last-child)::after{top:21px;inset-inline-start:calc(50% + 25px);width:calc(100% - 50px);height:3px}.mnode .ms{display:none}.mnode .mn{font-size:12px}
@@ -225,8 +275,7 @@ nav{flex-wrap:nowrap;overflow-x:auto;padding-inline:16px;scrollbar-width:none}na
     <h1>🧭 個人成長導航系統</h1>
     <div class="sub" id="hdrSub">現況 → 目標 → 計畫 → 模擬</div>
   </div>
-  <div id="hud"></div>
-  <div class="row">
+  <div class="row tools">
     <span class="small" id="saveStat"></span>
     <button class="btn ghost sm" id="btnShare">🤝 分享經驗</button>
     <button class="btn ghost sm" id="btnAI">⚙ AI 設定</button>
@@ -235,6 +284,8 @@ nav{flex-wrap:nowrap;overflow-x:auto;padding-inline:16px;scrollbar-width:none}na
   </div>
 </header>
 <nav id="nav"></nav>
+<div class="app">
+<aside id="side"></aside>
 <main>
   <section id="tab-dash"></section>
   <section id="tab-now" class="hide"></section>
@@ -243,6 +294,7 @@ nav{flex-wrap:nowrap;overflow-x:auto;padding-inline:16px;scrollbar-width:none}na
   <section id="tab-sim" class="hide"></section>
   <section id="tab-share" class="hide"></section>
 </main>
+</div>
 <footer id="foot"></footer>
 <div class="card panel hide" id="aiPanel"></div>
 <div class="card panel hide" id="gamePanel"></div>
@@ -509,10 +561,7 @@ const BADGES=[
  ["mentor","🤝","傳承經驗","分享一次職業經驗",function(){return !!(S.share&&S.share.sentAt);}]
 ];
 function badgesGot(){return BADGES.filter(function(b){try{return b[4]();}catch(e){return false;}}).map(function(b){return b[0];});}
-function rHud(){
-  const L=lvInfo(xpTotal()),got=badgesGot();
-  $("#hud").innerHTML='<button class="hud" id="btnHud" title="查看等級與成就" aria-label="等級 '+L.lv+'，'+L.title+'，查看成就"><span class="av">'+L.av+'</span><span><div class="lv">Lv.'+L.lv+'<span class="tt">　'+L.title+'</span></div><div class="xpbar"><i style="width:'+L.pct+'%"></i></div><div class="ttl">'+(L.next?L.x+' / '+L.next+' XP':L.x+' XP・已滿級')+'</div></span><span class="bd">🏆 '+got.length+'/'+BADGES.length+'</span></button>';
-}
+function rHud(){rSide();}
 function rGame(){
   const L=lvInfo(xpTotal()),got=badgesGot();
   $("#gamePanel").innerHTML='<div class="row"><h2 style="margin:0" class="sp">'+L.av+' Lv.'+L.lv+' '+L.title+'</h2><button class="btn ghost sm" id="btnGameClose" aria-label="關閉">✕</button></div>'+
@@ -520,6 +569,35 @@ function rGame(){
   '<h3 style="margin-block-start:14px">稱號之路</h3><div class="ladder">'+TITLES.map(function(t,i){return '<span class="'+(i+1===L.lv?"on":"")+'">'+AVATARS[i]+' '+t+'</span>';}).join("")+'</div>'+
   '<h3 style="margin-block-start:14px">成就 '+got.length+' / '+BADGES.length+'</h3><div class="badges">'+BADGES.map(function(b){const on=got.indexOf(b[0])>=0;return '<div class="badge'+(on?"":" locked")+'" title="'+esc(b[3])+'"><div class="bi">'+b[1]+'</div><div class="bn">'+esc(b[2])+'</div><div class="bdsc">'+esc(b[3])+'</div></div>';}).join("")+'</div>'+
   '<h3 style="margin-block-start:14px">怎麼獲得經驗值</h3><div class="small muted">經驗值完全依你實際完成的事計算，改回去就會扣回來，不能灌水。</div><table class="small" style="margin-block-start:6px">'+XP_RULES.map(function(r){return '<tr><td>'+r[0]+'</td><td style="text-align:end"><b>+'+r[1]+'</b></td></tr>';}).join("")+'</table>';
+}
+// ===== 左側角色欄：身分卡、狀態值、成長地圖（全部由資料推導）=====
+let sideOpen=false;
+function avgOf(ids){const v=ids.filter(function(id){return S.lv[id];}).map(function(id){return S.lv[id].cur;});return v.length?v.reduce(function(a,b){return a+b;},0)/v.length:0;}
+// 每筆行動的日期：成長紀錄 + 勾完的步驟（步驟從這版開始記 at）
+function actDates(){const d=S.log.map(function(l){return l.d;});S.plan.forEach(function(p){(p.steps||[]).forEach(function(st){if(st.done&&st.at)d.push(st.at);});});return d.filter(Boolean);}
+function weekIdx(ds){const d=new Date(ds+"T00:00:00"),n=new Date();n.setHours(0,0,0,0);const mon=function(x){const m=new Date(x);m.setDate(x.getDate()-((x.getDay()+6)%7));return m;};return Math.round((mon(n)-mon(d))/604800000);}
+function sideStats(){
+  const core=COMPS.filter(function(c){return CORE_IDS.indexOf(c.id)>=0;}).map(function(c){return c.id;}),pro=COMPS.filter(function(c){return CORE_IDS.indexOf(c.id)<0;}).map(function(c){return c.id;});
+  const wk={};actDates().forEach(function(d){const i=weekIdx(d);if(i>=0&&i<4)wk[i]=1;});
+  return [["目標達成",S.setup.target?overall():0,"var(--accent)"],["核心能力",Math.round(avgOf(core)*20),"var(--accent2)"],["專業能力",Math.round(avgOf(pro.length?pro:core)*20),"var(--xp1)"],["行動力",Object.keys(wk).length*25,"var(--warn)"]];
+}
+function mrz(a,b){const pad=function(x){x=String(x).toUpperCase().replace(/\s+/g,"<");return (x+"<".repeat(40)).slice(0,40);};return esc(pad(a))+"<br>"+esc(pad(b));}
+function rSide(){
+  const p=S.profile,L=lvInfo(xpTotal()),f=FRAMEWORKS[S.fw],ps=p.persona||{},st=STAGE_LIST.find(function(x){return x[0]===ps.stage;}),rm=getRM();
+  const got=badgesGot().length,rows=[["職務",p.role],["階段",st&&st[1]],["目標",S.setup.target&&p.target],["典範",rm&&rm.n.split(" ")[0]],["每週投入",p.hours&&p.hours+" 小時"],["開始於",S.since]];
+  const cnt={};actDates().forEach(function(d){const i=weekIdx(d);if(i>=0&&i<52)cnt[i]=(cnt[i]||0)+1;});
+  const cells=[];for(let i=51;i>=0;i--){const c=cnt[i]||0;cells.push('<i class="'+(c>=3?"a3":c===2?"a2":c===1?"a1":"")+(i===0?" now":"")+'" title="'+(i===0?"本週":i+" 週前")+'：'+c+' 筆行動"></i>');}
+  $("#side").className=(sideOpen?"side-open":"")+(tab!=="dash"?" slim":"");
+  $("#side").innerHTML=
+  '<div class="idc"><div class="strip"><span>冒險者檔案 · '+esc(f?f.name.split("（")[0]:"未選職類")+'</span><span>'+new Date().getFullYear()+'</span></div>'+
+   '<div class="body"><div class="pic">'+L.av+'<b>Lv.'+L.lv+'</b></div><div style="min-width:0;flex:1"><div class="nm">'+esc(p.name||"冒險者")+'</div><div class="small muted">'+esc(L.title)+'</div>'+
+   '<dl>'+rows.map(function(r){return '<dt>'+r[0]+'</dt><dd>'+(r[1]?esc(r[1]):'<span class="muted" style="font-weight:400">尚未設定</span>')+'</dd>';}).join("")+'</dl></div></div>'+
+   '<div class="lvrow"><button class="hud" id="btnHud" style="width:100%;box-shadow:none;padding:0;background:none" title="查看等級與成就" aria-label="等級 '+L.lv+'，'+L.title+'，查看成就"><span style="flex:1"><div class="row small"><b class="sp">Lv.'+L.lv+'</b><span class="ttl">'+(L.next?L.x+' / '+L.next+' XP':L.x+' XP・已滿級')+'</span></div><div class="xpbar"><i style="width:'+L.pct+'%"></i></div></span><span class="bd">🏆 '+got+'/'+BADGES.length+'</span></button></div>'+
+   '<div class="mrz">'+mrz("LV"+L.lv+"<"+L.title+"<<"+(p.target||"???"),"XP"+L.x+"<"+(p.role||"NEWBIE")+"<<"+String(S.since||"").replace(/-/g,""))+'</div></div>'+
+  '<div class="sbox"><h2>狀態 <small>0–100</small></h2><div class="sidestats">'+sideStats().map(function(x){return '<div class="stat"><span>'+x[0]+'</span><span class="tr"><i style="width:'+Math.max(0,Math.min(100,x[1]))+'%;background:'+x[2]+'"></i></span><span class="v">'+x[1]+'</span></div>';}).join("")+'</div>'+
+   '<details><summary>這些狀態代表什麼？</summary><div style="margin-top:6px;line-height:1.7"><b>目標達成</b>：目前等級占目標等級的比例。<br><b>核心能力</b>：溝通、解決問題、執行、學習 4 項的平均等級 × 20。<br><b>專業能力</b>：你這個職類專屬能力的平均等級 × 20。<br><b>行動力</b>：最近 4 週中有幾週留下行動（勾完步驟或寫成長紀錄），每週 25 分。</div></details></div>'+
+  '<button class="btn ghost sm sidetoggle" id="btnSideMore">'+(sideOpen?"▴ 收合角色檔案":"▾ 展開角色檔案與成長地圖")+'</button>'+
+  '<div class="sidemore'+(sideOpen?" open":"")+'"><div class="sbox"><h2>成長地圖 <small>一格 = 1 週・近一年</small></h2><div class="wmap">'+cells.join("")+'</div><div class="wleg"><span>■ 顏色越深，那週行動越多</span><span style="color:var(--bad)">□ 本週</span></div></div></div>';
 }
 // 慶祝：新成就與升級。第一次載入（或載入範例、舊資料升級）只記錄不慶祝，避免一次跳出一堆
 let celeQ=[],celeOn=false;
@@ -1446,7 +1524,7 @@ main.addEventListener("change",function(e){
   if(t.dataset.p){S.profile[t.dataset.p]=t.value;markProfile();save();return;}
   if(t.dataset.cmp){const id=t.dataset.cmp;if(t.checked){if(cmpSel.indexOf(id)<0)cmpSel.push(id);}else cmpSel=cmpSel.filter(function(x){return x!==id;});render();return;}
   if(t.dataset.lv){S.lv[t.dataset.lv][t.dataset.f]=Number(t.value);save();render();return;}
-  if(t.dataset.step){const k=t.dataset.step.split("|");const p=S.plan.find(function(x){return x.id===k[0];});if(!p)return;const st=p.steps.find(function(x){return x.id===k[1];});if(!st)return;st.done=t.checked;const rc=t.getBoundingClientRect();syncPg(p);save();render();if(t.checked)floatXP(rc,"+15 XP");return;}
+  if(t.dataset.step){const k=t.dataset.step.split("|");const p=S.plan.find(function(x){return x.id===k[0];});if(!p)return;const st=p.steps.find(function(x){return x.id===k[1];});if(!st)return;st.done=t.checked;st.at=t.checked?today():"";const rc=t.getBoundingClientRect();syncPg(p);save();render();if(t.checked)floatXP(rc,"+15 XP");return;}
   if(t.dataset.due){S.plan.find(function(x){return x.id===t.dataset.due;}).due=t.value;save();return;}
   if(t.dataset.next){S.plan.find(function(x){return x.id===t.dataset.next;}).next=t.value;save();return;}
 });
@@ -1469,7 +1547,7 @@ main.addEventListener("keydown",function(e){
 });
 $("#btnShare").addEventListener("click",function(){flushInputs();show("share");});
 function toggleGame(){const gp=$("#gamePanel");if(gp.classList.contains("hide")){rGame();gp.classList.remove("hide");$("#aiPanel").classList.add("hide");}else gp.classList.add("hide");}
-$("#hud").addEventListener("click",function(e){if(e.target.closest("#btnHud")){flushInputs();toggleGame();}});
+$("#side").addEventListener("click",function(e){if(e.target.closest("#btnHud")){flushInputs();toggleGame();return;}if(e.target.closest("#btnSideMore")){sideOpen=!sideOpen;rSide();}});
 $("#gamePanel").addEventListener("click",function(e){if(e.target.closest("#btnGameClose"))$("#gamePanel").classList.add("hide");});
 $("#foot").addEventListener("click",function(e){if(e.target.id==="footShare"){e.preventDefault();show("share");}});
 $("#btnAI").addEventListener("click",function(){flushInputs();const p=$("#aiPanel");if(p.classList.contains("hide")){rAI();p.classList.remove("hide");}else p.classList.add("hide");});
