@@ -91,7 +91,7 @@
 
 ### #11 ｜P1｜社群分享：一鍵分享 + Supabase 收件審核｜✅ 完成（Claude / 2026-10-24；原 Google 表單方案已取代）
 - [x] 2026-10-24 改版：分享頁改成勾選要分享的區塊（自動打包已填內容）、關於你全選填、進階能力定義收合；預覽後送出到 Supabase `submissions`（只能新增、待審核、限頻）；失敗時自動下載檔案；`supabase/schema.sql`、`docs/contribution-review.md`；回歸測試 S×3
-- [ ] 擁有者在 Supabase SQL Editor 執行 `supabase/schema.sql`，再實際送一筆確認
+- [x] 擁有者已執行 `supabase/schema.sql`（2026-10-24）；從線上網站實際送出一筆 → 201。安全檢查：匿名讀取、修改、刪除、未勾授權、自填 reviewer_note 皆被擋（401/RLS）；自填 status=approved 會被觸發器改回 pending
 - [x] App「🤝 分享經驗」頁（標頭按鈕、② 頁提示、頁尾連結）：投稿者資料、職業、3–10 項能力（每項需要等級＋≥ 15 字親身例子，可從框架帶入）、證照資源、親身經驗聲明與授權同意；草稿存 `S.share`
 - [x] 送出：表單未設定 → 下載 JSON；已設定 → 開啟 Google 表單並預填（精簡 JSON 編碼 < 6000 字元）或複製到剪貼簿；複製失敗 → 下載
 - [x] `docs/contribution-review.md`：表單題目、取得 entryId、審核標準
