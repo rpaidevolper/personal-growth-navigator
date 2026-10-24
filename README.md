@@ -15,7 +15,7 @@
 | 產品規格 | [`docs/SPEC.md`](docs/SPEC.md) |
 | 為什麼這樣設計 | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 | 待辦與認領 | [`docs/BACKLOG.md`](docs/BACKLOG.md) |
-| 分享你的職業經驗（一般使用者） | App 右上角「🤝 分享經驗」，審核流程見 [`docs/contribution-form.md`](docs/contribution-form.md) |
+| 分享你的職業經驗（一般使用者） | App 右上角「🤝 分享路徑」，審核流程見 [`docs/contribution-review.md`](docs/contribution-review.md) |
 | 貢獻能力框架、推薦、role model（技術人員） | [`data/README.md`](data/README.md) |
 
 框架資料在 `data/*.json`，修改後執行：
