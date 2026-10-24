@@ -29,6 +29,17 @@ def load():
     return data
 
 
+def _jwt_role(token):
+    """解出 JWT 的 payload（不驗簽），只用來確認放進網頁的是 anon 金鑰。"""
+    import base64
+    try:
+        part = token.split(".")[1]
+        part += "=" * (-len(part) % 4)
+        return base64.urlsafe_b64decode(part).decode("utf-8").replace(" ", "")
+    except Exception:
+        return ""
+
+
 def validate(d):
     """回傳錯誤清單；空清單代表通過。"""
     err = []
@@ -99,9 +110,11 @@ def validate(d):
             err.append("site.json：缺少 %s" % k)
     if site.get("contrib") and not (site["contrib"].get("consent") and site["contrib"].get("declaration")):
         err.append("site.json：contrib 需要 consent 與 declaration 文字")
-    url = (site.get("contrib") or {}).get("formUrl", "")
-    if url and not url.startswith("https://"):
-        err.append("site.json：contrib.formUrl 必須是 https 網址")
+    sb = (site.get("contrib") or {}).get("supabase") or {}
+    if sb.get("url") and not str(sb["url"]).startswith("https://"):
+        err.append("site.json：contrib.supabase.url 必須是 https 網址")
+    if sb.get("url") and '"role":"anon"' not in _jwt_role(sb.get("anonKey", "")):
+        err.append("site.json：contrib.supabase.anonKey 必須是 anon（公開）金鑰，絕對不能放 service_role")
     # 組織內語境（主管、跨部門）要有獨立專家版本 tx / dx（#14）
     org = ("主管", "跨部門")
     for it in rec["catalog"] + [x for v in rec["byTrack"].values() for x in v]:

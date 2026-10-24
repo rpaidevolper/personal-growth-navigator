@@ -89,10 +89,12 @@
 - [x] CI 套件升級：`actions/checkout@v5`、`actions/setup-python@v6`（Node.js 24）
 - [ ] 之後可綁 RPAI 自有網域（Settings → Pages → Custom domain）
 
-### #11 ｜P1｜社群投稿：App 內表單 + Google 表單審核｜部分完成（Claude / 2026-10-23）
+### #11 ｜P1｜社群分享：一鍵分享 + Supabase 收件審核｜✅ 完成（Claude / 2026-10-24；原 Google 表單方案已取代）
+- [x] 2026-10-24 改版：分享頁改成勾選要分享的區塊（自動打包已填內容）、關於你全選填、進階能力定義收合；預覽後送出到 Supabase `submissions`（只能新增、待審核、限頻）；失敗時自動下載檔案；`supabase/schema.sql`、`docs/contribution-review.md`；回歸測試 S×3
+- [ ] 擁有者在 Supabase SQL Editor 執行 `supabase/schema.sql`，再實際送一筆確認
 - [x] App「🤝 分享經驗」頁（標頭按鈕、② 頁提示、頁尾連結）：投稿者資料、職業、3–10 項能力（每項需要等級＋≥ 15 字親身例子，可從框架帶入）、證照資源、親身經驗聲明與授權同意；草稿存 `S.share`
 - [x] 送出：表單未設定 → 下載 JSON；已設定 → 開啟 Google 表單並預填（精簡 JSON 編碼 < 6000 字元）或複製到剪貼簿；複製失敗 → 下載
-- [x] `docs/contribution-form.md`：表單題目、取得 entryId、審核標準
+- [x] `docs/contribution-review.md`：表單題目、取得 entryId、審核標準
 - [ ] **擁有者**：用 RPAI 帳號建立 Google 表單與試算表，把 `formUrl` / `entryId` 給 Claude 填進 `data/site.json`
 - [ ] `tools/import_contributions.py`：試算表 CSV → 依職業彙整的草稿（≥ 3 份再整理成框架包）
 - 交接摘要：驗證過未填阻擋、缺勾選阻擋、未開放時下載、測試網址下預填（3 項約 3000 字元，解碼回原內容）、長內容改剪貼簿、375px 無橫向捲動；投稿格式見 `shPayload()`
@@ -167,7 +169,7 @@
 
 ### #21 ｜P2｜分享我的路徑（使用者紀錄回饋）
 - [ ] 使用者可把自己的計畫與完成紀錄（含 AI 產生的機會／角色）匿名送出，經審核成為選項；三層可信度：親身經驗／使用者認可／使用者完成
-- [ ] 依賴 Google 表單（#11）建立後再做
+- [ ] 收件已就緒（#11）；累積約 30 筆通過的分享後，開 `approved_paths` 檢視表並在「目標」頁顯示相似路徑
 
 ### #8 ｜P2｜Claude / Jev 真實連線驗證
 - [ ] 用真 key 跑一局含敘事；確認 JSON schema 回傳；記錄 Jev 是否能從瀏覽器呼叫（CORS）

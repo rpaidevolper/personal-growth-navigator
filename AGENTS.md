@@ -23,7 +23,7 @@ personal-growth-system-for-career-2026-10-12/
 │   ├── SPEC.md          ← 產品規格（願景、模組、資料模型、演算法、路線圖）
 │   ├── DECISIONS.md     ← 決策紀錄（為什麼這樣做；新決策往下追加）
 │   ├── BACKLOG.md       ← 待辦看板（認領 / 進行中 / 完成；交接時更新）
-│   ├── contribution-form.md  ← 社群投稿：Google 表單題目、接回 App、審核標準
+│   ├── contribution-review.md  ← 社群投稿：Google 表單題目、接回 App、審核標準
 │   ├── frameworks-draft.md / rolemodels-draft.md  ← 給擁有者審閱用的草稿
 ├── data/                ← 框架資料的唯一來源（改資料只改這裡）
 │   ├── README.md        ← 資料格式、框架包規格、貢獻流程
@@ -51,7 +51,7 @@ personal-growth-system-for-career-2026-10-12/
 | Role model 原型庫（20 位 + AI 自訂） | ✅ 完成，待擁有者驗收 | `ROLE_MODELS` / `TRAIT_MAP` / `applyTargets()`（#4） |
 | 框架資料外部化 + 匯入／匯出框架包 | ✅ 完成 | `data/*.json` + `tools/build.py`；GitHub repo 待擁有者建立（#5） |
 | 授權 CC BY-NC-SA 4.0 + 頁尾聲明 | ✅ 完成 | `LICENSE`、`data/site.json`、`rFoot()` |
-| 🤝 分享經驗（App 內投稿表單） | ✅ 完成，Google 表單待擁有者建立 | `rShare()` / `shSubmit()`；投稿格式 `growth-nav-contribution`（#11） |
+| 🤝 分享路徑（一鍵打包已填內容 → Supabase 待審核） | ✅ 完成，需擁有者在 Supabase 執行 `supabase/schema.sql` | `rShare()` / `shPath()` / `shSubmit()`；審核流程 `docs/contribution-review.md`（#11、D-032） |
 | GitHub Pages 部署 | ✅ 上線 https://rpaidevolper.github.io/personal-growth-navigator/ | `.github/workflows/deploy-pages.yml`；push 到 main 自動發佈（#10） |
 | 測試回饋修正 #12–#16（表單儲存、舊計畫處理、獨立專家語境、準備度部分計分、模擬提示） | ✅ 完成 | 回歸測試 `tools/regression.js` |
 | 機會卡去重 + 職稱、AI 擴充機會與角色 | ✅ 完成 | `genOpps()` / `aiNewOpps()` / `aiRole()`（#18） |

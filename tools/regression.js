@@ -139,6 +139,22 @@ window.runRegression = async function () {
   $("#btnHud").click(); await sleep(40);
   check("G 點 HUD 開啟成就面板", !$("#gamePanel").classList.contains("hide") && $$("#gamePanel .badge").length === 14, {});
   $$(".cele").forEach((c) => c.remove());
+  $("#gamePanel").classList.add("hide");
+
+  // S：一鍵分享。不勾聲明不能送；送到 Supabase 時 email 不在公開內容裡、只送 INSERT（return=minimal）
+  $("#btnShare").click(); await sleep(60);
+  check("S 分享頁不需要另外填表就能預覽", $("#tab-share").innerText.indexOf("能力自評") >= 0 && $$("[data-shi]").length === 8, {});
+  const realFetch2 = window.fetch; let sent = null;
+  window.fetch = (u, o) => { if (String(u).indexOf("/rest/v1/") >= 0) { sent = { u, o }; return Promise.resolve({ ok: true, text: () => Promise.resolve("") }); } return realFetch2(u, o); };
+  $("#btnShSubmit").click(); await sleep(60);
+  const blocked = !sent && $("#toast").textContent.indexOf("聲明") >= 0;
+  $('[data-sh="email"]').value = "me@example.com"; $('[data-sh="email"]').dispatchEvent(new Event("input", { bubbles: true }));
+  $('[data-shc="decl"]').click(); await sleep(20); $('[data-shc="consent"]').click(); await sleep(20);
+  $("#btnShSubmit").click(); await sleep(150);
+  window.fetch = realFetch2;
+  const body = sent ? JSON.parse(sent.o.body) : {};
+  check("S 未勾聲明時擋下", blocked, { toast: $("#toast").textContent });
+  check("S 送出到 Supabase：格式正確、email 不進公開內容", sent && sent.o.headers.Prefer === "return=minimal" && body.payload.format === "growth-nav-path" && body.contact_email === "me@example.com" && JSON.stringify(body.payload).indexOf("me@example.com") < 0 && S().share.sentAt, { keys: Object.keys(body) });
 
   localStorage.clear();
   const failed = results.filter((r) => !r.ok);

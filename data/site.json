@@ -1,9 +1,12 @@
 {
  "meta": {
   "schema": 1,
-  "updated": "2026-10-23",
-  "description": "網站層級設定：版權、授權、投稿表單網址",
-  "contributors": ["Eddy", "Claude"],
+  "updated": "2026-10-24",
+  "description": "網站層級設定：版權、授權、分享收件（Supabase）",
+  "contributors": [
+   "Eddy",
+   "Claude"
+  ],
   "sources": [],
   "license": "CC BY-NC-SA 4.0（© RPAI 數位優化器、Eddy Wu 吳宗賢）"
  },
@@ -15,8 +18,11 @@
  },
  "repo": "https://github.com/rpaidevolper/personal-growth-navigator",
  "contrib": {
-  "formUrl": "",
-  "entryId": "",
+  "supabase": {
+   "url": "https://qtrqkrgzmewkvtzebopt.supabase.co",
+   "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0cnFrcmd6bWV3a3Z0emVib3B0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MDUwODgsImV4cCI6MjEwODM4MTA4OH0.iZCD0OwtdDe8ihyxjg2L6hV4aJms30hkDc73O0OGFHY",
+   "table": "submissions"
+  },
   "consent": "我同意投稿內容以 CC BY-NC-SA 4.0 公開，並授予 RPAI 數位優化器與 Eddy Wu 吳宗賢非專屬、永久、全球、可再授權的使用權（包含商業用途）。",
   "declaration": "我聲明以上內容都是我親身做過、或在工作中直接觀察到的經驗，不是推測或想像，也沒有洩漏任何公司的營業秘密。"
  }
