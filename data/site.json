@@ -2,7 +2,7 @@
  "meta": {
   "schema": 1,
   "updated": "2026-10-24",
-  "description": "網站層級設定：版權、授權、分享收件（Supabase）",
+  "description": "網站層級設定：版權、授權、分享收件（Supabase）、免費 AI 額度",
   "contributors": [
    "Eddy",
    "Claude"
@@ -25,5 +25,12 @@
   },
   "consent": "我同意投稿內容以 CC BY-NC-SA 4.0 公開，並授予 RPAI 數位優化器與 Eddy Wu 吳宗賢非專屬、永久、全球、可再授權的使用權（包含商業用途）。",
   "declaration": "我聲明以上內容都是我親身做過、或在工作中直接觀察到的經驗，不是推測或想像，也沒有洩漏任何公司的營業秘密。"
+ },
+ "ai": {
+  "enabled": false,
+  "provider": "Gemini",
+  "proxyUrl": "https://qtrqkrgzmewkvtzebopt.supabase.co/functions/v1/ai",
+  "limit": 30,
+  "notice": "免費額度由 Google Gemini 免費方案提供，依 Google 條款，送出的內容可能被用於改善其產品；介意的話請改填自己的 Claude key。"
  }
 }

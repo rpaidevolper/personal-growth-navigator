@@ -110,6 +110,11 @@ def validate(d):
             err.append("site.json：缺少 %s" % k)
     if site.get("contrib") and not (site["contrib"].get("consent") and site["contrib"].get("declaration")):
         err.append("site.json：contrib 需要 consent 與 declaration 文字")
+    ai = site.get("ai") or {}
+    if ai.get("enabled") and not str(ai.get("proxyUrl", "")).startswith("https://"):
+        err.append("site.json：ai.proxyUrl 必須是 https 網址")
+    if ai.get("enabled") and not ai.get("notice"):
+        err.append("site.json：ai.notice 必須說明免費額度的資料使用方式")
     sb = (site.get("contrib") or {}).get("supabase") or {}
     if sb.get("url") and not str(sb["url"]).startswith("https://"):
         err.append("site.json：contrib.supabase.url 必須是 https 網址")

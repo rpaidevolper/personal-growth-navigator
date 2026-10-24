@@ -125,5 +125,10 @@
 決定：分享頁自動打包已填內容，使用者只勾選要分享的區塊與兩個必要聲明，其餘全選填；直接寫入 Supabase `submissions`（anon 只能 INSERT、強制 pending、限頻、email 另存不公開）；送出失敗自動下載檔案。共享資料庫分三階段：先收件審核 → 約 30 筆後顯示匿名相似路徑 → 整體統計。
 替代方案（未採）：維持 Google 表單（JSON 貼上體驗差、難查詢）；直接公開所有分享（隱私與真實性風險高）。
 
+### D-033｜2026-10-24｜✅ 免費 AI 額度用 Gemini，經 Supabase Edge Function 代理
+背景：希望使用者不用準備 API key 就能用 AI，卡住時再改用自己的 key。
+決定：Gemini 免費方案（無費用）；金鑰只放在 Edge Function Secrets；每人／每 IP／全站每日上限與網域限制；只開放規劃類功能，職涯模擬不使用（一局約 60 次呼叫）。使用者自己的 Claude key 優先，不扣免費次數。面板明示免費方案的資料可能被 Google 用於改善產品，並可關閉。
+替代方案（未採）：把金鑰放在網頁（任何人都能拿走，額度會被耗盡）；用付費 Claude key 當預設（需要控管費用，之後有預算再評估）。
+
 ### D-016｜2026-10-23｜✅ 專案以「多 AI 協作」為前提建立文件
 `AGENTS.md`（交接入口）、`docs/SPEC.md`、`docs/DECISIONS.md`、`docs/BACKLOG.md`；協作規則見 AGENTS.md §6。

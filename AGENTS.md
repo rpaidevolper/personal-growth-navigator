@@ -58,6 +58,7 @@ personal-growth-system-for-career-2026-10-12/
 | 外部資料來源與誠實標示 | ✅ 第一階段 | `docs/sources.md`、框架 `maturity`／`refs`、`fwBasis()`；逐項對照 iCAP 待做（#19） |
 | 遊戲化（闖關地圖、XP、等級、成就） | ✅ 完成 | `xpTotal()` / `BADGES` / `rHud()` / `checkProgress()`（#20） |
 | 版面：置中 + 左側角色欄（身分卡、狀態、成長地圖） | ✅ 完成 | `rSide()` / `sideStats()`（#22） |
+| 免費 AI 額度（Gemini 經 Supabase 代理） | 程式完成，待擁有者部署 | `supabase/functions/ai/`、`supabase/ai_quota.sql`、`freeCall()`；步驟見 `docs/free-ai.md`（#23） |
 | Role model 推薦相關度與目標合理化 | 🔜 | BACKLOG #17 |
 | 真 key 實測（Claude / Jev） | 🔜 | BACKLOG #8 |
 

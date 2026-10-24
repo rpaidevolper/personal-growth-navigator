@@ -121,6 +121,32 @@ window.runRegression = async function () {
   check("B AI 產生角色卡並設為目標", S().profile.target === "財務長" && S().lv.domain.tgt === 5 && $$(".rolecard[data-role]")[0].innerText.indexOf("AI 產生") >= 0, { target: S().profile.target });
   window.fetch = realFetch;
 
+  // F：免費 AI 額度（site.json 的 ai.enabled 為 true 時才測）。沒填 key 也能用；額度用完時說明清楚
+  $("#btnAI").click(); await sleep(40);
+  if ($("#aiFree")) {
+    $("#aiClaudeKey").value = ""; $("#aiFree").checked = true; $("#btnAISave").click(); await sleep(60);
+    await nav("goal");
+    const aiBtn = !!$("#btnAINewOpp");
+    let req = null, mode = "ok";
+    window.fetch = (u, o) => {
+      if (String(u).indexOf("/functions/v1/ai") >= 0) {
+        req = { u, o };
+        if (mode === "quota") return Promise.resolve({ ok: false, status: 429, json: () => Promise.resolve({ error: "quota", scope: "client", limit: 30, message: "今天的免費 AI 次數（30 次）已用完" }) });
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve({ used: 3, limit: 30, text: "```json\n" + JSON.stringify({ items: [{ tn: "結帳流程", t: "把月結從 8 天縮到 5 天", d: "盤點月結步驟。", comps: ["domain"], req: [], mini: "記錄每個步驟花幾小時", h: 40 }] }) + "\n```" }) });
+      }
+      return realFetch(u, o);
+    };
+    const n0 = (S().aiOpps && S().aiOpps.items.length) || 0;
+    $("#btnAINewOpp").click(); await sleep(200);
+    const fb = req ? JSON.parse(req.o.body) : {};
+    check("F 沒填 key 也能用免費額度（不送 Claude key、帶 schema 與瀏覽器編號）", aiBtn && req && !req.o.headers["x-api-key"] && fb.schema && fb.client && S().aiOpps && S().aiOpps.items.length === n0 + 1 && S().ai.freeUse.used === 3, { aiBtn, n0, n: S().aiOpps && S().aiOpps.items.length });
+    mode = "quota"; $("#btnAINewOpp").click(); await sleep(200);
+    window.fetch = realFetch;
+    $("#btnAI").click(); await sleep(40);
+    check("F 額度用完時提示改用自己的 key，面板顯示剩 0 次", $("#toast").textContent.indexOf("Claude key") >= 0 && $("#aiPanel").innerText.indexOf("還剩 0 次") >= 0, { toast: $("#toast").textContent });
+    $("#btnAIClose").click();
+  } else { $("#btnAIClose").click(); }
+
   // G：遊戲化。載入範例只記錄不慶祝；勾一個步驟 XP +15；取消勾選扣回
   await nav("dash"); $("#btnReset").click(); await sleep(60);
   $("#btnSample").click(); await sleep(120);
