@@ -167,11 +167,12 @@
 - [x] 手機：頁首工具列橫向捲動、副標隱藏；基地頁角色欄精簡（狀態兩欄、檔案與地圖可展開）；其他分頁只留一條等級列
 - 交接摘要（#22）：`rSide()`（由 `rHud()` 呼叫）、`sideStats()`、`actDates()`；HUD 改在角色欄內，事件掛在 `#side`。舊資料沒有 `at` 的步驟不計入地圖與行動力。
 
-### #23 ｜P1｜免費 AI 額度（Gemini 經 Supabase 代理）｜程式完成，待擁有者部署（Claude / 2026-10-24）
+### #23 ｜P1｜免費 AI 額度（Gemini 經 Supabase 代理）｜✅ 上線（Claude / 2026-10-24）
 - [x] Edge Function `supabase/functions/ai/index.ts`：限定網域、每人 30／每 IP 60／全站 800 次（可調）、輸入輸出上限、固定職涯助手系統提示、失敗退回次數；JSON Schema 先用 `responseJsonSchema`，400 時改 `responseSchema`
 - [x] `supabase/ai_quota.sql`：`ai_usage` 表、`ai_take()` / `ai_refund()`（只有 service_role 可呼叫）
 - [x] App：沒填 Claude key 時規劃類 AI 走免費額度（`freeOn()` / `freeCall()`）；AI 設定面板顯示剩餘次數、資料使用說明、可關閉；額度用完提示改填自己的 key；模擬仍用規則；回歸測試 F×2（`ai.enabled` 為 true 時才跑）
-- [ ] 擁有者依 `docs/free-ai.md` 部署（Gemini 金鑰、SQL、Secret、函式）→ 實測 → `site.json` 的 `ai.enabled` 改 true
+- [x] 擁有者已部署（2026-10-24）。實測：一般回覆 200（約 4 秒，`gemini-3.5-flash-lite`）、JSON Schema 輸出可解析、無關請求會婉拒、超長 413、無效編號 400；App 內 AI 新增機會、AI 產生角色、AI 追問（含 final 校正結果）皆成功；`ai.enabled` 已改 true
+- [ ] 未實測：真的把每人 30 次用完（邏輯由 SQL 與模擬測試涵蓋）、非允許網域被擋
 
 ### #21 ｜P2｜分享我的路徑（使用者紀錄回饋）
 - [ ] 使用者可把自己的計畫與完成紀錄（含 AI 產生的機會／角色）匿名送出，經審核成為選項；三層可信度：親身經驗／使用者認可／使用者完成

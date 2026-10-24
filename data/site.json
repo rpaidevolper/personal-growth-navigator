@@ -27,7 +27,7 @@
   "declaration": "我聲明以上內容都是我親身做過、或在工作中直接觀察到的經驗，不是推測或想像，也沒有洩漏任何公司的營業秘密。"
  },
  "ai": {
-  "enabled": false,
+  "enabled": true,
   "provider": "Gemini",
   "proxyUrl": "https://qtrqkrgzmewkvtzebopt.supabase.co/functions/v1/ai",
   "limit": 30,
